@@ -1,5 +1,5 @@
 <script>
-	import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-svelte';
+	import { Facebook, Twitter, Instagram, Linkedin, Shield } from 'lucide-svelte';
 
 	// Current year for copyright
 	const currentYear = new Date().getFullYear();
@@ -63,11 +63,7 @@
 			<!-- Company Info -->
 			<div class="space-y-6">
 				<div class="flex items-center space-x-2">
-					<img
-						src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fshield&psig=AOvVaw1O3Yot8TWO-XCmr0O_WhUq&ust=1733899577996000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJCt6bjNnIoDFQAAAAAdAAAAABAE"
-						alt="ImageGuard"
-						class="h-8 w-auto"
-					/>
+					<Shield class="text-muted-foreground h-5 w-5" />
 					<h2
 						class="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-2xl font-bold text-transparent"
 					>

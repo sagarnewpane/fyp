@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { Menu, Shield, X, ChevronRight } from 'lucide-svelte';
+	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
 
 	// Navigation items array with icons for better mobile experience
 	const navItems = [
-		{ label: 'Home', href: '#', icon: 'Home' },
-		{ label: 'Gallery', href: '#', icon: 'Image' },
-		{ label: 'Pricing', href: '#', icon: 'DollarSign' },
-		{ label: 'Contact', href: '#', icon: 'Mail' }
+		{ label: 'Home', href: '#', icon: Shield },
+		{ label: 'Gallery', href: '#', icon: Album },
+		{ label: 'Pricing', href: '#', icon: DollarSign },
+		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
 	// Mobile menu state
@@ -100,7 +100,7 @@
 							onclick={() => (isMobileMenuOpen = false)}
 						>
 							<div class="flex items-center gap-3">
-								<Shield class="text-muted-foreground h-5 w-5" />
+								<item.icon class="text-muted-foreground h-5 w-5" />
 								<span>{item.label}</span>
 							</div>
 							<ChevronRight class="text-muted-foreground h-5 w-5" />
