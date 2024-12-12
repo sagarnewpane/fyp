@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="js">
 	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
@@ -22,19 +22,19 @@
 
 <!-- Navigation wrapper -->
 <nav
-	class="bg-background/95 supports-[backdrop-filter]:bg-background/0.1 sticky top-0 z-50 w-full border-b backdrop-blur"
+	class="supports-[backdrop-filter]:bg-background/0.1 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur"
 >
-	<div class="container mx-auto px-4">
+	<div class="px-4">
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo and brand -->
 			<div class="group flex items-center gap-2">
 				<div
-					class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-110"
+					class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary transition-transform duration-300 group-hover:scale-110"
 				>
 					<Shield class="h-6 w-6 text-white" />
 				</div>
 				<span
-					class="after:bg-primary relative text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:transition-all after:duration-300 group-hover:after:w-full"
+					class="relative text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 group-hover:after:w-full"
 					>IGuardian</span
 				>
 			</div>
@@ -44,7 +44,7 @@
 				{#each navItems as item}
 					<a
 						href={item.href}
-						class="text-muted-foreground hover:text-foreground after:bg-primary relative px-2 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+						class="relative px-2 text-muted-foreground transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:text-foreground hover:after:w-full"
 					>
 						{item.label}
 					</a>
@@ -55,11 +55,11 @@
 			<div class="hidden items-center gap-2 md:flex">
 				<Button
 					variant="ghost"
-					class="after:bg-primary relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+					class="relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
 					>Login</Button
 				>
 				<Button
-					class="hover:shadow-primary/20 px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+					class="px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
 					>Register</Button
 				>
 			</div>
@@ -69,7 +69,7 @@
 				variant="ghost"
 				size="icon"
 				on:click={toggleMobileMenu}
-				class="after:bg-primary relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:transition-all after:duration-300 hover:after:w-full md:hidden"
+				class="relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full md:hidden"
 			>
 				{#if isMobileMenuOpen}
 					<div in:fade={{ duration: 200 }}>
@@ -87,7 +87,7 @@
 	<!-- Mobile navigation -->
 	{#if isMobileMenuOpen}
 		<div
-			class="bg-background/95 supports-[backdrop-filter]:bg-background/0.1 fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-full border-t backdrop-blur md:hidden"
+			class="supports-[backdrop-filter]:bg-background/0.1 fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-full border-t bg-background/95 backdrop-blur md:hidden"
 			transition:slide={{ duration: 200 }}
 		>
 			<div class="container mx-auto px-4 py-4">
@@ -96,14 +96,14 @@
 					{#each navItems as item}
 						<a
 							href={item.href}
-							class="text-muted-foreground hover:bg-primary/5 group relative flex items-center justify-between rounded-md px-3 py-2 transition-all active:scale-[0.98]"
+							class="group relative flex items-center justify-between rounded-md px-3 py-2 text-muted-foreground transition-all hover:bg-primary/5 active:scale-[0.98]"
 							onclick={() => (isMobileMenuOpen = false)}
 						>
 							<div class="flex items-center gap-3">
-								<item.icon class="text-muted-foreground h-5 w-5" />
+								<item.icon class="h-5 w-5 text-muted-foreground" />
 								<span>{item.label}</span>
 							</div>
-							<ChevronRight class="text-muted-foreground h-5 w-5" />
+							<ChevronRight class="h-5 w-5 text-muted-foreground" />
 						</a>
 					{/each}
 
@@ -111,12 +111,12 @@
 					<div class="flex flex-col gap-3 pt-4">
 						<Button
 							variant="outline"
-							class="hover:bg-primary/5 w-full justify-center gap-2 px-3 py-2 transition-all active:scale-[0.98]"
+							class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
 						>
 							Login
 						</Button>
 						<Button
-							class="hover:bg-primary/90 w-full justify-center gap-2 px-3 py-2 transition-all active:scale-[0.98]"
+							class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/90 active:scale-[0.98]"
 						>
 							Register
 						</Button>
