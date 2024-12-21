@@ -5,7 +5,8 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Alert from '$lib/components/ui/alert';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import FeatureCarousel from '$lib/components/FeatureCarousel.svelte';
+	import { loginFeatures } from '$lib/config/features';
 
 	export let data;
 
@@ -15,7 +16,7 @@
 	const { form: formData, enhance, message } = form;
 </script>
 
-<div class="grid min-h-screen w-full lg:grid-cols-2">
+<div class="grid min-h-screen w-full lg:grid-cols-[40%_60%]">
 	<div
 		class="flex min-h-screen items-center justify-center bg-gradient-to-b from-primary/10 to-primary/5 px-4 py-8 lg:min-h-full"
 	>
@@ -54,7 +55,7 @@
 							<div class="grid gap-2">
 								<div class="flex flex-wrap items-center justify-between gap-2">
 									<Form.Label>Password</Form.Label>
-									<a href="##" class="text-sm underline hover:text-primary">
+									<a href="/forget-password" class="text-sm underline hover:text-primary">
 										Forgot your password?
 									</a>
 								</div>
@@ -64,21 +65,15 @@
 						<Form.FieldErrors />
 					</Form.Field>
 
-					<Form.Button className="w-full">Login</Form.Button>
+					<Form.Button class="w-full">Login</Form.Button>
 
-					<div class="mt-2 text-center text-sm">
+					<div class="text-center text-sm">
 						Don't have an account?
-						<a href="/register" class="ml-1 underline hover:text-primary"> Sign up </a>
+						<a href="/register" class="ml-1 underline hover:text-primary">Sign up</a>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="hidden h-screen lg:block">
-		<img
-			src="/side.webp"
-			alt="placeholder"
-			class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-		/>
-	</div>
+	<FeatureCarousel features={loginFeatures} />
 </div>

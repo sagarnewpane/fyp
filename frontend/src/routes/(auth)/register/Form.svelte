@@ -5,17 +5,18 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Alert from '$lib/components/ui/alert';
+	import FeatureCarousel from '$lib/components/FeatureCarousel.svelte';
+	import { registerFeatures } from '$lib/config/features';
 
 	export let data;
 
 	const form = superForm(data, {
 		validators: zodClient(formSchema)
 	});
-
 	const { form: formData, enhance, message } = form;
 </script>
 
-<div class="grid min-h-screen w-full lg:grid-cols-2">
+<div class="grid min-h-screen w-full lg:grid-cols-[40%_60%]">
 	<div
 		class="flex min-h-screen items-center justify-center bg-gradient-to-b from-primary/10 to-primary/5 px-4 py-8 lg:min-h-full"
 	>
@@ -30,7 +31,6 @@
 						Enter your details below to create your account
 					</p>
 				</div>
-
 				<form method="POST" use:enhance class="grid gap-5">
 					{#if $message}
 						<Alert.Root variant="destructive">
@@ -38,7 +38,6 @@
 							<Alert.Description>{$message}</Alert.Description>
 						</Alert.Root>
 					{/if}
-
 					<div class="grid gap-4">
 						<Form.Field {form} name="username">
 							<Form.Control let:attrs>
@@ -49,7 +48,6 @@
 							</Form.Control>
 							<Form.FieldErrors />
 						</Form.Field>
-
 						<div class="grid gap-4 sm:grid-cols-2">
 							<Form.Field {form} name="first_name">
 								<Form.Control let:attrs>
@@ -60,7 +58,6 @@
 								</Form.Control>
 								<Form.FieldErrors />
 							</Form.Field>
-
 							<Form.Field {form} name="last_name">
 								<Form.Control let:attrs>
 									<div class="grid gap-2">
@@ -71,7 +68,6 @@
 								<Form.FieldErrors />
 							</Form.Field>
 						</div>
-
 						<Form.Field {form} name="email">
 							<Form.Control let:attrs>
 								<div class="grid gap-2">
@@ -81,7 +77,6 @@
 							</Form.Control>
 							<Form.FieldErrors />
 						</Form.Field>
-
 						<Form.Field {form} name="password1">
 							<Form.Control let:attrs>
 								<div class="grid gap-2">
@@ -91,7 +86,6 @@
 							</Form.Control>
 							<Form.FieldErrors />
 						</Form.Field>
-
 						<Form.Field {form} name="password2">
 							<Form.Control let:attrs>
 								<div class="grid gap-2">
@@ -102,9 +96,7 @@
 							<Form.FieldErrors />
 						</Form.Field>
 					</div>
-
 					<Form.Button class="w-full">Create Account</Form.Button>
-
 					<div class="text-center text-sm">
 						Already have an account?
 						<a href="/login" class="ml-1 underline hover:text-primary">Login</a>
@@ -113,11 +105,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="hidden h-screen lg:block">
-		<img
-			src="/side.webp"
-			alt="placeholder"
-			class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-		/>
-	</div>
+	<FeatureCarousel features={registerFeatures} />
 </div>
