@@ -17,10 +17,6 @@
 			</p>
 			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
 				<Button size="lg" class="min-w-[200px]">Get Started</Button>
-				<Button variant="outline" size="lg" class="min-w-[200px]">
-					<Star class="mr-2 h-4 w-4" />
-					View Plans
-				</Button>
 			</div>
 		</div>
 	</div>

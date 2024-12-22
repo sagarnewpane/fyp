@@ -24,7 +24,7 @@
 				mind with our cutting-edge security solutions.
 			</p>
 			<div class="flex flex-col gap-4 sm:flex-row">
-				<Button size="lg">
+				<Button size="lg" href="/register">
 					<Upload class="mr-2 h-5 w-5" />
 					Get Started Now
 				</Button>
@@ -45,12 +45,12 @@
 	</div>
 
 	<!-- Scroll down indicator -->
-	<div
+	<Button
 		class="my-20 animate-bounce cursor-pointer transition-colors hover:text-primary"
 		onclick={scrollToFeatures}
-		in:fade={{ delay: 1000 }}
+		variant="ghost"
 	>
 		<ChevronDown class="h-8 w-8" />
 		<span class="sr-only">Scroll down</span>
-	</div>
+	</Button>
 </section>

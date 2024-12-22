@@ -32,10 +32,12 @@
 				>
 					<Shield class="h-6 w-6 text-white" />
 				</div>
-				<span
-					class="relative text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 group-hover:after:w-full"
-					>IGuardian</span
-				>
+				<a href="/">
+					<span
+						class="relative cursor-pointer text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 group-hover:after:w-full"
+						>IGuardian</span
+					>
+				</a>
 			</div>
 
 			<!-- Desktop navigation -->
