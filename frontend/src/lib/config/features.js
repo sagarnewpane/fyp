@@ -19,16 +19,8 @@ export const loginFeatures = [
 
 export const registerFeatures = [
 	{
-		title: 'Smart Integration',
-		description: 'Seamlessly connect with all your favorite tools and workflows'
-	},
-	{
 		title: 'Advanced Security',
 		description: 'Enterprise-grade security with end-to-end encryption'
-	},
-	{
-		title: '24/7 Support',
-		description: 'Round-the-clock expert support to help you succeed'
 	},
 	{
 		title: 'Real-time Analytics',
@@ -37,10 +29,6 @@ export const registerFeatures = [
 ];
 
 export const forgotPasswordFeatures = [
-	{
-		title: 'Easy Recovery',
-		description: 'Simple and secure password recovery process'
-	},
 	{
 		title: 'Quick Reset',
 		description: 'Reset your password in just a few simple steps'

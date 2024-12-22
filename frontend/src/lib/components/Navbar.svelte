@@ -5,9 +5,8 @@
 
 	// Navigation items array with icons for better mobile experience
 	const navItems = [
-		{ label: 'Home', href: '#', icon: Shield },
+		{ label: 'Home', href: '/', icon: Shield },
 		{ label: 'Gallery', href: '#', icon: Album },
-		{ label: 'Pricing', href: '#', icon: DollarSign },
 		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
@@ -56,11 +55,11 @@
 				<Button
 					variant="ghost"
 					class="relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-					>Login</Button
+					href="/login">Login</Button
 				>
 				<Button
 					class="px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
-					>Register</Button
+					href="/register">Register</Button
 				>
 			</div>
 
@@ -112,11 +111,13 @@
 						<Button
 							variant="outline"
 							class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
+							href="/login"
 						>
 							Login
 						</Button>
 						<Button
 							class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/90 active:scale-[0.98]"
+							href="/register"
 						>
 							Register
 						</Button>
