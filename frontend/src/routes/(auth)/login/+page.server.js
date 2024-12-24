@@ -2,7 +2,7 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
-// import { redirect } from 'sveltekit-flash-message/server';
+import { redirect } from 'sveltekit-flash-message/server';
 
 export const load = async () => {
 	return {
@@ -24,7 +24,7 @@ export const actions = {
 
 		let response;
 		try {
-			response = await fetch('http://localhost:8000/api/token/', {
+			response = await fetch('http://localhost:8000/token/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -39,6 +39,7 @@ export const actions = {
 		}
 
 		const data = await response.json();
+		console.log(data);
 
 		if (!response.ok) {
 			return message(form, data.detail || 'Login failed');
@@ -57,13 +58,13 @@ export const actions = {
 			maxAge: 60 * 60 * 24 * 7 // 7 days for refresh token
 		});
 
-		// throw redirect(
-		// 	'/',
-		// 	{
-		// 		type: 'success',
-		// 		message: 'Login Successful!'
-		// 	},
-		// 	event
-		// );
+		throw redirect(
+			'/',
+			{
+				type: 'success',
+				message: 'Login Successful!'
+			},
+			event
+		);
 	}
 };

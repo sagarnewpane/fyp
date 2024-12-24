@@ -38,6 +38,9 @@
 		"zod": "^3.24.1"
 	},
 	"dependencies": {
-		"lucide-svelte": "^0.468.0"
+		"embla-carousel-svelte": "^8.5.1",
+		"lucide-svelte": "^0.468.0",
+		"svelte-sonner": "^0.3.28",
+		"sveltekit-flash-message": "^2.4.4"
 	}
 }

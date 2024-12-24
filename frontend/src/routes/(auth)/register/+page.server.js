@@ -2,7 +2,7 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
-// import { redirect } from 'sveltekit-flash-message/server';
+import { redirect } from 'sveltekit-flash-message/server';
 
 export const load = async () => {
 	return {
@@ -62,13 +62,13 @@ export const actions = {
 		const data = await response.json();
 		console.log(data);
 
-		// throw redirect(
-		// 	'/login',
-		// 	{
-		// 		type: 'success',
-		// 		message: 'Registration successful!'
-		// 	},
-		// 	event
-		// );
+		throw redirect(
+			'/login',
+			{
+				type: 'success',
+				message: 'Registration successful!'
+			},
+			event
+		);
 	}
 };

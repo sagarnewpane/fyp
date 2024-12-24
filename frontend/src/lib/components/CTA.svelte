@@ -16,7 +16,7 @@
 				images today.
 			</p>
 			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-				<Button size="lg" class="min-w-[200px]">Get Started</Button>
+				<Button size="lg" class="min-w-[200px]" href="/register">Get Started</Button>
 			</div>
 		</div>
 	</div>

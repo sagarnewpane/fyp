@@ -43,7 +43,7 @@
 					<Form.Field {form} name="username">
 						<Form.Control let:attrs>
 							<div class="grid gap-2">
-								<Form.Label>Email</Form.Label>
+								<Form.Label>Username</Form.Label>
 								<Input {...attrs} bind:value={$formData.username} />
 							</div>
 						</Form.Control>
