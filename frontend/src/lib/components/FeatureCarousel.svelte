@@ -3,12 +3,14 @@
 	import { Button } from '$lib/components/ui/button';
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	export let features = [];
 
 	let api;
 	let autoScrollInterval;
 	let isPaused = false;
+	let currentImageIndex = 0;
 
 	const startAutoScroll = () => {
 		autoScrollInterval = setInterval(() => {
@@ -30,6 +32,12 @@
 		isPaused = false;
 	};
 
+	$: if (api) {
+		api.on('select', () => {
+			currentImageIndex = api.selectedScrollSnap();
+		});
+	}
+
 	onMount(() => {
 		startAutoScroll();
 	});
@@ -41,12 +49,18 @@
 	});
 </script>
 
-<div class="relative hidden h-screen lg:block">
-	<img
-		src="/side.webp"
-		alt="placeholder"
-		class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-	/>
+<div class="relative hidden h-screen overflow-hidden lg:block">
+	{#each features as feature, i}
+		{#if currentImageIndex === i}
+			<div class="absolute inset-0" in:fade={{ duration: 800 }} out:fade={{ duration: 800 }}>
+				<img
+					src={feature.image}
+					alt={feature.title}
+					class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+				/>
+			</div>
+		{/if}
+	{/each}
 	<div class="absolute inset-0 bg-black/50">
 		<div class="relative h-full" on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave}>
 			<Carousel.Root
@@ -89,7 +103,7 @@
 			<div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
 				{#each features as _, i}
 					<button
-						class="h-2 w-2 rounded-full transition-all {api?.selectedScrollSnap() === i
+						class="h-2 w-2 rounded-full transition-all {currentImageIndex === i
 							? 'bg-white'
 							: 'bg-white/50'}"
 						on:click={() => api?.scrollTo(i)}
