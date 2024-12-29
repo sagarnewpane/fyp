@@ -2,18 +2,39 @@
 	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
+	import { authStore } from '$lib/stores/auth';
+	import { goto, invalidate } from '$app/navigation';
+	import {
+		DropdownMenu,
+		DropdownMenuTrigger,
+		DropdownMenuContent,
+		DropdownMenuItem
+	} from '$lib/components/ui/dropdown-menu';
+	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
 
-	// Navigation items array with icons for better mobile experience
+	// Convert reactive declarations to runes
+	const user = $derived($authStore?.user || null);
+	const isAuthenticated = $derived(Boolean($authStore?.isAuthenticated));
+
+	let avatarUrl = null;
+	async function handleLogout() {
+		const response = await fetch('/logout', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		invalidate('app:auth');
+	}
+
 	const navItems = [
 		{ label: 'Home', href: '/', icon: Shield },
 		{ label: 'Gallery', href: '#', icon: Album },
 		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
-	// Mobile menu state
 	let isMobileMenuOpen = $state(false);
 
-	/** Toggle mobile menu */
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
 	};
@@ -52,18 +73,50 @@
 				{/each}
 			</div>
 
-			<!-- Auth buttons -->
-			<div class="hidden items-center gap-2 md:flex">
-				<Button
-					variant="ghost"
-					class="relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-					href="/login">Login</Button
-				>
-				<Button
-					class="px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
-					href="/register">Register</Button
-				>
-			</div>
+			{#if isAuthenticated}
+				<DropdownMenu>
+					<DropdownMenuTrigger>
+						<Avatar>
+							{#if avatarUrl}
+								<AvatarImage
+									src={avatarUrl}
+									alt="User avatar"
+									on:error={() => {
+										console.error('Failed to load avatar');
+										avatarUrl = null;
+									}}
+								/>
+							{/if}
+							<AvatarFallback>
+								{(user?.username && user.username[0].toUpperCase()) || '?'}
+							</AvatarFallback>
+						</Avatar>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent>
+						<a href="/profile"
+							><DropdownMenuItem class="cursor-pointer">Profile</DropdownMenuItem></a
+						>
+						<DropdownMenuItem>
+							<Button variant="destructive" class="mx-auto" on:click={handleLogout} size="sm">
+								Logout
+							</Button>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			{:else}
+				<!-- Auth buttons -->
+				<div class="hidden items-center gap-2 md:flex">
+					<Button
+						variant="ghost"
+						class="relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+						href="/login">Login</Button
+					>
+					<Button
+						class="px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
+						href="/register">Register</Button
+					>
+				</div>
+			{/if}
 
 			<!-- Mobile menu button -->
 			<Button
