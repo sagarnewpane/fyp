@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from .models import UserImage
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -51,3 +52,16 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         if attrs['new_password'] != attrs['confirm_password']:
             raise serializers.ValidationError({"password": "Password fields didn't match."})
         return attrs
+
+class UserImageSerializer(serializers.ModelSerializer):
+    created_at = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserImage
+        fields = ['id', 'image', 'created_at', 'access_control_enabled',
+                 'watermark_enabled', 'metadata_enabled', 'ai_protection_enabled']
+        read_only_fields = ['created_at']
+
+    def get_created_at(self, obj):
+        # Format: "January 3, 2025 5:44 PM"
+        return obj.created_at.strftime("%B %d, %Y %I:%M %p")

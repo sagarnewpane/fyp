@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, UserImageSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -103,4 +103,20 @@ class PasswordResetConfirmView(APIView):
                     {"error": "Invalid reset link."},
                     status=status.HTTP_400_BAD_REQUEST
                 )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ImageUploadView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Add the user to the data
+        data = request.data.copy()
+
+        # Create serializer with the data
+        serializer = UserImageSerializer(data=data)
+
+        if serializer.is_valid():
+            # Save the image and associate it with the user
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
