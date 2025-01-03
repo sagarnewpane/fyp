@@ -13,7 +13,7 @@
 	const form = superForm(data, {
 		validators: zodClient(formSchema)
 	});
-	const { form: formData, enhance, message, submitting } = form;
+	const { form: formData, enhance, message } = form;
 </script>
 
 <div class="grid min-h-screen w-full lg:grid-cols-[40%_60%]">
@@ -28,59 +28,42 @@
 				<div class="grid gap-3 text-center">
 					<h1 class="text-2xl font-bold sm:text-3xl">Reset Password</h1>
 					<p class="text-balance text-sm text-muted-foreground sm:text-base">
-						Enter your email address and we'll send you a link to reset your password
+						Enter your new password below
 					</p>
 				</div>
 				<form method="POST" use:enhance class="grid gap-5">
 					{#if $message}
-						<Alert.Root
-							variant={typeof $message === 'object' && $message.status === 'success'
-								? 'default'
-								: 'destructive'}
-						>
-							<Alert.Title>
-								{typeof $message === 'object' && $message.status === 'success'
-									? 'Success'
-									: 'Error'}
-							</Alert.Title>
-							<Alert.Description>
-								{typeof $message === 'object' ? $message.text : $message}
-							</Alert.Description>
+						<Alert.Root variant={$message.status === 'success' ? 'default' : 'destructive'}>
+							<Alert.Title>{$message.status === 'success' ? 'Success' : 'Error'}</Alert.Title>
+							<Alert.Description>{$message}</Alert.Description>
 						</Alert.Root>
 					{/if}
 					<div class="grid gap-4">
-						<Form.Field {form} name="email">
+						<Form.Field {form} name="new_password">
 							<Form.Control let:attrs>
 								<div class="grid gap-2">
-									<Form.Label>Email</Form.Label>
-									<Input
-										{...attrs}
-										bind:value={$formData.email}
-										type="email"
-										placeholder="Enter your email address"
-										disabled={$submitting}
-									/>
+									<Form.Label>New Password</Form.Label>
+									<Input {...attrs} bind:value={$formData.new_password} type="password" />
+								</div>
+							</Form.Control>
+							<Form.FieldErrors />
+						</Form.Field>
+						<Form.Field {form} name="confirm_password">
+							<Form.Control let:attrs>
+								<div class="grid gap-2">
+									<Form.Label>Confirm Password</Form.Label>
+									<Input {...attrs} bind:value={$formData.confirm_password} type="password" />
 								</div>
 							</Form.Control>
 							<Form.FieldErrors />
 						</Form.Field>
 					</div>
-					<Form.Button class="w-full" disabled={$submitting}>
-						{#if $submitting}
-							<div class="flex items-center justify-center gap-2">
-								<span
-									class="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent"
-								></span>
-								Sending...
-							</div>
-						{:else}
-							Send Reset Link
-						{/if}
-					</Form.Button>
-					<div class="text-center text-sm">
-						Remember your password?
-						<a href="/login" class="ml-1 underline hover:text-primary">Login</a>
-					</div>
+					<Form.Button class="w-full">Reset Password</Form.Button>
+					{#if $message?.status === 'success'}
+						<div class="text-center text-sm">
+							<a href="/login" class="underline hover:text-primary">Go to Login</a>
+						</div>
+					{/if}
 				</form>
 			</div>
 		</div>

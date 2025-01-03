@@ -20,9 +20,8 @@ export const actions = {
 
 		const email = form.data.email;
 
-		let response;
 		try {
-			response = await fetch('http://localhost:8000/api/password-reset/', {
+			const response = await fetch('http://localhost:8000/api/password-reset/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -31,15 +30,33 @@ export const actions = {
 					email
 				})
 			});
-		} catch (error) {
-			return message(form, 'Server is not reachable. Please try again later.');
-		}
 
-		if (!response.ok) {
 			const data = await response.json();
-			return message(form, data.detail || 'Password reset request failed');
-		}
 
-		return message(form, 'Password reset link has been sent to your email.', { status: 'success' });
+			if (!response.ok) {
+				// Check for email-specific error
+				if (data.email) {
+					return message(form, {
+						status: 'error',
+						text: data.email[0]
+					});
+				}
+				// Fall back to other error messages
+				return message(form, {
+					status: 'error',
+					text: data.error || data.detail || 'Password reset request failed'
+				});
+			}
+
+			return message(form, {
+				status: 'success',
+				text: 'Password reset link has been sent to your email.'
+			});
+		} catch (error) {
+			return message(form, {
+				status: 'error',
+				text: 'Server is not reachable. Please try again later.'
+			});
+		}
 	}
 };
