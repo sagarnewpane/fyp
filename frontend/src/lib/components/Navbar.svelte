@@ -29,7 +29,7 @@
 
 	const navItems = [
 		{ label: 'Home', href: '/', icon: Shield },
-		{ label: 'Gallery', href: '#', icon: Album },
+		{ label: 'Images', href: '/images', icon: Album },
 		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
