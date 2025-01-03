@@ -120,3 +120,21 @@ class ImageUploadView(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .serializers import UserImageListSerializer
+from .models import UserImage
+
+class ImageListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserImageListSerializer
+
+    def get_queryset(self):
+        # Return only images belonging to the current user
+        return UserImage.objects.filter(user=self.request.user).order_by('-created_at')
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context

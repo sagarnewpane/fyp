@@ -65,3 +65,27 @@ class UserImageSerializer(serializers.ModelSerializer):
     def get_created_at(self, obj):
         # Format: "January 3, 2025 5:44 PM"
         return obj.created_at.strftime("%B %d, %Y %I:%M %p")
+
+
+
+class UserImageListSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+    image_name = serializers.SerializerMethodField()
+    created_at = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserImage
+        fields = ['id', 'image_url', 'image_name', 'created_at']
+
+    def get_image_url(self, obj):
+        if obj.image:
+            return self.context['request'].build_absolute_uri(obj.image.url)
+        return None
+
+    def get_image_name(self, obj):
+        if obj.image:
+            return obj.image.name.split('/')[-1]  # Gets just the filename
+        return None
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%B %d, %Y %I:%M %p")
