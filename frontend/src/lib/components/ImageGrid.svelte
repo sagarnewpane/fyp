@@ -3,22 +3,6 @@
 	import { goto } from '$app/navigation';
 
 	export let images = [];
-	export let pagination;
-	export let searchQuery = ''; // Add this line to accept searchQuery as a prop
-
-	function changePage(pageUrl) {
-		if (pageUrl) {
-			try {
-				const url = new URL(pageUrl);
-				const page = url.searchParams.get('page') || '1';
-				goto(`?page=${page}`, { replaceState: false });
-			} catch (err) {
-				console.error('Error changing page:', err);
-			}
-		}
-	}
-
-	$: totalPages = Math.ceil(pagination.count / 10);
 </script>
 
 <section class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -41,29 +25,3 @@
 		{/each}
 	{/if}
 </section>
-
-{#if !searchQuery && (pagination.next || pagination.previous)}
-	<div class="mt-6 flex justify-center gap-4">
-		{#if pagination.previous}
-			<button
-				class="rounded-lg bg-gray-100 px-4 py-2 hover:bg-gray-200"
-				on:click={() => changePage(pagination.previous)}
-			>
-				Previous
-			</button>
-		{/if}
-
-		<span class="px-4 py-2">
-			Page {pagination.currentPage} of {totalPages || 1}
-		</span>
-
-		{#if pagination.next}
-			<button
-				class="rounded-lg bg-gray-100 px-4 py-2 hover:bg-gray-200"
-				on:click={() => changePage(pagination.next)}
-			>
-				Next
-			</button>
-		{/if}
-	</div>
-{/if}

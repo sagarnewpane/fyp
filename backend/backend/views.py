@@ -125,16 +125,47 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import UserImageListSerializer
 from .models import UserImage
+from rest_framework.pagination import PageNumberPagination
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class ImageListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserImageListSerializer
 
     def get_queryset(self):
-        # Return only images belonging to the current user
-        return UserImage.objects.filter(user=self.request.user).order_by('-created_at')
+        queryset = UserImage.objects.filter(user=self.request.user)
+        params = self.request.query_params
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['request'] = self.request
-        return context
+        # Search filter
+        search_query = params.get('search', '')
+        if search_query:
+            queryset = queryset.filter(image_name__icontains=search_query)
+
+        # Date range filter
+        date_from = params.get('date_from')
+        date_to = params.get('date_to')
+        if date_from:
+            queryset = queryset.filter(created_at__gte=date_from)
+        if date_to:
+            queryset = queryset.filter(created_at__lte=date_to)
+
+        # File type filter
+        file_types = params.getlist('file_type')
+        if file_types:
+            queryset = queryset.filter(file_type__in=file_types)
+
+        # Size range filter (in MB)
+        size_min = params.get('size_min')
+        size_max = params.get('size_max')
+        if size_min:
+            queryset = queryset.filter(file_size__gte=float(size_min)*1024*1024)
+        if size_max:
+            queryset = queryset.filter(file_size__lte=float(size_max)*1024*1024)
+
+        # Sorting
+        sort_by = params.get('sort', '-created_at')
+        return queryset.order_by(sort_by)
