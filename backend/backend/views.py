@@ -5,11 +5,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, UserImageSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, UserImageSerializer, UserImageListSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
+from .models import UserImage
 
 
 class RegisterView(generics.CreateAPIView):
@@ -121,20 +123,55 @@ class ImageUploadView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
-from .serializers import UserImageListSerializer
-from .models import UserImage
-from rest_framework.pagination import PageNumberPagination
+
+
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
 
+# class ImageListView(generics.ListAPIView):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class = UserImageListSerializer
+
+#     def get_queryset(self):
+#         queryset = UserImage.objects.filter(user=self.request.user)
+#         params = self.request.query_params
+
+#         # Search filter
+#         search_query = params.get('search', '')
+#         if search_query:
+#             queryset = queryset.filter(image_name__icontains=search_query)
+
+#         # Date range filter
+#         date_from = params.get('date_from')
+#         date_to = params.get('date_to')
+#         if date_from:
+#             queryset = queryset.filter(created_at__gte=date_from)
+#         if date_to:
+#             queryset = queryset.filter(created_at__lte=date_to)
+
+#         # File type filter
+#         file_types = params.getlist('file_type')
+#         if file_types:
+#             queryset = queryset.filter(file_type__in=file_types)
+
+#         # Size range filter (in MB)
+#         size_min = params.get('size_min')
+#         size_max = params.get('size_max')
+#         if size_min:
+#             queryset = queryset.filter(file_size__gte=float(size_min)*1024*1024)
+#         if size_max:
+#             queryset = queryset.filter(file_size__lte=float(size_max)*1024*1024)
+
+#         # Sorting
+#         sort_by = params.get('sort', '-created_at')
+#         return queryset.order_by(sort_by)
 class ImageListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserImageListSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         queryset = UserImage.objects.filter(user=self.request.user)
@@ -145,27 +182,27 @@ class ImageListView(generics.ListAPIView):
         if search_query:
             queryset = queryset.filter(image_name__icontains=search_query)
 
-        # Date range filter
-        date_from = params.get('date_from')
-        date_to = params.get('date_to')
-        if date_from:
-            queryset = queryset.filter(created_at__gte=date_from)
-        if date_to:
-            queryset = queryset.filter(created_at__lte=date_to)
-
         # File type filter
         file_types = params.getlist('file_type')
         if file_types:
             queryset = queryset.filter(file_type__in=file_types)
 
-        # Size range filter (in MB)
+        # Size filter (in MB)
         size_min = params.get('size_min')
         size_max = params.get('size_max')
         if size_min:
-            queryset = queryset.filter(file_size__gte=float(size_min)*1024*1024)
+            queryset = queryset.filter(file_size__gte=float(size_min)*1024*1024)  # Convert MB to bytes
         if size_max:
-            queryset = queryset.filter(file_size__lte=float(size_max)*1024*1024)
+            queryset = queryset.filter(file_size__lte=float(size_max)*1024*1024)  # Convert MB to bytes
 
         # Sorting
         sort_by = params.get('sort', '-created_at')
-        return queryset.order_by(sort_by)
+        valid_sort_fields = [
+            'created_at', '-created_at',
+            'image_name', '-image_name',
+            'file_size', '-file_size'
+        ]
+        if sort_by in valid_sort_fields:
+            queryset = queryset.order_by(sort_by)
+
+        return queryset

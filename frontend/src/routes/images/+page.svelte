@@ -15,30 +15,57 @@
 		goto(`?${params.toString()}`);
 	}
 
-	function handleFilter(event) {
-		const params = new URLSearchParams($page.url.searchParams);
+	function handleFilters(event) {
+		console.log('Filter event received:', event);
+		console.log('Filter detail:', event.detail);
+
 		const filters = event.detail;
+		const params = new URLSearchParams();
 
-		const existingSearch = params.get('search');
-		params.clear();
-		if (existingSearch) params.set('search', existingSearch);
+		// Preserve search if exists
+		const currentSearch = $page.url.searchParams.get('search');
+		if (currentSearch) {
+			params.set('search', currentSearch);
+		}
 
-		if (filters.dateFrom) params.set('date_from', filters.dateFrom.toISOString());
-		if (filters.dateTo) params.set('date_to', filters.dateTo.toISOString());
-		if (filters.fileTypes?.length)
-			filters.fileTypes.forEach((type) => params.append('file_type', type));
-		if (filters.sizeMin) params.set('size_min', filters.sizeMin);
-		if (filters.sizeMax) params.set('size_max', filters.sizeMax);
-		if (filters.sortBy) params.set('sort', filters.sortBy);
+		// Add file type filters
+		if (filters.file_type && filters.file_type.length > 0) {
+			console.log('Adding file types:', filters.file_type);
+			filters.file_type.forEach((type) => {
+				params.append('file_type', type);
+			});
+		}
 
+		// Add size filters
+		if (filters.size_min !== null) {
+			console.log('Adding size_min:', filters.size_min);
+			params.set('size_min', filters.size_min.toString());
+		}
+		if (filters.size_max !== null) {
+			console.log('Adding size_max:', filters.size_max);
+			params.set('size_max', filters.size_max.toString());
+		}
+
+		// Add sort parameter
+		if (filters.sort) {
+			console.log('Adding sort:', filters.sort);
+			params.set('sort', filters.sort);
+		}
+
+		// Reset to page 1
 		params.set('page', '1');
-		goto(`?${params.toString()}`);
+
+		const newUrl = `?${params.toString()}`;
+		console.log('Final URL parameters:', newUrl);
+		goto(newUrl);
 	}
 
 	function handlePageChange(newPage) {
 		const params = new URLSearchParams($page.url.searchParams);
 		params.set('page', newPage.toString());
-		goto(`?${params.toString()}`);
+		const newUrl = `?${params.toString()}`;
+		console.log('Page - New URL:', newUrl);
+		goto(newUrl);
 	}
 
 	// Compute pagination values from data
@@ -53,7 +80,7 @@
 		<ImageUpload on:uploadSuccess={() => location.reload()} />
 		<ImageFilters
 			on:search={handleSearch}
-			on:filter={handleFilter}
+			on:applyFilters={handleFilters}
 			searchQuery={$page.url.searchParams.get('search') || ''}
 		/>
 	</div>

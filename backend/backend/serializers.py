@@ -72,10 +72,12 @@ class UserImageListSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     image_name = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
+    file_size = serializers.IntegerField()  # Add this
+    file_type = serializers.CharField()     # Add this
 
     class Meta:
         model = UserImage
-        fields = ['id', 'image_url', 'image_name', 'created_at']
+        fields = ['id', 'image_url', 'image_name', 'created_at', 'file_size', 'file_type']  # Include new fields
 
     def get_image_url(self, obj):
         if obj.image:
