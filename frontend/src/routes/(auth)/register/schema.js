@@ -5,7 +5,7 @@ export const formSchema = z
 		username: z.string().min(2).max(50),
 		password1: z.string().min(8).max(100),
 		password2: z.string().min(8).max(100),
-		email: z.string().email().optional()
+		email: z.string().email()
 	})
 	.refine((data) => data.password1 === data.password2, {
 		message: "Passwords don't match",

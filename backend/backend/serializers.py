@@ -70,7 +70,6 @@ class UserImageSerializer(serializers.ModelSerializer):
 
 class UserImageListSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
-    image_name = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
     file_size = serializers.IntegerField()  # Add this
     file_type = serializers.CharField()     # Add this
@@ -84,10 +83,54 @@ class UserImageListSerializer(serializers.ModelSerializer):
             return self.context['request'].build_absolute_uri(obj.image.url)
         return None
 
-    def get_image_name(self, obj):
-        if obj.image:
-            return obj.image.name.split('/')[-1]  # Gets just the filename
-        return None
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%B %d, %Y %I:%M %p")
+
+
+class SpecificImageSerializer(serializers.ModelSerializer):
+    created_at = serializers.SerializerMethodField()
+    file_size = serializers.IntegerField()  # Add this
+    file_type = serializers.CharField()     # Add this
+    security = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+
+    # dimensions = serializers.SerializerMethodField()
+
+
+    class Meta:
+        model = UserImage
+        fields = ['id', 'image_url', 'image_name', 'created_at', 'file_size', 'file_type', 'security']  # Include new fields
 
     def get_created_at(self, obj):
         return obj.created_at.strftime("%B %d, %Y %I:%M %p")
+
+    def get_security(self, obj):
+        return {
+            'access_control': obj.access_control_enabled,
+            'watermark': obj.watermark_enabled,
+            'metadata': obj.metadata_enabled,
+            'ai_protection': obj.ai_protection_enabled
+        }
+        # def get_dimensions(self, obj):
+        #     try:
+        #         metadata = obj.metadata
+        #         return {
+        #             'width': metadata.width,
+        #             'height': metadata.height
+        #         }
+        #     except ImageMetadata.DoesNotExist:
+        #         return None
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
+    def _format_file_size(self, size_in_bytes):
+        # Convert bytes to human readable format
+        for unit in ['B', 'KB', 'MB', 'GB']:
+            if size_in_bytes < 1024:
+                return f"{size_in_bytes:.2f} {unit}"
+            size_in_bytes /= 1024
+        return f"{size_in_bytes:.2f} TB"

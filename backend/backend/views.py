@@ -5,10 +5,11 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, UserImageSerializer, UserImageListSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from .models import UserImage
@@ -206,3 +207,23 @@ class ImageListView(generics.ListAPIView):
             queryset = queryset.order_by(sort_by)
 
         return queryset
+
+
+class UserImageView(generics.RetrieveAPIView):
+    """
+    View for retrieving a single user image.
+    Handles permissions for public/private images.
+    """
+    serializer_class = SpecificImageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserImage.objects.filter(user=self.request.user)
+
+    def get_object(self):
+        image = super().get_object()
+        if image.user != self.request.user:
+            raise PermissionDenied(
+                "You do not have permission to view this image."
+            )
+        return image
