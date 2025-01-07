@@ -33,6 +33,8 @@
 		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
+	const dropItems = [{ label: 'Profile', href: '/profile', icon: Shield }];
+
 	let isMobileMenuOpen = $state(false);
 
 	const toggleMobileMenu = () => {
@@ -78,7 +80,7 @@
 					<DropdownMenu>
 						<div class="flex items-center gap-2">
 							<DropdownMenuTrigger class="focus:outline-none">
-								<Avatar>
+								<Avatar class="">
 									{#if avatarUrl}
 										<AvatarImage
 											src={avatarUrl}
@@ -95,10 +97,13 @@
 								</Avatar>
 							</DropdownMenuTrigger>
 						</div>
-						<DropdownMenuContent align="end" class="w-48">
-							<a href="/profile">
-								<DropdownMenuItem class="cursor-pointer">Profile</DropdownMenuItem>
-							</a>
+						<DropdownMenuContent align="start" class=" place-items-center">
+							{#each dropItems as item}
+								<a href={item.href}>
+									<DropdownMenuItem class="w-full cursor-pointer">{item.label}</DropdownMenuItem>
+								</a>
+							{/each}
+
 							<DropdownMenuItem>
 								<Button variant="destructive" class="w-full" on:click={handleLogout} size="sm">
 									Logout
@@ -147,51 +152,55 @@
 		>
 			<div class="container mx-auto px-4 py-4">
 				<div class="flex flex-col gap-4">
+					{#if isAuthenticated}
+						<div class="flex items-center gap-3 px-3 py-2">
+							<Avatar>
+								{#if avatarUrl}
+									<AvatarImage src={avatarUrl} alt="User avatar" />
+								{/if}
+								<AvatarFallback>
+									{(user?.username && user.username[0].toUpperCase()) || '?'}
+								</AvatarFallback>
+							</Avatar>
+							<span class="text-xl font-semibold">
+								{user.username
+									? String(user.username).charAt(0).toUpperCase() + String(user.username).slice(1)
+									: 'User'}
+							</span>
+						</div>
+						<!-- Mobile items from drop Down-->
+						{#each dropItems as item}
+							<a
+								href={item.href}
+								class="group relative flex items-center justify-between rounded-md px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
+								on:click={() => (isMobileMenuOpen = false)}
+							>
+								<div class="flex items-center gap-3">
+									<item.icon class="h-5 w-5 " />
+									<span>{item.label}</span>
+								</div>
+								<ChevronRight class="h-5 w-5" />
+							</a>
+						{/each}
+					{/if}
 					<!-- Mobile nav items -->
 					{#each navItems as item}
 						<a
 							href={item.href}
-							class="group relative flex items-center justify-between rounded-md px-3 py-2 text-muted-foreground transition-all hover:bg-primary/5 active:scale-[0.98]"
+							class="group relative flex items-center justify-between rounded-md px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
 							on:click={() => (isMobileMenuOpen = false)}
 						>
 							<div class="flex items-center gap-3">
-								<item.icon class="h-5 w-5 text-muted-foreground" />
+								<item.icon class="h-5 w-5 " />
 								<span>{item.label}</span>
 							</div>
-							<ChevronRight class="h-5 w-5 text-muted-foreground" />
+							<ChevronRight class="h-5 w-5" />
 						</a>
 					{/each}
 
 					<!-- Mobile auth section -->
 					<div class="flex flex-col gap-3 pt-4">
-						{#if isAuthenticated}
-							<div class="flex items-center gap-3 px-3 py-2">
-								<Avatar>
-									{#if avatarUrl}
-										<AvatarImage src={avatarUrl} alt="User avatar" />
-									{/if}
-									<AvatarFallback>
-										{(user?.username && user.username[0].toUpperCase()) || '?'}
-									</AvatarFallback>
-								</Avatar>
-								<span class="text-sm font-medium">{user?.username || 'User'}</span>
-							</div>
-							<a
-								href="/profile"
-								class="w-full rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-primary/5"
-								on:click={() => (isMobileMenuOpen = false)}
-							>
-								Profile
-							</a>
-							<Button
-								variant="destructive"
-								class="w-full justify-center"
-								on:click={handleLogout}
-								size="sm"
-							>
-								Logout
-							</Button>
-						{:else}
+						{#if !isAuthenticated}
 							<Button
 								variant="outline"
 								class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
@@ -204,6 +213,15 @@
 								href="/register"
 							>
 								Register
+							</Button>
+						{:else}
+							<Button
+								variant="destructive"
+								class="w-full justify-center"
+								on:click={handleLogout}
+								size="sm"
+							>
+								Logout
 							</Button>
 						{/if}
 					</div>
