@@ -12,7 +12,6 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
 
-	// Convert reactive declarations to runes
 	const user = $derived($authStore?.user || null);
 	const isAuthenticated = $derived(Boolean($authStore?.isAuthenticated));
 
@@ -25,6 +24,7 @@
 			}
 		});
 		invalidate('app:auth');
+		isMobileMenuOpen = false;
 	}
 
 	const navItems = [
@@ -40,7 +40,6 @@
 	};
 </script>
 
-<!-- Navigation wrapper -->
 <nav
 	class="supports-[backdrop-filter]:bg-background/0.1 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur"
 >
@@ -73,39 +72,41 @@
 				{/each}
 			</div>
 
-			{#if isAuthenticated}
-				<DropdownMenu>
-					<DropdownMenuTrigger>
-						<Avatar>
-							{#if avatarUrl}
-								<AvatarImage
-									src={avatarUrl}
-									alt="User avatar"
-									on:error={() => {
-										console.error('Failed to load avatar');
-										avatarUrl = null;
-									}}
-								/>
-							{/if}
-							<AvatarFallback>
-								{(user?.username && user.username[0].toUpperCase()) || '?'}
-							</AvatarFallback>
-						</Avatar>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent>
-						<a href="/profile"
-							><DropdownMenuItem class="cursor-pointer">Profile</DropdownMenuItem></a
-						>
-						<DropdownMenuItem>
-							<Button variant="destructive" class="mx-auto" on:click={handleLogout} size="sm">
-								Logout
-							</Button>
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			{:else}
-				<!-- Auth buttons -->
-				<div class="hidden items-center gap-2 md:flex">
+			<!-- Auth section (desktop) -->
+			<div class="hidden items-center gap-2 md:flex">
+				{#if isAuthenticated}
+					<DropdownMenu>
+						<div class="flex items-center gap-2">
+							<DropdownMenuTrigger class="focus:outline-none">
+								<Avatar>
+									{#if avatarUrl}
+										<AvatarImage
+											src={avatarUrl}
+											alt="User avatar"
+											on:error={() => {
+												console.error('Failed to load avatar');
+												avatarUrl = null;
+											}}
+										/>
+									{/if}
+									<AvatarFallback>
+										{(user?.username && user.username[0].toUpperCase()) || '?'}
+									</AvatarFallback>
+								</Avatar>
+							</DropdownMenuTrigger>
+						</div>
+						<DropdownMenuContent align="end" class="w-48">
+							<a href="/profile">
+								<DropdownMenuItem class="cursor-pointer">Profile</DropdownMenuItem>
+							</a>
+							<DropdownMenuItem>
+								<Button variant="destructive" class="w-full" on:click={handleLogout} size="sm">
+									Logout
+								</Button>
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				{:else}
 					<Button
 						variant="ghost"
 						class="relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
@@ -115,8 +116,8 @@
 						class="px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
 						href="/register">Register</Button
 					>
-				</div>
-			{/if}
+				{/if}
+			</div>
 
 			<!-- Mobile menu button -->
 			<Button
@@ -151,7 +152,7 @@
 						<a
 							href={item.href}
 							class="group relative flex items-center justify-between rounded-md px-3 py-2 text-muted-foreground transition-all hover:bg-primary/5 active:scale-[0.98]"
-							onclick={() => (isMobileMenuOpen = false)}
+							on:click={() => (isMobileMenuOpen = false)}
 						>
 							<div class="flex items-center gap-3">
 								<item.icon class="h-5 w-5 text-muted-foreground" />
@@ -161,21 +162,50 @@
 						</a>
 					{/each}
 
-					<!-- Mobile auth buttons -->
+					<!-- Mobile auth section -->
 					<div class="flex flex-col gap-3 pt-4">
-						<Button
-							variant="outline"
-							class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
-							href="/login"
-						>
-							Login
-						</Button>
-						<Button
-							class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/90 active:scale-[0.98]"
-							href="/register"
-						>
-							Register
-						</Button>
+						{#if isAuthenticated}
+							<div class="flex items-center gap-3 px-3 py-2">
+								<Avatar>
+									{#if avatarUrl}
+										<AvatarImage src={avatarUrl} alt="User avatar" />
+									{/if}
+									<AvatarFallback>
+										{(user?.username && user.username[0].toUpperCase()) || '?'}
+									</AvatarFallback>
+								</Avatar>
+								<span class="text-sm font-medium">{user?.username || 'User'}</span>
+							</div>
+							<a
+								href="/profile"
+								class="w-full rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-primary/5"
+								on:click={() => (isMobileMenuOpen = false)}
+							>
+								Profile
+							</a>
+							<Button
+								variant="destructive"
+								class="w-full justify-center"
+								on:click={handleLogout}
+								size="sm"
+							>
+								Logout
+							</Button>
+						{:else}
+							<Button
+								variant="outline"
+								class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
+								href="/login"
+							>
+								Login
+							</Button>
+							<Button
+								class="w-full justify-center gap-2 px-3 py-2 transition-all hover:bg-primary/90 active:scale-[0.98]"
+								href="/register"
+							>
+								Register
+							</Button>
+						{/if}
 					</div>
 				</div>
 			</div>

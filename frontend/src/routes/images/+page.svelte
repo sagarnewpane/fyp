@@ -7,6 +7,12 @@
 	import Pagination from '$lib/components/Pagination.svelte';
 
 	export let data;
+	let showUpload = false;
+
+	function handleUploadSuccess() {
+		showUpload = false;
+		location.reload();
+	}
 
 	function handleSearch(event) {
 		const params = new URLSearchParams($page.url.searchParams);
@@ -73,27 +79,69 @@
 	$: currentPage = parseInt($page.url.searchParams.get('page') || '1');
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="mb-6 text-2xl font-bold">Image Gallery</h1>
-
-	<div class="mb-6 space-y-4">
-		<ImageUpload on:uploadSuccess={() => location.reload()} />
-		<ImageFilters
-			on:search={handleSearch}
-			on:applyFilters={handleFilters}
-			searchQuery={$page.url.searchParams.get('search') || ''}
-		/>
-	</div>
-
-	{#if data?.images?.results?.length > 0}
-		<ImageGrid images={data.images.results} />
-
-		{#if totalPages > 1}
-			<div class="mt-6">
-				<Pagination {totalPages} {currentPage} onPageChange={handlePageChange} />
+<main class="min-h-screen w-full bg-gray-50/50">
+	<div class="w-full space-y-6 px-4 py-6 md:px-6 lg:px-8">
+		<!-- Header Section -->
+		<div class="flex items-center justify-between">
+			<div>
+				<h1 class="text-2xl font-bold tracking-tight text-gray-900">Image Gallery</h1>
+				<p class="mt-1 text-sm text-gray-500">Upload, organize, and browse your images</p>
 			</div>
-		{/if}
-	{:else}
-		<div class="py-10 text-center text-gray-500">No images found</div>
-	{/if}
-</div>
+		</div>
+
+		<!-- Upload Section -->
+		<section class="overflow-hidden rounded-lg border bg-white shadow-sm">
+			<div class="border-b bg-gray-50/50 px-4 py-3 sm:px-6">
+				<h2 class="font-semibold text-gray-900">Upload Images</h2>
+			</div>
+			<div class="p-4 sm:p-6">
+				<ImageUpload on:uploadSuccess={() => location.reload()} />
+			</div>
+		</section>
+
+		<!-- Browse Images Section -->
+		<section class="space-y-4">
+			<div class="flex items-center justify-between px-1">
+				<div>
+					<h2 class="text-xl font-semibold text-gray-900">Browse Images</h2>
+					<p class="mt-1 text-sm text-gray-500">Search and filter your image collection</p>
+				</div>
+				{#if data?.images?.results?.length > 0}
+					<p class="text-sm text-gray-500">
+						Showing {data.images.results.length} of {data.images.total} images
+					</p>
+				{/if}
+			</div>
+
+			<!-- Filters and Grid Container -->
+			<div class="rounded-lg border bg-white shadow-sm">
+				<div class="border-b p-4 sm:p-6">
+					<ImageFilters
+						on:search={handleSearch}
+						on:applyFilters={handleFilters}
+						searchQuery={$page.url.searchParams.get('search') || ''}
+					/>
+				</div>
+
+				<div class="p-4 sm:p-6">
+					{#if data?.images?.results?.length > 0}
+						<ImageGrid images={data.images.results} />
+
+						{#if totalPages > 1}
+							<div class="mt-6 border-t pt-6">
+								<Pagination {totalPages} {currentPage} onPageChange={handlePageChange} />
+							</div>
+						{/if}
+					{:else}
+						<div
+							class="flex min-h-[250px] flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50/50"
+						>
+							<p class="text-gray-600">No images found</p>
+							<p class="mt-1 text-sm text-gray-500">Try adjusting your search or filters</p>
+						</div>
+					{/if}
+				</div>
+			</div>
+		</section>
+	</div>
+</main>

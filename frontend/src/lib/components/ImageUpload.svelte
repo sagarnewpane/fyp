@@ -87,7 +87,6 @@
 
 <div class="mx-auto my-8 max-w-xl">
 	<form on:submit|preventDefault={handleSubmit} enctype="multipart/form-data" class="space-y-4">
-		<!-- Drag & Drop Zone -->
 		<div
 			class="relative"
 			on:dragenter|preventDefault={handleDragEnter}
@@ -107,9 +106,9 @@
 				on:change={handleFileInput}
 			/>
 			<div
-				class={`min-h-[200px] rounded-lg border-2 border-dashed p-4 text-center transition-all duration-200 ${
-					isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
-				} ${preview ? 'bg-gray-50' : 'bg-white'} cursor-pointer hover:border-blue-500 hover:bg-blue-50`}
+				class={`min-h-[200px] rounded-lg border-2 border-dashed p-8 text-center transition-all duration-200 ${
+					isDragging ? 'border-primary bg-muted/50' : 'border-muted-foreground/25'
+				} ${preview ? 'bg-muted' : 'bg-background'} cursor-pointer hover:border-primary hover:bg-muted/50`}
 				on:click={() => fileInput.click()}
 				on:keydown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
@@ -122,19 +121,13 @@
 				aria-label="Click or press Enter to select an image"
 			>
 				{#if preview}
-					<div class="relative mx-auto aspect-video w-full max-w-md">
-						<img
-							src={preview}
-							alt="Preview"
-							class="h-full w-full rounded-lg object-contain"
-							transition:fade
-						/>
-						<!-- Add this button -->
+					<div class="relative mx-auto aspect-video w-full max-w-md" transition:fade>
+						<img src={preview} alt="Preview" class="h-full w-full rounded-lg object-contain" />
 						<button
 							type="button"
-							class="absolute -right-2 -top-2 rounded-full bg-red-500 p-1 text-white
-                   hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500
-                   focus:ring-offset-2"
+							class="absolute -right-2 -top-2 rounded-full bg-destructive p-1 text-destructive-foreground
+                                   hover:bg-destructive/90 focus:outline-none focus:ring-2 focus:ring-destructive
+                                   focus:ring-offset-2"
 							on:click|preventDefault={() => {
 								preview = null;
 								fileInput.value = '';
@@ -158,7 +151,7 @@
 				{:else}
 					<div class="flex h-full flex-col items-center justify-center space-y-2">
 						<svg
-							class="h-12 w-12 text-gray-400"
+							class="h-12 w-12 text-muted-foreground"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -169,20 +162,21 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-							></path>
+							/>
 						</svg>
-						<p class="text-gray-600">Drag and drop your image here or click to select</p>
-						<p class="text-sm text-gray-500">Supported formats: JPG, PNG, GIF</p>
+						<p class="text-sm font-medium text-foreground">
+							Drag and drop your image here or click to select
+						</p>
+						<p class="text-xs text-muted-foreground">Supported formats: JPG, PNG, GIF</p>
 					</div>
 				{/if}
 			</div>
 		</div>
 
-		<!-- Progress Bar -->
 		{#if isUploading}
-			<div class="w-full rounded-full bg-gray-200" transition:fade>
+			<div class="w-full rounded-full bg-muted" transition:fade>
 				<div
-					class="rounded-full bg-blue-600 p-1 text-center text-xs font-medium leading-none text-white"
+					class="rounded-full bg-primary p-1 text-center text-xs font-medium leading-none text-primary-foreground"
 					style="width: {uploadProgress}%"
 					transition:fade
 				>
@@ -191,11 +185,10 @@
 			</div>
 		{/if}
 
-		<!-- Upload Button -->
 		<button
 			type="submit"
-			class="w-full rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors
-                   hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+			class="w-full rounded-lg bg-primary px-4 py-2 text-primary-foreground transition-colors
+                   hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary
                    focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 			disabled={!preview || isUploading}
 		>
@@ -206,13 +199,12 @@
 			{/if}
 		</button>
 
-		<!-- Status Message -->
 		{#if uploadStatus}
 			<div
 				class={`rounded-lg p-3 text-center ${
 					uploadStatus.includes('successfully')
-						? 'bg-green-100 text-green-700'
-						: 'bg-red-100 text-red-700'
+						? 'bg-success/20 text-success'
+						: 'bg-destructive/20 text-destructive'
 				}`}
 				transition:fade
 			>
