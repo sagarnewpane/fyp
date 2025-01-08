@@ -173,7 +173,7 @@
 							<a
 								href={item.href}
 								class="group relative flex items-center justify-between rounded-md px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
-								on:click={() => (isMobileMenuOpen = false)}
+								onclick={() => (isMobileMenuOpen = false)}
 							>
 								<div class="flex items-center gap-3">
 									<item.icon class="h-5 w-5 " />
@@ -188,7 +188,7 @@
 						<a
 							href={item.href}
 							class="group relative flex items-center justify-between rounded-md px-3 py-2 transition-all hover:bg-primary/5 active:scale-[0.98]"
-							on:click={() => (isMobileMenuOpen = false)}
+							onclick={() => (isMobileMenuOpen = false)}
 						>
 							<div class="flex items-center gap-3">
 								<item.icon class="h-5 w-5 " />
