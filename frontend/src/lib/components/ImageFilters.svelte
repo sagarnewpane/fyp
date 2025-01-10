@@ -54,7 +54,7 @@
 		if (searchTimeout) clearTimeout(searchTimeout);
 		searchTimeout = setTimeout(() => {
 			dispatch('search', { search });
-		}, 500);
+		}, 1000);
 	}
 
 	// Handle select changes

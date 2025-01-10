@@ -3,7 +3,8 @@ import { error } from '@sveltejs/kit';
 export async function load({ request, fetch, cookies, url }) {
 	const accessToken = cookies.get('access_token');
 	if (!accessToken) {
-		throw error(401, 'Unauthorized');
+		// throw error(401, 'Unauthorized');
+		return;
 	}
 
 	try {

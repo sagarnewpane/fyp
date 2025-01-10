@@ -227,3 +227,53 @@ class UserImageView(generics.RetrieveAPIView):
                 "You do not have permission to view this image."
             )
         return image
+
+from rest_framework.parsers import MultiPartParser, FormParser
+from .models import UserProfile
+from .serializers import UserProfileSerializer, UserProfileUpdateSerializer
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        serializer = UserProfileSerializer(profile)
+        data = serializer.data
+        # Add user data
+        data.update({
+            'username': request.user.username,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
+            'avatar_url': request.build_absolute_uri(profile.avatar.url) if profile.avatar else None
+        })
+        return Response(data)
+
+    def patch(self, request):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        serializer = UserProfileUpdateSerializer(profile, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AvatarUploadView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+        if 'avatar' not in request.FILES:
+            return Response({'error': 'No avatar file provided'},
+                          status=status.HTTP_400_BAD_REQUEST)
+
+        profile.avatar = request.FILES['avatar']
+        profile.save()
+
+        return Response({
+            'message': 'Avatar uploaded successfully',
+            'avatar_url': request.build_absolute_uri(profile.avatar.url)
+        })

@@ -13,18 +13,7 @@
 	export let data;
 </script>
 
-{#if !isAuthenticated}
-	<main class="min-h-screen w-full bg-background text-foreground">
-		<!-- Main sections with reduced gap -->
-		<div class="flex flex-col gap-16">
-			<Hero />
-			<Features />
-			<Gallery />
-			<FAQ />
-			<CTA />
-		</div>
-	</main>
-{:else}
+{#if isAuthenticated}
 	<div class="min-h-screen w-full bg-background">
 		<!-- Main Content -->
 		<main class="mx-auto space-y-8 p-6">
@@ -44,4 +33,15 @@
 			</div>
 		</main>
 	</div>
+{:else}
+	<main class="min-h-screen w-full bg-background text-foreground">
+		<!-- Main sections with reduced gap -->
+		<div class="flex flex-col gap-16">
+			<Hero />
+			<Features />
+			<Gallery />
+			<FAQ />
+			<CTA />
+		</div>
+	</main>
 {/if}

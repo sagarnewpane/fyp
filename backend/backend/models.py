@@ -28,3 +28,13 @@ class UserImage(models.Model):
             # Set the file type
             self.file_type = Path(self.image.name).suffix[1:].lower()  # Remove the dot from extension
         super().save(*args, **kwargs)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    website = models.URLField(max_length=200, blank=True)
+    twitter = models.CharField(max_length=100, blank=True)
+    instagram = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"

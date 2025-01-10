@@ -11,11 +11,29 @@
 		DropdownMenuItem
 	} from '$lib/components/ui/dropdown-menu';
 	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
+	import { fetchUserAvatar } from '$lib/utils/avatar';
 
 	const user = $derived($authStore?.user || null);
 	const isAuthenticated = $derived(Boolean($authStore?.isAuthenticated));
 
-	let avatarUrl = null;
+	// Declare avatarUrl with $state
+	let avatarUrl = $state(null);
+
+	async function loadAvatar() {
+		if (isAuthenticated) {
+			avatarUrl = await fetchUserAvatar();
+			console.log(avatarUrl);
+		} else {
+			avatarUrl = null;
+		}
+	}
+
+	$effect(() => {
+		if (isAuthenticated !== undefined) {
+			loadAvatar();
+		}
+	});
+
 	async function handleLogout() {
 		const response = await fetch('/logout', {
 			method: 'POST',
@@ -33,7 +51,7 @@
 		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
-	const dropItems = [{ label: 'Profile', href: '/profile', icon: Shield }];
+	const dropItems = [{ label: 'Profile', href: '/user?tab=profile', icon: Shield }];
 
 	let isMobileMenuOpen = $state(false);
 
