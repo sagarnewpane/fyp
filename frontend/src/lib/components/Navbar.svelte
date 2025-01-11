@@ -15,16 +15,25 @@
 
 	const user = $derived($authStore?.user || null);
 	const isAuthenticated = $derived(Boolean($authStore?.isAuthenticated));
+	const avatarUrl = $derived($authStore?.avatar || null);
 
-	// Declare avatarUrl with $state
-	let avatarUrl = $state(null);
+	function handleAvatarError() {
+		console.error('Failed to load avatar');
+		authStore.update((state) => ({
+			...state,
+			avatar: null
+		}));
+	}
 
 	async function loadAvatar() {
 		if (isAuthenticated) {
-			avatarUrl = await fetchUserAvatar();
-			console.log(avatarUrl);
-		} else {
-			avatarUrl = null;
+			const fetchedAvatar = await fetchUserAvatar();
+			if (fetchedAvatar) {
+				authStore.update((state) => ({
+					...state,
+					avatar: fetchedAvatar
+				}));
+			}
 		}
 	}
 
@@ -100,14 +109,7 @@
 							<DropdownMenuTrigger class="focus:outline-none">
 								<Avatar class="">
 									{#if avatarUrl}
-										<AvatarImage
-											src={avatarUrl}
-											alt="User avatar"
-											on:error={() => {
-												console.error('Failed to load avatar');
-												avatarUrl = null;
-											}}
-										/>
+										<AvatarImage src={avatarUrl} alt="User avatar" on:error={handleAvatarError} />
 									{/if}
 									<AvatarFallback>
 										{(user?.username && user.username[0].toUpperCase()) || '?'}

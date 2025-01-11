@@ -234,29 +234,41 @@ from .serializers import UserProfileSerializer, UserProfileUpdateSerializer
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
-    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
-        profile, created = UserProfile.objects.get_or_create(user=request.user)
-        serializer = UserProfileSerializer(profile)
-        data = serializer.data
-        # Add user data
-        data.update({
-            'username': request.user.username,
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'email': request.user.email,
-            'avatar_url': request.build_absolute_uri(profile.avatar.url) if profile.avatar else None
-        })
+        user = request.user
+        profile, created = UserProfile.objects.get_or_create(user=user)
+
+        data = {
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'avatar_url': request.build_absolute_uri(profile.avatar.url) if profile.avatar else None,
+            'social_links': profile.social_links
+        }
         return Response(data)
 
     def patch(self, request):
-        profile, created = UserProfile.objects.get_or_create(user=request.user)
-        serializer = UserProfileUpdateSerializer(profile, data=request.data, partial=True)
+        serializer = UserProfileUpdateSerializer(
+            request.user,
+            data=request.data,
+            context={'request': request},
+            partial=True
+        )
 
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            try:
+                serializer.save()
+                return Response({
+                    'message': 'Profile updated successfully',
+                    'data': serializer.data
+                })
+            except Exception as e:
+                return Response({
+                    'error': str(e)
+                }, status=status.HTTP_400_BAD_REQUEST)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AvatarUploadView(APIView):

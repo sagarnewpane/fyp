@@ -141,27 +141,43 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ['avatar', 'website', 'twitter', 'instagram']
 
-class UserProfileUpdateSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(source='user.first_name')
-    last_name = serializers.CharField(source='user.last_name')
-    email = serializers.EmailField(source='user.email')
+class UserProfileUpdateSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=150)
+    first_name = serializers.CharField(max_length=150)
+    last_name = serializers.CharField(max_length=150)
+    email = serializers.EmailField()
+    social_links = serializers.JSONField(required=False, default=dict)
 
-    class Meta:
-        model = UserProfile
-        fields = ['avatar', 'website', 'twitter', 'instagram', 'first_name', 'last_name', 'email']
+    def validate_username(self, value):
+        """
+        Check that the username is unique (except for current user)
+        """
+        user = self.context['request'].user
+        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return value
+
+    def validate_email(self, value):
+        """
+        Check that the email is unique (except for current user)
+        """
+        user = self.context['request'].user
+        if User.objects.exclude(pk=user.pk).filter(email=value).exists():
+            raise serializers.ValidationError("This email is already registered.")
+        return value
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user', {})
-        user = instance.user
-
         # Update User model fields
-        for attr, value in user_data.items():
-            setattr(user, attr, value)
-        user.save()
-
-        # Update UserProfile model fields
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+        instance.username = validated_data.get('username', instance.username)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
         instance.save()
+
+        # Update or create UserProfile
+        profile, created = UserProfile.objects.get_or_create(user=instance)
+        if 'social_links' in validated_data:
+            profile.social_links = validated_data['social_links']
+            profile.save()
 
         return instance
