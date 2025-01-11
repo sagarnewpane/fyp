@@ -107,7 +107,7 @@
 					<DropdownMenu>
 						<div class="flex items-center gap-2">
 							<DropdownMenuTrigger class="focus:outline-none">
-								<Avatar class="">
+								<Avatar class="border-2 ">
 									{#if avatarUrl}
 										<AvatarImage src={avatarUrl} alt="User avatar" on:error={handleAvatarError} />
 									{/if}

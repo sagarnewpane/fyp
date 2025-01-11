@@ -19,9 +19,12 @@
 		Download,
 		Key,
 		UserCheck,
-		MessageSquare
+		MessageSquare,
+		AlertCircle
 	} from 'lucide-svelte';
 	import { Separator } from '$lib/components/ui/separator';
+	import { passwordChangeSchema } from '$lib/schemas';
+	import { toast } from 'svelte-sonner';
 
 	// Notification preferences
 	let notifications = $state({
@@ -41,15 +44,69 @@
 		downloadExpiry: 24 // hours
 	});
 
-	// Password fields
+	// Password state
 	let passwords = $state({
-		current: '',
-		new: '',
-		confirm: ''
+		current_password: '',
+		new_password: '',
+		confirm_password: ''
 	});
+	let passwordErrors = $state({});
+	let isChangingPassword = $state(false);
 
-	function updatePassword() {
-		// Implement password update logic
+	async function updatePassword(event: Event) {
+		event.preventDefault();
+		passwordErrors = {};
+
+		// Validate input
+		const validation = passwordChangeSchema.safeParse(passwords);
+		if (!validation.success) {
+			validation.error.errors.forEach((error) => {
+				passwordErrors[error.path[0]] = error.message;
+			});
+			toast.error('Please fix the validation errors');
+			return;
+		}
+
+		try {
+			isChangingPassword = true;
+			const loadingToastId = toast.loading('Updating password...');
+
+			const response = await fetch('/api/password/change/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(passwords)
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				toast.dismiss(loadingToastId);
+				if (data && typeof data === 'object') {
+					Object.keys(data).forEach((key) => {
+						passwordErrors[key] = data[key];
+					});
+					toast.error('Please fix the validation errors');
+				} else {
+					toast.error('Failed to update password');
+				}
+				return;
+			}
+
+			// Clear form
+			passwords.current_password = '';
+			passwords.new_password = '';
+			passwords.confirm_password = '';
+
+			toast.dismiss(loadingToastId);
+			toast.success('Password updated successfully');
+		} catch (error) {
+			console.error('Password update error:', error);
+			toast.error('Failed to update password');
+		} finally {
+			isChangingPassword = false;
+		}
 	}
 
 	function saveNotificationSettings() {
@@ -217,23 +274,83 @@
 				<CardDescription>Update your account password</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<form class="space-y-4" on:submit|preventDefault={updatePassword}>
+				<form class="space-y-4" on:submit={updatePassword}>
 					<div class="space-y-2">
 						<Label for="current-password">Current Password</Label>
-						<Input id="current-password" type="password" bind:value={passwords.current} />
+						<div class="space-y-2">
+							<Input
+								id="current-password"
+								type="password"
+								bind:value={passwords.current_password}
+								class={passwordErrors.current_password ? 'border-destructive' : ''}
+							/>
+							{#if passwordErrors.current_password}
+								<div class="flex items-center gap-2 text-sm text-destructive">
+									<AlertCircle class="h-4 w-4" />
+									<span>{passwordErrors.current_password}</span>
+								</div>
+							{/if}
+						</div>
 					</div>
 
 					<div class="space-y-2">
 						<Label for="new-password">New Password</Label>
-						<Input id="new-password" type="password" bind:value={passwords.new} />
+						<div class="space-y-2">
+							<Input
+								id="new-password"
+								type="password"
+								bind:value={passwords.new_password}
+								class={passwordErrors.new_password ? 'border-destructive' : ''}
+							/>
+							{#if passwordErrors.new_password}
+								<div class="flex items-center gap-2 text-sm text-destructive">
+									<AlertCircle class="h-4 w-4" />
+									<span>{passwordErrors.new_password}</span>
+								</div>
+							{/if}
+						</div>
 					</div>
 
 					<div class="space-y-2">
 						<Label for="confirm-password">Confirm New Password</Label>
-						<Input id="confirm-password" type="password" bind:value={passwords.confirm} />
+						<div class="space-y-2">
+							<Input
+								id="confirm-password"
+								type="password"
+								bind:value={passwords.confirm_password}
+								class={passwordErrors.confirm_password ? 'border-destructive' : ''}
+							/>
+							{#if passwordErrors.confirm_password}
+								<div class="flex items-center gap-2 text-sm text-destructive">
+									<AlertCircle class="h-4 w-4" />
+									<span>{passwordErrors.confirm_password}</span>
+								</div>
+							{/if}
+						</div>
 					</div>
 
-					<Button type="submit" class="w-full">Update Password</Button>
+					<div class="flex justify-end gap-4">
+						<Button
+							variant="outline"
+							type="button"
+							disabled={isChangingPassword}
+							on:click={() => {
+								passwords.current_password = '';
+								passwords.new_password = '';
+								passwords.confirm_password = '';
+								passwordErrors = {};
+							}}
+						>
+							Cancel
+						</Button>
+						<Button type="submit" disabled={isChangingPassword}>
+							{#if isChangingPassword}
+								Updating...
+							{:else}
+								Update Password
+							{/if}
+						</Button>
+					</div>
 				</form>
 			</CardContent>
 		</Card>
