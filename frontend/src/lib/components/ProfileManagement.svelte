@@ -13,7 +13,8 @@
 	import { Camera, Twitter, Instagram, Globe } from 'lucide-svelte';
 	import { Separator } from '$lib/components/ui/separator';
 	import { Skeleton } from '$lib/components/ui/skeleton';
-
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { AlertCircle } from 'lucide-svelte';
 	import { avatarSchema, profileSchema } from '$lib/schemas';
 	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
@@ -34,6 +35,8 @@
 	let isUploading = $state(false);
 	let selectedFile = $state(null);
 	let fileInput;
+
+	let fieldErrors = $state({});
 
 	// Track original values for change detection
 	let originalValues = $state(null);
@@ -105,6 +108,7 @@
 
 	async function handleSubmit(event) {
 		event.preventDefault();
+		fieldErrors = {}; // Reset errors
 
 		if (!selectedFile && !hasOtherChanges()) {
 			toast.error('No changes to save');
@@ -120,7 +124,8 @@
 				const avatarValidation = avatarSchema.safeParse({ file: selectedFile });
 				if (!avatarValidation.success) {
 					toast.dismiss(loadingToastId);
-					throw new Error(avatarValidation.error.errors[0].message);
+					toast.error(avatarValidation.error.errors[0].message);
+					return;
 				}
 
 				const formData = new FormData();
@@ -133,7 +138,8 @@
 
 				if (!avatarResponse.ok) {
 					toast.dismiss(loadingToastId);
-					throw new Error('Failed to upload avatar');
+					toast.error('Failed to upload avatar');
+					return;
 				}
 
 				const avatarData = await avatarResponse.json();
@@ -158,7 +164,11 @@
 				const profileValidation = profileSchema.safeParse(profileData);
 				if (!profileValidation.success) {
 					toast.dismiss(loadingToastId);
-					throw new Error(profileValidation.error.errors[0].message);
+					profileValidation.error.errors.forEach((error) => {
+						fieldErrors[error.path[0]] = error.message;
+					});
+					toast.error('Please fix the validation errors');
+					return;
 				}
 
 				const profileResponse = await fetch('/api/profile/', {
@@ -169,9 +179,21 @@
 					body: JSON.stringify(profileData)
 				});
 
+				const responseData = await profileResponse.json();
+
 				if (!profileResponse.ok) {
 					toast.dismiss(loadingToastId);
-					throw new Error('Failed to update profile');
+					// Handle backend validation errors
+					console.log(responseData);
+					if (responseData && typeof responseData === 'object') {
+						Object.keys(responseData).forEach((key) => {
+							fieldErrors[key] = responseData[key][0];
+						});
+						toast.error('Please fix the validation errors');
+					} else {
+						toast.error('Failed to update profile');
+					}
+					return;
 				}
 
 				// Update original values after successful save
@@ -264,7 +286,20 @@
 							{#if isLoading}
 								<Skeleton class="h-10 w-full" />
 							{:else}
-								<Input id="username" bind:value={username} placeholder="Enter your username" />
+								<div class="space-y-2">
+									<Input
+										id="username"
+										bind:value={username}
+										placeholder="Enter your username"
+										class={fieldErrors.username ? 'border-destructive' : ''}
+									/>
+									{#if fieldErrors.username}
+										<div class="flex items-center gap-2 text-sm text-destructive">
+											<AlertCircle class="h-4 w-4" />
+											<span>{fieldErrors.username}</span>
+										</div>
+									{/if}
+								</div>
 							{/if}
 							<p class="text-sm text-muted-foreground">
 								This is your unique identifier for the platform
@@ -282,11 +317,37 @@
 								<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 									<div class="grid gap-2">
 										<Label for="first-name" class="text-sm text-muted-foreground">First Name</Label>
-										<Input id="first-name" bind:value={firstName} placeholder="Enter first name" />
+										<div class="space-y-2">
+											<Input
+												id="first-name"
+												bind:value={firstName}
+												placeholder="Enter first name"
+												class={fieldErrors.first_name ? 'border-destructive' : ''}
+											/>
+											{#if fieldErrors.first_name}
+												<div class="flex items-center gap-2 text-sm text-destructive">
+													<AlertCircle class="h-4 w-4" />
+													<span>{fieldErrors.first_name}</span>
+												</div>
+											{/if}
+										</div>
 									</div>
 									<div class="grid gap-2">
 										<Label for="last-name" class="text-sm text-muted-foreground">Last Name</Label>
-										<Input id="last-name" bind:value={lastName} placeholder="Enter last name" />
+										<div class="space-y-2">
+											<Input
+												id="last-name"
+												bind:value={lastName}
+												placeholder="Enter last name"
+												class={fieldErrors.last_name ? 'border-destructive' : ''}
+											/>
+											{#if fieldErrors.last_name}
+												<div class="flex items-center gap-2 text-sm text-destructive">
+													<AlertCircle class="h-4 w-4" />
+													<span>{fieldErrors.last_name}</span>
+												</div>
+											{/if}
+										</div>
 									</div>
 								</div>
 							{/if}
@@ -297,7 +358,21 @@
 							{#if isLoading}
 								<Skeleton class="h-10 w-full" />
 							{:else}
-								<Input id="email" type="email" bind:value={email} placeholder="Enter your email" />
+								<div class="space-y-2">
+									<Input
+										id="email"
+										type="email"
+										bind:value={email}
+										placeholder="Enter your email"
+										class={fieldErrors.email ? 'border-destructive' : ''}
+									/>
+									{#if fieldErrors.email}
+										<div class="flex items-center gap-2 text-sm text-destructive">
+											<AlertCircle class="h-4 w-4" />
+											<span>{fieldErrors.email}</span>
+										</div>
+									{/if}
+								</div>
 							{/if}
 							<p class="text-sm text-muted-foreground">
 								Used for notifications and account recovery

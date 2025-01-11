@@ -125,11 +125,9 @@ export async function PATCH({ request, fetch, cookies }) {
 
 		const data = await response.json();
 
-		if (!response.ok) {
-			throw new Error(data.error || 'Failed to update profile');
-		}
-
+		// Instead of throwing an error, return the response with the same status code
 		return new Response(JSON.stringify(data), {
+			status: response.status,
 			headers: { 'Content-Type': 'application/json' }
 		});
 	} catch (error) {
@@ -139,7 +137,7 @@ export async function PATCH({ request, fetch, cookies }) {
 				error: error.message || 'Server error'
 			}),
 			{
-				status: error.status || 500,
+				status: 500,
 				headers: { 'Content-Type': 'application/json' }
 			}
 		);

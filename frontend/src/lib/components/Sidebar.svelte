@@ -15,7 +15,6 @@
 
 <aside class="hidden w-64 space-y-4 border-r bg-card p-6 md:block">
 	<div class="mb-8 flex items-center gap-2">
-		<img src="$assets/ui-dark-logo.png" alt="Logo" class="h-8 w-8" />
 		<h1 class="text-xl font-bold">Dashboard</h1>
 	</div>
 
