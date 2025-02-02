@@ -131,7 +131,7 @@
 				const formData = new FormData();
 				formData.append('avatar', selectedFile);
 
-				const avatarResponse = await fetch('/api/profile/avatar', {
+				const avatarResponse = await fetch('/api/profile', {
 					method: 'POST',
 					body: formData
 				});

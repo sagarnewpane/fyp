@@ -12,7 +12,8 @@ from .views import (
     UserImageView,
     UserProfileView,
     AvatarUploadView,
-    PasswordChangeView
+    PasswordChangeView,
+    WatermarkSettingsView
 
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -32,6 +33,7 @@ urlpatterns = [
     path('api/profile/', UserProfileView.as_view(), name='user-profile'),
     path('api/profile/avatar/', AvatarUploadView.as_view(), name='avatar-upload'),
     path('api/password/change/', PasswordChangeView.as_view(), name='password-change'),
+    path('api/image/<int:image_id>/watermark-settings/',WatermarkSettingsView.as_view(),name='watermark-settings'),
 ]
 
 if settings.DEBUG:

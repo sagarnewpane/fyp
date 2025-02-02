@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from .models import UserImage, UserProfile
+from .models import UserImage, UserProfile, WatermarkSettings
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -198,3 +198,12 @@ class PasswordChangeSerializer(serializers.Serializer):
         if data['new_password'] != data['confirm_password']:
             raise serializers.ValidationError({"confirm_password": "Password fields didn't match."})
         return data
+
+class WatermarkSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatermarkSettings
+        fields = ['enabled', 'settings']
+
+    def validate_settings(self, value):
+        # Add any validation if needed
+        return value

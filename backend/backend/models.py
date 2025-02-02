@@ -46,3 +46,39 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
     else:
         instance.profile.save()
+
+
+class WatermarkSettings(models.Model):
+    user_image = models.OneToOneField(
+        UserImage,
+        on_delete=models.CASCADE,
+        related_name='watermark_settings'
+    )
+    enabled = models.BooleanField(default=False)
+    settings = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def get_default_settings(cls, user_image=None):
+        """
+        Get default watermark settings.
+        If user_image is provided, use its user's username in the watermark.
+        """
+        return {
+            "text": f"© {user_image.user.username}" if user_image else "© Protected Image",
+            "font": "Arial",
+            "color": "#000000",
+            "fontSize": 24,
+            "opacity": 50,
+            "rotation": 45,
+            "pattern": "diagonal",
+            "spacing": 50,
+            "horizontalOffset": 0,
+            "verticalOffset": 0
+        }
+
+    def save(self, *args, **kwargs):
+        if not self.settings:
+            self.settings = self.get_default_settings(self.user_image)
+        super().save(*args, **kwargs)

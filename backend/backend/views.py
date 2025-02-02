@@ -12,7 +12,7 @@ from rest_framework import status
 from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from .models import UserImage
+from .models import UserImage, WatermarkSettings
 
 
 class RegisterView(generics.CreateAPIView):
@@ -304,3 +304,66 @@ class PasswordChangeView(APIView):
                 "message": "Password updated successfully."
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class WatermarkSettingsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, image_id):
+        try:
+            # First, get the image and verify ownership
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+
+            try:
+                # Try to get existing settings
+                watermark_settings = WatermarkSettings.objects.get(user_image=user_image)
+                return Response({
+                    'enabled': watermark_settings.enabled,
+                    **watermark_settings.settings
+                })
+            except WatermarkSettings.DoesNotExist:
+                # If settings don't exist, return default settings
+                default_settings = WatermarkSettings.get_default_settings(user_image)
+                return Response({
+                    'enabled': False,
+                    **default_settings
+                })
+
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def patch(self, request, image_id):
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+            watermark_settings, created = WatermarkSettings.objects.get_or_create(
+                user_image=user_image,
+                defaults={
+                    'enabled': True,
+                    'settings': WatermarkSettings.get_default_settings(user_image)
+                }
+            )
+
+            # Update enabled status if provided
+            if 'enabled' in request.data:
+                watermark_settings.enabled = request.data['enabled']
+
+            # Update settings
+            new_settings = watermark_settings.settings.copy()
+            for key, value in request.data.items():
+                if key != 'enabled':
+                    new_settings[key] = value
+            watermark_settings.settings = new_settings
+
+            watermark_settings.save()
+            return Response({
+                'enabled': watermark_settings.enabled,
+                **watermark_settings.settings
+            })
+
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
