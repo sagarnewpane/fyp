@@ -4,6 +4,10 @@ from pathlib import Path
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+
 class UserImage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='uploads/')
@@ -22,13 +26,24 @@ class UserImage(models.Model):
         return f"{self.user.username}'s image - {self.image_name}"
 
     def save(self, *args, **kwargs):
-        if self.image:
-            # Set the image name from the uploaded file
-            self.image_name = Path(self.image.name).name
-            # Set the file size
+        if self.image and not self.id:  # Only convert on new uploads
+            # Open the image
+            img = Image.open(self.image)
+            # Convert to RGB if necessary
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+
+            # Save as PNG
+            buffer = BytesIO()
+            img.save(buffer, format='PNG')
+            file_name = f"{Path(self.image.name).stem}.png"
+
+            # Save the converted image
+            self.image.save(file_name, ContentFile(buffer.getvalue()), save=False)
+            self.image_name = file_name
+            self.file_type = 'png'
             self.file_size = self.image.size
-            # Set the file type
-            self.file_type = Path(self.image.name).suffix[1:].lower()  # Remove the dot from extension
+
         super().save(*args, **kwargs)
 
 class UserProfile(models.Model):
@@ -72,7 +87,7 @@ class WatermarkSettings(models.Model):
             "fontSize": 24,
             "opacity": 50,
             "rotation": 45,
-            "pattern": "diagonal",
+            "pattern": "tiled",
             "spacing": 50,
             "horizontalOffset": 0,
             "verticalOffset": 0
