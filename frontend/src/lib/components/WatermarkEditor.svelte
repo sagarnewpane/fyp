@@ -10,6 +10,8 @@
 	import { Slider } from '$lib/components/ui/slider';
 	import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/components/ui/tabs';
 	import { toast } from 'svelte-sonner';
+	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { Label } from '$lib/components/ui/label';
 
 	export let imageUrl;
 	export let initialSettings;
@@ -21,6 +23,11 @@
 	let watermarks = [];
 	let backgroundImage = null;
 	let isSaving = false;
+
+	// Hidden Message
+	let hiddenMessage = '';
+	let fetchedMessage = 'No hidden message found'; // Default value
+	let isStegApplied = false; // For the checkbox state
 
 	// Fixed container dimensions
 	const CONTAINER_WIDTH = 800;
@@ -57,8 +64,17 @@
 	const fonts = ['Arial', 'Times New Roman', 'Georgia', 'Verdana', 'Courier New'];
 	const fontOptions = fonts.map((font) => ({ value: font, label: font }));
 
-	let selectedFont = { value: 'Arial', label: 'Arial' };
-	let selectedPattern = { value: 'diagonal', label: 'Diagonal' };
+	let selectedFont = {
+		value: `${initialSettings.font}`,
+		label:
+			initialSettings.font.charAt(0).toUpperCase() + initialSettings.font.slice(1).toLowerCase()
+	};
+	let selectedPattern = {
+		value: `${initialSettings.pattern}`,
+		label:
+			initialSettings.pattern.charAt(0).toUpperCase() +
+			initialSettings.pattern.slice(1).toLowerCase()
+	};
 
 	function debounce(func, wait) {
 		let timeout;
@@ -456,6 +472,68 @@
 		canvas.renderAll();
 	}
 
+	async function fetchHiddenMessage() {
+		try {
+			const response = await fetch(`/api/hidden-message/${imageId}`);
+			if (response.ok) {
+				const data = await response.json();
+				fetchedMessage = data.text || 'No hidden message found';
+				isStegApplied = Boolean(data.text);
+			} else {
+				fetchedMessage = 'Failed to retrieve hidden message';
+				isStegApplied = false;
+			}
+		} catch (error) {
+			console.error('Error fetching hidden message:', error);
+			fetchedMessage = 'Error retrieving hidden message';
+			isStegApplied = false;
+		}
+	}
+
+	async function saveHiddenMessage() {
+		try {
+			const method = isStegApplied ? 'PATCH' : 'POST';
+			const response = await fetch(`/api/hidden-message/${imageId}`, {
+				method,
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ text: hiddenMessage })
+			});
+
+			if (response.ok) {
+				toast.success('Hidden message saved successfully');
+				await fetchHiddenMessage(); // Refresh the displayed message
+			} else {
+				const error = await response.json();
+				throw new Error(error.error || 'Failed to save hidden message');
+			}
+		} catch (error) {
+			console.error('Error saving hidden message:', error);
+			toast.error(error.message);
+		}
+	}
+
+	async function deleteHiddenMessage() {
+		try {
+			const response = await fetch(`/api/hidden-message/${imageId}`, {
+				method: 'DELETE'
+			});
+
+			if (response.ok) {
+				toast.success('Hidden message removed successfully');
+				hiddenMessage = '';
+				fetchedMessage = 'No hidden message found';
+				isStegApplied = false;
+			} else {
+				throw new Error('Failed to remove hidden message');
+			}
+		} catch (error) {
+			console.error('Error deleting hidden message:', error);
+			toast.error(error.message);
+		}
+	}
+
 	async function saveWatermarkSettings() {
 		if (!canvas || !backgroundImage) return;
 
@@ -502,7 +580,7 @@
 		if (imageUrl) {
 			loadImageFromUrl(imageUrl);
 		}
-
+		fetchHiddenMessage(); // Add this line
 		return () => {
 			if (canvas) {
 				canvas.dispose();
@@ -536,23 +614,23 @@
 	}
 </script>
 
-<div class="grid justify-center gap-6 lg:grid-cols-[1fr,400px]">
+<div class="grid justify-center gap-6 lg:grid-cols-[1fr,500px]">
 	<Card>
 		<CardContent class="p-6">
 			<!-- Preview container with fixed size and scrollbars -->
 			<div class="relative rounded-lg border bg-muted" style="width: {CONTAINER_WIDTH}px;">
 				<!-- Zoom controls -->
 				<div class="absolute left-4 top-4 z-10 flex gap-2">
-					<Button variant="secondary" size="sm" on:click={zoomIn}>
+					<Button variant="secondary" size="sm" on:click={zoomIn} title="Zoom In">
 						<Plus class="h-4 w-4" />
 					</Button>
-					<Button variant="secondary" size="sm" on:click={zoomOut}>
+					<Button variant="secondary" size="sm" on:click={zoomOut} title="Zoom Out">
 						<Minus class="h-4 w-4" />
 					</Button>
-					<Button variant="secondary" size="sm" on:click={resetZoom}>
+					<Button variant="secondary" size="sm" on:click={resetZoom} title="Reset Zoom">
 						<RotateCcw class="h-4 w-4" />
 					</Button>
-					<span class="rounded bg-white/80 px-2 py-1 text-sm">
+					<span class="rounded bg-white/80 px-2 py-1 text-sm font-medium">
 						{Math.round(currentZoom * 100)}%
 					</span>
 				</div>
@@ -578,8 +656,9 @@
 			</Alert>
 
 			<!-- Existing alert -->
-			<Alert class="mt-2">
-				<AlertDescription>
+			<Alert class="mt-2 border-primary/20 bg-primary/5">
+				<Eye class="h-4 w-4 text-primary" />
+				<AlertDescription class="ml-2 text-sm">
 					Watermark will be applied with {settings.opacity}% opacity in a {settings.pattern} pattern.
 					Text will be rendered in {settings.font} at {settings.fontSize}px.
 				</AlertDescription>
@@ -593,12 +672,21 @@
 		</CardHeader>
 		<CardContent class="space-y-4">
 			<Tabs defaultValue="basic">
-				<TabsList class="grid w-full grid-cols-2">
+				<TabsList class="grid w-full grid-cols-3">
 					<TabsTrigger value="basic">Basic</TabsTrigger>
 					<TabsTrigger value="advanced">Advanced</TabsTrigger>
+					<TabsTrigger value="more-advanced">More Advanced</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="basic" class="space-y-4">
+					<div class="mt-2 rounded-md border bg-muted p-4">
+						<p class="mb-2 text-sm text-muted-foreground">Preview:</p>
+						<p
+							style="font-family: {settings.font}; font-size: {settings.fontSize}px; color: {settings.color}; opacity: {settings.opacity}%;"
+						>
+							{settings.text || 'Your watermark text'}
+						</p>
+					</div>
 					<div class="space-y-2">
 						<label for="watermark-text" class="text-sm">Text</label>
 						<Input
@@ -671,6 +759,17 @@
 				</TabsContent>
 
 				<TabsContent value="advanced" class="space-y-4">
+					<!-- Image Preview -->
+					<div class="mt-2 rounded-md border bg-muted p-4">
+						<p class="mb-2 text-sm text-muted-foreground">Preview:</p>
+						<p
+							style="font-family: {settings.font}; font-size: {settings.fontSize}px; color: {settings.color}; opacity: {settings.opacity}%;"
+						>
+							{settings.text || 'Your watermark text'}
+						</p>
+					</div>
+					<!-- ----- -->
+
 					<div class="space-y-2">
 						<label for="font-size" class="text-sm">Size ({settings.fontSize}px)</label>
 						<Slider
@@ -757,7 +856,64 @@
 					</div>
 					<div class="space-y-2">
 						<label for="color-picker" class="text-sm">Color</label>
-						<Input id="color-picker" type="color" bind:value={settings.color} />
+						<div class="flex items-center gap-2">
+							<div class="h-8 w-8 rounded border" style="background-color: {settings.color}"></div>
+							<Input id="color-picker" type="color" bind:value={settings.color} class="h-8 w-12" />
+							<Input type="text" bind:value={settings.color} class="flex-1" placeholder="#000000" />
+						</div>
+					</div>
+				</TabsContent>
+
+				<TabsContent value="more-advanced" class="space-y-4">
+					<div class="space-y-4">
+						<!-- Hidden Message Input -->
+						<div class="space-y-2">
+							<Label for="hidden-message">Hidden Message</Label>
+							<Input
+								id="hidden-message"
+								bind:value={hiddenMessage}
+								placeholder="Enter message to hide in image"
+							/>
+						</div>
+
+						<!-- Fetched Message Display -->
+						<div class="space-y-2">
+							<Label>Retrieved Hidden Message</Label>
+							<div class="rounded-md border bg-muted p-3">
+								<p class="text-sm text-muted-foreground">{fetchedMessage}</p>
+							</div>
+						</div>
+
+						<!-- Applied Status -->
+						<div class="flex items-center space-x-2">
+							<Checkbox id="applied" checked={isStegApplied} disabled={true} />
+							<Label
+								for="applied"
+								class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+							>
+								Steganography Applied
+							</Label>
+						</div>
+
+						<!-- Information Alert -->
+						<Alert>
+							<AlertDescription>
+								Steganography allows you to hide messages within your image that won't be visible to
+								the naked eye. The message will be securely embedded in the image data.
+							</AlertDescription>
+						</Alert>
+					</div>
+
+					<div class="space-y-2 pt-4">
+						<Button class="w-full" on:click={saveHiddenMessage} disabled={!hiddenMessage}>
+							{isStegApplied ? 'Update' : 'Save'} Hidden Message
+						</Button>
+
+						{#if isStegApplied}
+							<Button variant="destructive" class="w-full" on:click={deleteHiddenMessage}>
+								Remove Hidden Message
+							</Button>
+						{/if}
 					</div>
 				</TabsContent>
 			</Tabs>

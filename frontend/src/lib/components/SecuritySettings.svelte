@@ -10,6 +10,7 @@
 		metadata: false,
 		ai_protection: false
 	};
+	export let imageId;
 
 	const securityFeatures = [
 		{
@@ -24,7 +25,8 @@
 			description: 'Add visible watermarks to prevent unauthorized use and maintain copyright.',
 			icon: Fingerprint,
 			applied: protectionStatus.watermark,
-			action: 'Apply Watermark'
+			action: 'Apply Watermark',
+			url: `/watermark/${imageId}`
 		},
 		{
 			title: 'Metadata Protection',
@@ -62,7 +64,7 @@
 					<p class="mb-4 text-muted-foreground">{feature.description}</p>
 
 					<div class="flex items-center justify-between">
-						<Button variant="default">{feature.action}</Button>
+						<Button href={`${feature.url}`} variant="default">{feature.action}</Button>
 						<Button variant="link" class="text-sm">Learn more</Button>
 					</div>
 				</CardContent>

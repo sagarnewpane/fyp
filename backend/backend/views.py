@@ -12,7 +12,7 @@ from rest_framework import status
 from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from .models import UserImage, WatermarkSettings
+from .models import UserImage, WatermarkSettings, InvisibleWatermarkSettings
 
 
 class RegisterView(generics.CreateAPIView):
@@ -367,3 +367,174 @@ class WatermarkSettingsView(APIView):
                 {'error': 'Image not found'},
                 status=status.HTTP_404_NOT_FOUND
             )
+
+
+from django.core.files.base import ContentFile
+import cv2
+import numpy as np
+from .scripts.steg import TextSteganography
+import tempfile
+import os
+
+class InvisibleWatermarkView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, image_id):
+        """Create a new invisible watermark"""
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+            message = request.data.get('text', '')
+
+            if not message:
+                return Response({'error': 'Message is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check if watermark already exists
+            if InvisibleWatermarkSettings.objects.filter(user_image=user_image).exists():
+                return Response(
+                    {'error': 'Watermark already exists. Use PATCH to update.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
+                temp_path = temp_file.name
+                with open(temp_path, 'wb') as f:
+                    f.write(user_image.image.read())
+
+            stego = TextSteganography()
+
+            try:
+                stego_image = stego.embed_message(temp_path, message)
+
+                watermark = InvisibleWatermarkSettings.objects.create(
+                    user_image=user_image,
+                    enabled=True,
+                    text=message
+                )
+
+                with tempfile.NamedTemporaryFile(suffix='.png') as stego_temp:
+                    cv2.imwrite(stego_temp.name, stego_image)
+                    with open(stego_temp.name, 'rb') as f:
+                        watermark.embedded_image.save(
+                            f'stego_{user_image.image_name}',
+                            ContentFile(f.read()),
+                            save=True
+                        )
+
+                return Response({'status': 'success'})
+
+            finally:
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+
+        except UserImage.DoesNotExist:
+            return Response({'error': 'Image not found'}, status=status.HTTP_404_NOT_FOUND)
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def patch(self, request, image_id):
+        """Update existing watermark text"""
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+            message = request.data.get('text')
+
+            if message is None:
+                return Response({'error': 'Text is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                watermark = InvisibleWatermarkSettings.objects.get(user_image=user_image)
+            except InvisibleWatermarkSettings.DoesNotExist:
+                return Response(
+                    {'error': 'No watermark exists. Use POST to create one.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
+                temp_path = temp_file.name
+                with open(temp_path, 'wb') as f:
+                    f.write(user_image.image.read())
+
+            stego = TextSteganography()
+
+            try:
+                stego_image = stego.embed_message(temp_path, message)
+
+                # Delete old embedded image if it exists
+                if watermark.embedded_image:
+                    watermark.embedded_image.delete(save=False)
+
+                with tempfile.NamedTemporaryFile(suffix='.png') as stego_temp:
+                    cv2.imwrite(stego_temp.name, stego_image)
+                    with open(stego_temp.name, 'rb') as f:
+                        watermark.text = message
+                        watermark.embedded_image.save(
+                            f'stego_{user_image.image_name}',
+                            ContentFile(f.read()),
+                            save=True
+                        )
+
+                return Response({'status': 'success'})
+
+            finally:
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+
+        except UserImage.DoesNotExist:
+            return Response({'error': 'Image not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+    def clean_extracted_text(self, text):
+        """Remove null characters and trailing whitespace from extracted text"""
+        if text:
+            # Split on first null character and take the first part
+            cleaned_text = text.split('\x00')[0]
+            # Remove any trailing whitespace
+            return cleaned_text.strip()
+        return text
+
+    def get(self, request, image_id):
+            try:
+                watermark = InvisibleWatermarkSettings.objects.get(
+                    user_image_id=image_id,
+                    user_image__user=request.user
+                )
+
+                if watermark.embedded_image:
+                    image_array = cv2.imdecode(
+                        np.frombuffer(watermark.embedded_image.read(), np.uint8),
+                        cv2.IMREAD_COLOR
+                    )
+
+                    stego = TextSteganography()
+                    extracted_message = stego.extract_message(image_array)
+                    # Clean the extracted message
+                    cleaned_message = self.clean_extracted_text(extracted_message)
+
+                    return Response({
+                        'text': cleaned_message,
+                        'embedded_image': request.build_absolute_uri(watermark.embedded_image.url)
+                    })
+                return Response({'text': None, 'embedded_image': None})
+
+            except InvisibleWatermarkSettings.DoesNotExist:
+                return Response({'text': None, 'embedded_image': None})
+            except Exception as e:
+                return Response(
+                    {'error': f"Error extracting watermark: {str(e)}"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+    def delete(self, request, image_id):
+        """Delete the invisible watermark"""
+        try:
+            watermark = InvisibleWatermarkSettings.objects.get(
+                user_image_id=image_id,
+                user_image__user=request.user
+            )
+            watermark.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except InvisibleWatermarkSettings.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

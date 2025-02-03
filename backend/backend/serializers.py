@@ -207,3 +207,13 @@ class WatermarkSettingsSerializer(serializers.ModelSerializer):
     def validate_settings(self, value):
         # Add any validation if needed
         return value
+
+
+from rest_framework import serializers
+from .models import InvisibleWatermarkSettings
+
+class InvisibleWatermarkSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InvisibleWatermarkSettings
+        fields = ['enabled', 'text', 'embedded_image']
+        read_only_fields = ['embedded_image']

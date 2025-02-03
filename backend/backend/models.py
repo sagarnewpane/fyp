@@ -97,3 +97,38 @@ class WatermarkSettings(models.Model):
         if not self.settings:
             self.settings = self.get_default_settings(self.user_image)
         super().save(*args, **kwargs)
+
+class InvisibleWatermarkSettings(models.Model):
+    user_image = models.OneToOneField(
+        UserImage,
+        on_delete=models.CASCADE,
+        related_name='invisible_watermark_settings'
+    )
+    enabled = models.BooleanField(default=False)
+    embedded_image = models.ImageField(upload_to='uploads/stegnated', null=True, blank=True)
+    text = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+# SIGNALS
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=WatermarkSettings)
+def update_user_image_watermark(sender, instance, **kwargs):
+    """Sync UserImage when WatermarkSettings.enabled is changed"""
+    user_image = instance.user_image
+    if user_image.watermark_enabled != instance.enabled:
+        user_image.watermark_enabled = instance.enabled
+        user_image.save(update_fields=['watermark_enabled'])  # Prevent infinite loop
+
+@receiver(post_save, sender=InvisibleWatermarkSettings)
+def update_user_image_ai_protection(sender, instance, **kwargs):
+    """Sync UserImage when InvisibleWatermarkSettings.enabled is changed"""
+    user_image = instance.user_image
+    if user_image.ai_protection_enabled != instance.enabled:
+        user_image.ai_protection_enabled = instance.enabled
+        user_image.save(update_fields=['ai_protection_enabled'])  # Prevent infinite loop
