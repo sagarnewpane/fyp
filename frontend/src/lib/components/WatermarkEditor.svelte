@@ -65,15 +65,12 @@
 	const fontOptions = fonts.map((font) => ({ value: font, label: font }));
 
 	let selectedFont = {
-		value: `${initialSettings.font}`,
-		label:
-			initialSettings.font.charAt(0).toUpperCase() + initialSettings.font.slice(1).toLowerCase()
+		value: `${settings.font}`,
+		label: settings.font.charAt(0).toUpperCase() + settings.font.slice(1).toLowerCase()
 	};
 	let selectedPattern = {
-		value: `${initialSettings.pattern}`,
-		label:
-			initialSettings.pattern.charAt(0).toUpperCase() +
-			initialSettings.pattern.slice(1).toLowerCase()
+		value: `${settings.pattern}`,
+		label: settings.pattern.charAt(0).toUpperCase() + settings.pattern.slice(1).toLowerCase()
 	};
 
 	function debounce(func, wait) {
