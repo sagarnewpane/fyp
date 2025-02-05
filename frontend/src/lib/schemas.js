@@ -8,22 +8,32 @@ export const profileSchema = z.object({
 	first_name: z
 		.string()
 		.min(2, 'First name must be at least 2 characters')
-		.max(50, 'First name must be less than 50 characters'),
+		.max(50, 'First name must be less than 50 characters')
+		.or(z.literal('')),
 	last_name: z
 		.string()
 		.min(2, 'Last name must be at least 2 characters')
-		.max(50, 'Last name must be less than 50 characters'),
+		.max(50, 'Last name must be less than 50 characters')
+		.or(z.literal('')),
 	email: z.string().email('Invalid email address'),
 	social_links: z.object({
 		website: z.string().url('Invalid website URL').optional().or(z.literal('')),
+
 		twitter: z
 			.string()
-			.regex(/^@?(\w){1,15}$/, 'Invalid Twitter username')
+			.regex(
+				/^@?[A-Za-z0-9_.-]{1,15}$/,
+				'Invalid Twitter username (max 15 characters, can contain letters, numbers, _, ., -)'
+			)
 			.optional()
 			.or(z.literal('')),
+
 		instagram: z
 			.string()
-			.regex(/^@?(\w){1,30}$/, 'Invalid Instagram username')
+			.regex(
+				/^@?[A-Za-z0-9._-]{1,30}$/,
+				'Invalid Instagram username (max 30 characters, can contain letters, numbers, ., _, -)'
+			)
 			.optional()
 			.or(z.literal(''))
 	})

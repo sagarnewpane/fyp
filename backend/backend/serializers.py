@@ -11,8 +11,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
         extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
+            'first_name': {'required': False},
+            'last_name': {'required': False},
             'email': {'required': True}
         }
 
@@ -143,8 +143,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserProfileUpdateSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=150)
-    first_name = serializers.CharField(max_length=150)
-    last_name = serializers.CharField(max_length=150)
+    first_name = serializers.CharField(max_length=150, required=False, allow_blank=True)  # Made optional
+    last_name = serializers.CharField(max_length=150, required=False, allow_blank=True)   # Made optional
     email = serializers.EmailField()
     social_links = serializers.JSONField(required=False, default=dict)
 
