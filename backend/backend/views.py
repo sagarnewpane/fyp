@@ -419,6 +419,9 @@ class InvisibleWatermarkView(APIView):
                             ContentFile(f.read()),
                             save=True
                         )
+                # Update hidden_watermark_enabled flag
+                user_image.hidden_watermark_enabled = True
+                user_image.save(update_fields=['hidden_watermark_enabled'])
 
                 return Response({'status': 'success'})
 

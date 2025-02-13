@@ -19,6 +19,7 @@ class UserImage(models.Model):
     # Protection status fields
     access_control_enabled = models.BooleanField(default=False)
     watermark_enabled = models.BooleanField(default=False)
+    hidden_watermark_enabled = models.BooleanField(default=False)
     metadata_enabled = models.BooleanField(default=False)
     ai_protection_enabled = models.BooleanField(default=False)
 
@@ -129,6 +130,6 @@ def update_user_image_watermark(sender, instance, **kwargs):
 def update_user_image_ai_protection(sender, instance, **kwargs):
     """Sync UserImage when InvisibleWatermarkSettings.enabled is changed"""
     user_image = instance.user_image
-    if user_image.ai_protection_enabled != instance.enabled:
-        user_image.ai_protection_enabled = instance.enabled
-        user_image.save(update_fields=['ai_protection_enabled'])  # Prevent infinite loop
+    if user_image.hidden_watermark_enabled != instance.enabled:
+        user_image.hidden_watermark_enabled = instance.enabled
+        user_image.save(update_fields=['hidden_watermark_enabled'])  # Prevent infinite loop
