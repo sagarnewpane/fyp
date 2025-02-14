@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -541,3 +541,152 @@ class InvisibleWatermarkView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except InvisibleWatermarkSettings.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.core.mail import send_mail
+from .utils import OTPHandler
+import secrets
+from .models import ImageAccess,AccessLog
+from .serializers import ImageAccessSerializer, AccessVerificationSerializer
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
+class CreateAccessView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, image_id):
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+
+            # Create data dict with all fields
+            data = {
+                'user_image': user_image.id,
+                'allowed_emails': request.data.get('allowed_emails', []),
+                'requires_password': request.data.get('requires_password', False),
+                'password': request.data.get('password'),
+                'allow_download': request.data.get('allow_download', False),
+                'max_views': request.data.get('max_views', 0),
+                'expiration_date': request.data.get('expiration_date'),
+            }
+
+            serializer = ImageAccessSerializer(data=data)
+            if serializer.is_valid():
+                access = serializer.save()
+                # Return the complete access data including token
+                return Response({
+                    'id': access.id,
+                    'token': access.token,
+                    'allowed_emails': access.allowed_emails,
+                    'requires_password': access.requires_password,
+                    'allow_download': access.allow_download,
+                    'max_views': access.max_views,
+                    'created_at': access.created_at
+                })
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+from django.core.cache import cache
+from django.core.mail import send_mail
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from .models import ImageAccess, UserImage, OTPSecret
+from .utils import OTPHandler
+from .serializers import AccessVerificationSerializer, ImageAccessSerializer
+
+class InitiateAccessView(APIView):
+    permission_classes = [AllowAny]  # Allow unauthenticated access
+    def post(self, request, token):
+        try:
+            access = ImageAccess.objects.get(token=token)
+            email = request.data.get('email')
+
+            if not email:
+                return Response({'error': 'Email is required'}, status=400)
+
+            # Strict email validation
+            if access.allowed_emails:
+                # Convert both to lowercase for case-insensitive comparison
+                email_lower = email.lower()
+                allowed_emails_lower = [e.lower() for e in access.allowed_emails]
+
+                if email_lower not in allowed_emails_lower:
+                    return Response({
+                        'error': 'Email not authorized',
+                        'message': 'This email is not allowed to access this image'
+                    }, status=403)
+
+            # Generate and store OTP
+            otp = OTPHandler.generate_and_store_otp(access, email)
+
+            print(f"""
+            Access Debug Info:
+            Token: {token}
+            Allowed Emails: {access.allowed_emails}
+            Requested Email: {email}
+            OTP Generated: {otp}
+            """)
+
+            # Send email
+            send_mail(
+                'Access Verification Code',
+                f'Your verification code is: {otp}\nValid for 5 minutes.',
+                'from@example.com',
+                [email],
+                fail_silently=False,
+            )
+
+            return Response({'message': 'OTP sent successfully'})
+
+        except ImageAccess.DoesNotExist:
+            return Response({'error': 'Invalid token'}, status=404)
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return Response({'error': 'Failed to send OTP'}, status=500)
+
+
+class VerifyOTPView(APIView):
+    permission_classes = [AllowAny]  # Allow unauthenticated access
+    def post(self, request, token):
+        try:
+            email = request.data.get('email')
+            provided_otp = request.data.get('otp')
+
+            if not email or not provided_otp:
+                return Response({'error': 'Email and OTP are required'}, status=400)
+
+            access = ImageAccess.objects.get(token=token)
+
+            # Verify OTP
+            if not OTPHandler.verify_otp(access, email, provided_otp):
+                return Response({'error': 'Invalid or expired OTP'}, status=400)
+
+            # Increment view count
+            access.current_views += 1
+            access.save()
+
+            return Response({
+                'message': 'Access granted',
+                'image_url': access.user_image.image.url,
+                'allow_download': access.allow_download
+            })
+
+        except ImageAccess.DoesNotExist:
+            return Response({'error': 'Invalid token'}, status=404)
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return Response({'error': 'Verification failed'}, status=500)

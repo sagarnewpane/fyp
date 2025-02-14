@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from pathlib import Path
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
+from datetime import timedelta
+import secrets
 
 from PIL import Image
 from io import BytesIO
@@ -111,6 +114,66 @@ class InvisibleWatermarkSettings(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+from django.contrib.auth.hashers import make_password, check_password as django_check_password
+
+class ImageAccess(models.Model):
+    user_image = models.ForeignKey('UserImage', on_delete=models.CASCADE)
+    token = models.CharField(max_length=64, unique=True, db_index=True)
+    allowed_emails = models.JSONField(default=list, blank=True)
+    requires_password = models.BooleanField(default=False)
+    password = models.CharField(max_length=128, null=True, blank=True)
+
+    allow_download = models.BooleanField(default=False)
+    max_views = models.IntegerField(default=0)
+    current_views = models.IntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = secrets.token_urlsafe(32)
+
+        # Hash password if it's provided and changed
+        if self.requires_password and self.password and not self.password.startswith('pbkdf2_'):
+            self.password = make_password(self.password)
+
+        super().save(*args, **kwargs)
+
+    def check_password(self, raw_password):
+        """Check if the provided password matches the stored hash"""
+        if self.password:
+            return django_check_password(raw_password, self.password)
+        return False
+
+    def is_valid(self):
+        if self.max_views > 0 and self.current_views >= self.max_views:
+            return False
+        return True
+
+class AccessLog(models.Model):
+    image_access = models.ForeignKey(ImageAccess, on_delete=models.CASCADE)
+    email = models.EmailField()
+    ip_address = models.GenericIPAddressField()
+    accessed_at = models.DateTimeField(auto_now_add=True)
+    success = models.BooleanField(default=True)
+
+
+from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+
+class OTPSecret(models.Model):
+    image_access = models.ForeignKey('ImageAccess', on_delete=models.CASCADE)
+    email = models.EmailField()
+    secret = models.CharField(max_length=32)  # For storing pyotp secret
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)
+
+    def is_valid(self):
+        # Check if secret is not expired (5 minutes validity) and not used
+        expiry_time = self.created_at + timedelta(minutes=5)
+        return not self.is_used and timezone.now() <= expiry_time
 
 # SIGNALS
 

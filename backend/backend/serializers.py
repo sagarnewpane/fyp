@@ -108,6 +108,7 @@ class SpecificImageSerializer(serializers.ModelSerializer):
         return {
             'access_control': obj.access_control_enabled,
             'watermark': obj.watermark_enabled,
+            'hidden_watermark': obj.hidden_watermark_enabled,
             'metadata': obj.metadata_enabled,
             'ai_protection': obj.ai_protection_enabled
         }
@@ -217,3 +218,21 @@ class InvisibleWatermarkSettingsSerializer(serializers.ModelSerializer):
         model = InvisibleWatermarkSettings
         fields = ['enabled', 'text', 'embedded_image']
         read_only_fields = ['embedded_image']
+
+
+from rest_framework import serializers
+from .models import ImageAccess
+
+class ImageAccessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImageAccess
+        fields = '__all__'
+        read_only_fields = ('token', 'current_views')
+
+class AccessVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(required=False)
+
+class OTPVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
