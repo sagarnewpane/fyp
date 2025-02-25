@@ -3,16 +3,14 @@
 	export let data;
 </script>
 
-<!-- <ImageViewPage imageId="mock-image-id" /> -->
-<div class="min-h-screen bg-background p-6">
-	<div class="mx-auto max-w-[1400px]">
-		<div class="mb-8">
-			<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Access Control</h1>
-			<p class="mt-2 text-muted-foreground">
-				Manage access settings and permissions for your image
-			</p>
-		</div>
+<main class="min-h-screen w-full bg-background p-6 text-foreground">
+	<div class="mx-auto space-y-6">
+		<h1 class="text-3xl font-bold">Image Watermarking Tool</h1>
 
-		<AccessControl imageUrl={data.imageData.image_url} imageId={data.imageData.id} />
+		<AccessControl
+			imageUrl={data.imageData.image_url}
+			imageId={data.imageData.id}
+			imageSecurity={data.imageData.security}
+		/>
 	</div>
-</div>
+</main>

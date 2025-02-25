@@ -1,0 +1,1292 @@
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpg05w6sn0.png
+Cleaned up temporary file: /tmp/tmpg05w6sn0.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmplyxhftib.png
+Output will be saved to: /tmp/tmpl3lqkdne.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmplyxhftib.png /tmp/tmpl3lqkdne.png {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmplyxhftib.png
+Cleaned up temporary file: /tmp/tmpl3lqkdne.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmp293fk103.png
+Cleaned up temporary file: /tmp/tmp293fk103.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpy8fxqhjr.png
+Output will be saved to: /tmp/tmpf3uq2fs4.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpy8fxqhjr.png /tmp/tmpf3uq2fs4.png {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpy8fxqhjr.png
+Cleaned up temporary file: /tmp/tmpf3uq2fs4.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpud8zho37.png
+Cleaned up temporary file: /tmp/tmpud8zho37.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp06dwijst.png
+Output will be saved to: /tmp/tmp0korsrte.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp06dwijst.png /tmp/tmp0korsrte.png {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmp06dwijst.png
+Cleaned up temporary file: /tmp/tmp0korsrte.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpovd3ju4_.png
+Cleaned up temporary file: /tmp/tmpovd3ju4_.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar newpane', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpvigut4tk.png
+Output will be saved to: /tmp/tmphkk5_iqp.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpvigut4tk.png /tmp/tmphkk5_iqp.png {"text": "\u00a9 sagar newpane", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpvigut4tk.png
+Cleaned up temporary file: /tmp/tmphkk5_iqp.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpvsam7mab.png
+Cleaned up temporary file: /tmp/tmpvsam7mab.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar newpane', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpcupd490e.png
+Output will be saved to: /tmp/tmpx_4q9mdd.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpcupd490e.png /tmp/tmpx_4q9mdd.png {"text": "\u00a9 sagar newpane", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpcupd490e.png
+Cleaned up temporary file: /tmp/tmpx_4q9mdd.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpzwaotixq.png
+Cleaned up temporary file: /tmp/tmpzwaotixq.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar newpane', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp8xhgerqs.png
+Output will be saved to: /tmp/tmp_ybagq34.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp8xhgerqs.png /tmp/tmp_ybagq34.png {"text": "\u00a9 sagar newpane", "font": "Arial", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmp8xhgerqs.png
+Cleaned up temporary file: /tmp/tmp_ybagq34.png
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+Not Found: /favicon.ico
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmp01qiayqn.png
+Cleaned up temporary file: /tmp/tmp01qiayqn.png
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpzgdk8zg3.png
+Output will be saved to: /tmp/tmpthmkjo2l.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpzgdk8zg3.png /tmp/tmpthmkjo2l.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 24, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpzgdk8zg3.png
+Cleaned up temporary file: /tmp/tmpthmkjo2l.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmp0gqkj75v.png
+Cleaned up temporary file: /tmp/tmp0gqkj75v.png
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 70, 'fontSize': 31, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpvfyfnlwn.png
+Output will be saved to: /tmp/tmp2rts8zqc.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpvfyfnlwn.png /tmp/tmp2rts8zqc.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpvfyfnlwn.png
+Cleaned up temporary file: /tmp/tmp2rts8zqc.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpiq2ve1ty.png
+Cleaned up temporary file: /tmp/tmpiq2ve1ty.png
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 70, 'fontSize': 31, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp19st0x1x.png
+Output will be saved to: /tmp/tmpyaijqqs8.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp19st0x1x.png /tmp/tmpyaijqqs8.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmp19st0x1x.png
+Cleaned up temporary file: /tmp/tmpyaijqqs8.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmp1poncd4p.png
+Cleaned up temporary file: /tmp/tmp1poncd4p.png
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 70, 'fontSize': 31, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp0999n7cw.png
+Output will be saved to: /tmp/tmpfj1x6ioh.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp0999n7cw.png /tmp/tmpfj1x6ioh.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmp0999n7cw.png
+Cleaned up temporary file: /tmp/tmpfj1x6ioh.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 70, 'fontSize': 31, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpj8880sa1.png
+Output will be saved to: /tmp/tmpadnjbdc4.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpj8880sa1.png /tmp/tmpadnjbdc4.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 31, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpj8880sa1.png
+Cleaned up temporary file: /tmp/tmpadnjbdc4.png
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 70, 'fontSize': 27, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp0vex_1sq.png
+Output will be saved to: /tmp/tmpsdsspn4c.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp0vex_1sq.png /tmp/tmpsdsspn4c.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 70.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmp0vex_1sq.png
+Cleaned up temporary file: /tmp/tmpsdsspn4c.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 4
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/zen.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 12731
+Initial image size: (512, 512)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar newpane', 'color': '#ffffff', 'opacity': 50, 'pattern': 'grid', 'spacing': 50, 'fontSize': 46, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpc7k57e3b.png
+Output will be saved to: /tmp/tmprkdezyes.png
+Watermark settings: {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 46, "color": "#ffffff", "opacity": 50.0, "rotation": 45.0, "pattern": "grid", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpc7k57e3b.png /tmp/tmprkdezyes.png {"text": "\u00a9 sagar newpane", "font": "Times New Roman", "fontSize": 46, "color": "#ffffff", "opacity": 50.0, "rotation": 45.0, "pattern": "grid", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpc7k57e3b.png
+Cleaned up temporary file: /tmp/tmprkdezyes.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 27, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpkow0f0pu.png
+Output will be saved to: /tmp/tmpivfz9nxy.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpkow0f0pu.png /tmp/tmpivfz9nxy.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpkow0f0pu.png
+Cleaned up temporary file: /tmp/tmpivfz9nxy.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 27, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpn3f03iqn.png
+Output will be saved to: /tmp/tmplxfvvzxf.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpn3f03iqn.png /tmp/tmplxfvvzxf.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpn3f03iqn.png
+Cleaned up temporary file: /tmp/tmplxfvvzxf.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 27, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpttzvonam.png
+Output will be saved to: /tmp/tmp0fc77ged.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpttzvonam.png /tmp/tmp0fc77ged.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpttzvonam.png
+Cleaned up temporary file: /tmp/tmp0fc77ged.png
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 27, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmptt82qcev.png
+Output will be saved to: /tmp/tmpffdn8nkb.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmptt82qcev.png /tmp/tmpffdn8nkb.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmptt82qcev.png
+Cleaned up temporary file: /tmp/tmpffdn8nkb.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 27, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpnj97kfeu.png
+Output will be saved to: /tmp/tmp5ttvv7sh.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpnj97kfeu.png /tmp/tmp5ttvv7sh.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 27, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpnj97kfeu.png
+Cleaned up temporary file: /tmp/tmp5ttvv7sh.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmprptioye1.png
+Output will be saved to: /tmp/tmph0jbmvrh.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmprptioye1.png /tmp/tmph0jbmvrh.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmprptioye1.png
+Cleaned up temporary file: /tmp/tmph0jbmvrh.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmp3m_xi4_a.png
+Output will be saved to: /tmp/tmp92g5gosi.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp3m_xi4_a.png /tmp/tmp92g5gosi.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: (node:6636) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Error applying watermark: TypeError: Cannot read properties of undefined (reading 'Image')
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:62:10
+    at new Promise (<anonymous>)
+    at loadImage (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:61:9)
+    at applyWatermark (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:7:23)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:145:3)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+Failed to apply watermark: TypeError: Cannot read properties of undefined (reading 'Image')
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:62:10
+    at new Promise (<anonymous>)
+    at loadImage (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:61:9)
+    at applyWatermark (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:7:23)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:145:3)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+
+Cleaned up temporary file: /tmp/tmp3m_xi4_a.png
+Cleaned up temporary file: /tmp/tmp92g5gosi.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmp0c0rh320.png
+Output will be saved to: /tmp/tmpvezx_u1a.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp0c0rh320.png /tmp/tmpvezx_u1a.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Watermark applied successfully
+
+Script stderr: (node:6778) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmp0c0rh320.png
+Cleaned up temporary file: /tmp/tmpvezx_u1a.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpc02g1i9l.png
+Output will be saved to: /tmp/tmp4mbzcxal.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpc02g1i9l.png /tmp/tmp4mbzcxal.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: Applying watermark with settings: {
+  text: '© sagar',
+  font: 'Times New Roman',
+  fontSize: 40,
+  color: '#ff0000',
+  opacity: 100,
+  rotation: 0,
+  pattern: 'tiled',
+  spacing: 55,
+  horizontalOffset: 2,
+  verticalOffset: 0
+}
+
+stderr: Failed to register font Arial: Error: ENOENT: no such file or directory, lstat '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+    at Object.realpathSync (node:fs:2785:29)
+    at registerFont (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/canvas/index.js:48:34)
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:18:3
+    at Array.forEach (<anonymous>)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:16:27)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+}
+Failed to register font Times New Roman: Error: ENOENT: no such file or directory, lstat '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+    at Object.realpathSync (node:fs:2785:29)
+    at registerFont (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/canvas/index.js:48:34)
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:18:3
+    at Array.forEach (<anonymous>)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:16:27)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+}
+Failed to register font Georgia: Error: ENOENT: no such file or directory, lstat '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+    at Object.realpathSync (node:fs:2785:29)
+    at registerFont (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/canvas/index.js:48:34)
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:18:3
+    at Array.forEach (<anonymous>)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:16:27)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+}
+Failed to register font Verdana: Error: ENOENT: no such file or directory, lstat '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+    at Object.realpathSync (node:fs:2785:29)
+    at registerFont (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/canvas/index.js:48:34)
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:18:3
+    at Array.forEach (<anonymous>)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:16:27)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+}
+Failed to register font Courier New: Error: ENOENT: no such file or directory, lstat '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+    at Object.realpathSync (node:fs:2785:29)
+    at registerFont (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/canvas/index.js:48:34)
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:18:3
+    at Array.forEach (<anonymous>)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:16:27)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/home/sagar/Documents/FYP/igaurdian/frontend/fonts'
+}
+(node:6992) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Error applying watermark: TypeError: ctx.canvas.getAttribute is not a function
+    at klass._renderChars (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26934:54)
+    at klass._renderTextLine (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26501:12)
+    at klass._renderTextCommon (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26866:14)
+    at klass._renderTextFill (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26888:12)
+    at klass._renderText (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26440:14)
+    at klass._render (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26425:12)
+    at klass.drawObject (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:15653:12)
+    at klass.render (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:15510:14)
+    at klass.callSuper (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:3144:22)
+    at klass.render (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:27374:12)
+Failed to apply watermark: TypeError: ctx.canvas.getAttribute is not a function
+    at klass._renderChars (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26934:54)
+    at klass._renderTextLine (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26501:12)
+    at klass._renderTextCommon (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26866:14)
+    at klass._renderTextFill (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26888:12)
+    at klass._renderText (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26440:14)
+    at klass._render (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:26425:12)
+    at klass.drawObject (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:15653:12)
+    at klass.render (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:15510:14)
+    at klass.callSuper (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:3144:22)
+    at klass.render (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/fabric/dist/fabric.js:27374:12)
+
+Cleaned up temporary file: /tmp/tmpc02g1i9l.png
+Cleaned up temporary file: /tmp/tmp4mbzcxal.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpqufqsl6q.png
+Output will be saved to: /tmp/tmpfre6sb5f.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpqufqsl6q.png /tmp/tmpfre6sb5f.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: (node:7158) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Error applying watermark: TypeError: Cannot read properties of undefined (reading 'Image')
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:73:10
+    at new Promise (<anonymous>)
+    at loadImage (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:72:9)
+    at applyWatermark (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:7:27)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:159:3)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+Failed to apply watermark: TypeError: Cannot read properties of undefined (reading 'Image')
+    at /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:73:10
+    at new Promise (<anonymous>)
+    at loadImage (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:72:9)
+    at applyWatermark (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:7:27)
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:159:3)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+
+Cleaned up temporary file: /tmp/tmpqufqsl6q.png
+Cleaned up temporary file: /tmp/tmpfre6sb5f.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpc2ua3v4n.png
+Output will be saved to: /tmp/tmpcuo178ux.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpc2ua3v4n.png /tmp/tmpcuo178ux.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:6
+fabric.nodeCanvas = require('canvas');
+                  ^
+
+TypeError: Cannot set properties of undefined (setting 'nodeCanvas')
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:6:19)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.4.0
+
+Cleaned up temporary file: /tmp/tmpc2ua3v4n.png
+Cleaned up temporary file: /tmp/tmpcuo178ux.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmputqydu71.png
+Output will be saved to: /tmp/tmpxcdy8ex7.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmputqydu71.png /tmp/tmpxcdy8ex7.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:6
+fabric.initialize(require('canvas'));
+       ^
+
+TypeError: fabric.initialize is not a function
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:6:8)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.4.0
+
+Cleaned up temporary file: /tmp/tmputqydu71.png
+Cleaned up temporary file: /tmp/tmpxcdy8ex7.png
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpxjbid0eb.png
+Output will be saved to: /tmp/tmphxtx1f0r.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpxjbid0eb.png /tmp/tmphxtx1f0r.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Loading image: /tmp/tmpxjbid0eb.png
+Watermark applied successfully
+
+Script stderr: (node:7784) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 2752
+Cleaned up temporary file: /tmp/tmpxjbid0eb.png
+Cleaned up temporary file: /tmp/tmphxtx1f0r.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpy44ahrxy.png
+Output will be saved to: /tmp/tmpz7kn500f.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpy44ahrxy.png /tmp/tmpz7kn500f.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Loading image: /tmp/tmpy44ahrxy.png
+Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpy44ahrxy.png
+Cleaned up temporary file: /tmp/tmpz7kn500f.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmplp0ba_3n.png
+Output will be saved to: /tmp/tmpflol5aq7.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmplp0ba_3n.png /tmp/tmpflol5aq7.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Loading image: /tmp/tmplp0ba_3n.png
+Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmplp0ba_3n.png
+Cleaned up temporary file: /tmp/tmpflol5aq7.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpfnr9736k.png
+Output will be saved to: /tmp/tmpqdaf9xe0.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpfnr9736k.png /tmp/tmpqdaf9xe0.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Loading image: /tmp/tmpfnr9736k.png
+Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'bKGD' 41 6
+b'bKGD' 41 6 (unknown)
+STREAM b'IDAT' 59 8192
+Cleaned up temporary file: /tmp/tmpfnr9736k.png
+Cleaned up temporary file: /tmp/tmpqdaf9xe0.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpsg90slnq.png
+Output will be saved to: /tmp/tmprybpj54l.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpsg90slnq.png /tmp/tmprybpj54l.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Error in watermarking: Output file is empty
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py", line 217, in _apply_watermark
+    raise ValueError("Output file is empty")
+ValueError: Output file is empty
+Cleaned up temporary file: /tmp/tmpsg90slnq.png
+Cleaned up temporary file: /tmp/tmprybpj54l.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 100, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 40, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpz63l9xwo.png
+Output will be saved to: /tmp/tmp6u1wsasn.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpz63l9xwo.png /tmp/tmp6u1wsasn.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 40, "color": "#ff0000", "opacity": 100.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Creating temporary HTML file...
+Loading page...
+Reading input image...
+Applying watermark...
+Saving output...
+Cleaning up...
+Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpz63l9xwo.png
+Cleaned up temporary file: /tmp/tmp6u1wsasn.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpjzvy7a8n.png
+Output will be saved to: /tmp/tmpbg7lept5.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpjzvy7a8n.png /tmp/tmpbg7lept5.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Script stdout: Creating temporary HTML file...
+Loading page...
+Reading input image...
+Applying watermark...
+Saving output...
+Cleaning up...
+Watermark applied successfully
+
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpjzvy7a8n.png
+Cleaned up temporary file: /tmp/tmpbg7lept5.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpumcoa11f.png
+Output will be saved to: /tmp/tmpir7lxf6i.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpumcoa11f.png /tmp/tmpir7lxf6i.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: /home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:5
+fabric.nodeCanvas = require('canvas');
+                  ^
+
+TypeError: Cannot set properties of undefined (setting 'nodeCanvas')
+    at Object.<anonymous> (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:5:19)
+    at Module._compile (node:internal/modules/cjs/loader:1566:14)
+    at Object..js (node:internal/modules/cjs/loader:1718:10)
+    at Module.load (node:internal/modules/cjs/loader:1305:32)
+    at Function._load (node:internal/modules/cjs/loader:1119:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.4.0
+
+Cleaned up temporary file: /tmp/tmpumcoa11f.png
+Cleaned up temporary file: /tmp/tmpir7lxf6i.png
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Error in watermarking: name 'requests' is not defined
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py", line 184, in _apply_watermark
+    response = requests.post(
+               ^^^^^^^^
+NameError: name 'requests' is not defined
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Unauthorized: /image/5/
+Unauthorized: /image/5/
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Error in watermarking: name 'requests' is not defined
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py", line 185, in _apply_watermark
+    response = requests.post(
+               ^^^^^^^^
+NameError: name 'requests' is not defined
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Starting new HTTP connection (1): localhost:5173
+http://localhost:5173 "POST /api/watermark HTTP/1.1" 403 46
+Watermark request failed: 403
+Encoding detection: ascii is most likely the one.
+Response content: Cross-site POST form submissions are forbidden
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Starting new HTTP connection (1): localhost:5173
+http://localhost:5173 "POST /api/watermark HTTP/1.1" 500 28
+Watermark request failed: 500
+Response content: {"message":"Internal Error"}
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Starting new HTTP connection (1): localhost:5173
+http://localhost:5173 "POST /api/watermark HTTP/1.1" 500 28
+Watermark request failed: 500
+Response content: {"message":"Internal Error"}
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpslf32kob.png
+Output will be saved to: /tmp/tmpwvrpfbdo.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpslf32kob.png /tmp/tmpwvrpfbdo.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Error in watermarking: Output file is empty
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py", line 217, in _apply_watermark
+    raise ValueError("Output file is empty")
+ValueError: Output file is empty
+Cleaned up temporary file: /tmp/tmpslf32kob.png
+Cleaned up temporary file: /tmp/tmpwvrpfbdo.png
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmp1srddv1c.png
+Output will be saved to: /tmp/tmpe3xtsdmj.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp1srddv1c.png /tmp/tmpe3xtsdmj.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Error in watermarking: Output file is empty
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py", line 217, in _apply_watermark
+    raise ValueError("Output file is empty")
+ValueError: Output file is empty
+Cleaned up temporary file: /tmp/tmp1srddv1c.png
+Cleaned up temporary file: /tmp/tmpe3xtsdmj.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpg30rczo8.png
+Output will be saved to: /tmp/tmpqd5blr2m.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpg30rczo8.png /tmp/tmpqd5blr2m.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Error in watermarking: Output file is empty
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py", line 217, in _apply_watermark
+    raise ValueError("Output file is empty")
+ValueError: Output file is empty
+Cleaned up temporary file: /tmp/tmpg30rczo8.png
+Cleaned up temporary file: /tmp/tmpqd5blr2m.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmpn35cegnx.png
+Output will be saved to: /tmp/tmpi2im2ac6.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpn35cegnx.png /tmp/tmpi2im2ac6.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpn35cegnx.png
+Cleaned up temporary file: /tmp/tmpi2im2ac6.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 5
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpsziy5o7_.png
+Cleaned up temporary file: /tmp/tmpsziy5o7_.png
+Applying watermark with settings: {'font': 'Times New Roman', 'text': '© sagar', 'color': '#ff0000', 'opacity': 58, 'pattern': 'tiled', 'spacing': 55, 'fontSize': 32, 'rotation': 0, 'verticalOffset': 0, 'horizontalOffset': 2}
+Starting watermark application
+Saving input image to: /tmp/tmp8p9zvtxj.png
+Output will be saved to: /tmp/tmpxj9vzyaj.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp8p9zvtxj.png /tmp/tmpxj9vzyaj.png {"text": "\u00a9 sagar", "font": "Times New Roman", "fontSize": 32, "color": "#ff0000", "opacity": 58.0, "rotation": 0.0, "pattern": "tiled", "spacing": 55.0, "horizontalOffset": 2.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp8p9zvtxj.png
+Cleaned up temporary file: /tmp/tmpxj9vzyaj.png
+Saving final protected image...
+Protection chain completed successfully

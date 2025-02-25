@@ -135,16 +135,13 @@
 				watermarks = [];
 				currentZoom = 1;
 
-				// Set canvas to EXACT original image dimensions
-				const originalWidth = img.width;
-				const originalHeight = img.height;
-
+				// Set canvas dimensions
 				canvas.setDimensions({
-					width: originalWidth,
-					height: originalHeight
+					width: img.width,
+					height: img.height
 				});
 
-				// Set image at 1:1 scale
+				// Configure image settings
 				img.set({
 					left: 0,
 					top: 0,
@@ -156,47 +153,37 @@
 					scaleY: 1
 				});
 
+				// Set background image and add to canvas
 				backgroundImage = img;
 				canvas.add(backgroundImage);
-
-				// Calculate initial zoom to fit in container
-				const scaleX = CONTAINER_WIDTH / originalWidth;
-				const scaleY = CONTAINER_HEIGHT / originalHeight;
-				const initialZoom = Math.min(scaleX, scaleY, 1) * 0.9;
-				currentZoom = initialZoom;
-				canvas.setZoom(currentZoom);
-
 				updateWatermarks();
 				canvas.renderAll();
 			},
-			{ crossOrigin: 'anonymous' }
+			null,
+			{
+				crossOrigin: 'anonymous' // For handling cross-origin images
+			}
 		);
 	}
 
+	// Add zoom controls functions
 	function zoomIn() {
 		if (currentZoom < MAX_ZOOM) {
 			currentZoom = Math.min(currentZoom + ZOOM_STEP, MAX_ZOOM);
-			canvas.setZoom(currentZoom);
-			canvas.renderAll();
+			applyZoom();
 		}
 	}
 
 	function zoomOut() {
 		if (currentZoom > MIN_ZOOM) {
 			currentZoom = Math.max(currentZoom - ZOOM_STEP, MIN_ZOOM);
-			canvas.setZoom(currentZoom);
-			canvas.renderAll();
+			applyZoom();
 		}
 	}
 
 	function resetZoom() {
-		const originalWidth = backgroundImage.width;
-		const originalHeight = backgroundImage.height;
-		const scaleX = CONTAINER_WIDTH / originalWidth;
-		const scaleY = CONTAINER_HEIGHT / originalHeight;
-		currentZoom = Math.min(scaleX, scaleY, 1) * 0.9;
-		canvas.setZoom(currentZoom);
-		canvas.renderAll();
+		currentZoom = 1;
+		applyZoom();
 	}
 
 	function applyZoom() {
@@ -628,19 +615,16 @@
 	<Card>
 		<CardContent class="p-6">
 			<!-- Preview container with fixed size and scrollbars -->
-			<div
-				class="relative rounded-lg border bg-muted"
-				style="width: {CONTAINER_WIDTH}px; height: {CONTAINER_HEIGHT}px;"
-			>
+			<div class="relative rounded-lg border bg-muted" style="width: {CONTAINER_WIDTH}px;">
 				<!-- Zoom controls -->
 				<div class="absolute left-4 top-4 z-10 flex gap-2">
-					<Button variant="secondary" size="sm" on:click={zoomIn}>
+					<Button variant="secondary" size="sm" on:click={zoomIn} title="Zoom In">
 						<Plus class="h-4 w-4" />
 					</Button>
-					<Button variant="secondary" size="sm" on:click={zoomOut}>
+					<Button variant="secondary" size="sm" on:click={zoomOut} title="Zoom Out">
 						<Minus class="h-4 w-4" />
 					</Button>
-					<Button variant="secondary" size="sm" on:click={resetZoom}>
+					<Button variant="secondary" size="sm" on:click={resetZoom} title="Reset Zoom">
 						<RotateCcw class="h-4 w-4" />
 					</Button>
 					<span class="rounded bg-white/80 px-2 py-1 text-sm font-medium">
@@ -649,9 +633,14 @@
 				</div>
 
 				<!-- Scrollable container -->
-				<div class="h-full w-full overflow-auto" on:wheel={handleWheel}>
+				<div
+					class="relative overflow-auto"
+					style="width: 100%; height: {CONTAINER_HEIGHT}px;"
+					on:wheel={handleWheel}
+				>
+					<!-- Canvas wrapper -->
 					<div class="relative inline-block">
-						<canvas bind:this={canvasElement}></canvas>
+						<canvas bind:this={canvasElement} style="display: block;"></canvas>
 					</div>
 				</div>
 			</div>

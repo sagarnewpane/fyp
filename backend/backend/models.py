@@ -130,9 +130,20 @@ class ImageAccess(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    protection_features = models.JSONField(default=dict, blank=True)
+    protected_image = models.ImageField(upload_to='protected_images/', null=True, blank=True)
+
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = secrets.token_urlsafe(32)
+
+        if not self.protection_features:
+            self.protection_features = {
+                'watermark': False,
+                'hidden_watermark': False,
+                'metadata': False,
+                'ai_protection': False
+            }
 
         # Hash password if it's provided and changed
         if self.requires_password and self.password and not self.password.startswith('pbkdf2_'):

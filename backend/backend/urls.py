@@ -42,8 +42,10 @@ urlpatterns = [
 
 
     path('images/<int:image_id>/access/', CreateAccessView.as_view()),
+    path('images/<int:image_id>/access/<int:rule_id>/', CreateAccessView.as_view(), name='image-access-detail'),
     path('access/<str:token>/initiate/', InitiateAccessView.as_view()),
     path('access/<str:token>/verify/', VerifyOTPView.as_view()),
+
 ]
 
 if settings.DEBUG:
