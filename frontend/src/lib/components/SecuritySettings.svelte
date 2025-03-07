@@ -18,7 +18,8 @@
 			description: 'Control who can view and download your images with user-specific permissions.',
 			icon: Shield,
 			applied: protectionStatus.access_control,
-			action: 'Manage Access'
+			action: 'Manage Access',
+			url: `/access/${imageId}`
 		},
 		{
 			title: 'Watermarking Protection',

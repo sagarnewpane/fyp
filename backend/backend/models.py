@@ -117,7 +117,8 @@ class InvisibleWatermarkSettings(models.Model):
 from django.contrib.auth.hashers import make_password, check_password as django_check_password
 
 class ImageAccess(models.Model):
-    user_image = models.ForeignKey('UserImage', on_delete=models.CASCADE)
+
+    user_image = models.ForeignKey('UserImage', on_delete=models.CASCADE, related_name='access_rules')
     token = models.CharField(max_length=64, unique=True, db_index=True)
     allowed_emails = models.JSONField(default=list, blank=True)
     requires_password = models.BooleanField(default=False)
@@ -186,10 +187,34 @@ class OTPSecret(models.Model):
         expiry_time = self.created_at + timedelta(minutes=5)
         return not self.is_used and timezone.now() <= expiry_time
 
+
+
+class AccessLog(models.Model):
+    image_access = models.ForeignKey(ImageAccess, on_delete=models.CASCADE)
+    email = models.EmailField()
+    ip_address = models.GenericIPAddressField(null=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
+    region = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    accessed_at = models.DateTimeField(auto_now_add=True)
+    action_type = models.CharField(max_length=20, choices=[
+        ('VIEW', 'Viewed'),
+        ('DOWNLOAD', 'Downloaded'),
+        ('ATTEMPT', 'Access Attempt')
+    ])
+    success = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-accessed_at']
+
+    def __str__(self):
+        return f"{self.email} - {self.action_type} - {self.accessed_at}"
+
+
 # SIGNALS
 
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 @receiver(post_save, sender=WatermarkSettings)
@@ -207,3 +232,12 @@ def update_user_image_ai_protection(sender, instance, **kwargs):
     if user_image.hidden_watermark_enabled != instance.enabled:
         user_image.hidden_watermark_enabled = instance.enabled
         user_image.save(update_fields=['hidden_watermark_enabled'])  # Prevent infinite loop
+
+
+@receiver([post_save, post_delete], sender=ImageAccess)
+def update_access_control_status(sender, instance, **kwargs):
+    image = instance.user_image
+    has_access_rules = ImageAccess.objects.filter(user_image=image).exists()  # Changed this line
+    if image.access_control_enabled != has_access_rules:
+        image.access_control_enabled = has_access_rules
+        image.save(update_fields=['access_control_enabled'])

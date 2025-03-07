@@ -615,6 +615,11 @@ class CreateAccessView(APIView):
                         protected_image=protected_image,
                         # ... other fields ...
                     )
+
+                    # Update hidden_watermark_enabled flag
+                    # user_image.access_control_enabled = True
+                    # user_image.save(update_fields=['access_control_enabled'])
+
                     return Response({
                         'status': 'success',
                         'access_rule_id': access_rule.id
@@ -775,6 +780,11 @@ class InitiateAccessView(APIView):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+from .utils import SimpleLocationCollector
+import logging
+
+logger = logging.getLogger(__name__)
+
 class VerifyOTPView(APIView):
     permission_classes = [AllowAny]
 
@@ -803,43 +813,134 @@ class VerifyOTPView(APIView):
         return user_image.image.url
 
     def post(self, request, token):
-        try:
-            email = request.data.get('email')
-            provided_otp = request.data.get('otp')
+            try:
+                email = request.data.get('email')
+                provided_otp = request.data.get('otp')
 
-            if not email or not provided_otp:
-                return Response({'error': 'Email and OTP are required'}, status=400)
+                if not email or not provided_otp:
+                    return Response({'error': 'Email and OTP are required'}, status=400)
 
-            access = ImageAccess.objects.get(token=token)
+                try:
+                    access = ImageAccess.objects.get(token=token)
+                except ImageAccess.DoesNotExist:
+                    return Response({'error': 'Invalid token'}, status=404)
 
-            # Verify OTP
-            if not OTPHandler.verify_otp(access, email, provided_otp):
-                return Response({'error': 'Invalid or expired OTP'}, status=400)
+                # Get location data with logging
+                location_data = SimpleLocationCollector.get_location_data(request)
+                logger.info(f"Location data received: {location_data}")
 
-            # Use the pre-generated protected image if available
-            image_url = access.protected_image.url if access.protected_image else access.user_image.image.url
+                # Create access log with location data
+                access_log = AccessLog.objects.create(
+                    image_access=access,
+                    email=email,
+                    ip_address=location_data.get('ip_address'),
+                    country=location_data.get('country'),
+                    region=location_data.get('region'),
+                    city=location_data.get('city'),
+                    action_type='ATTEMPT',
+                    success=False
+                )
+                logger.info(f"Access log created: {access_log.id}")
 
-            # Increment view count
-            access.current_views += 1
-            access.save()
+                # Verify OTP
+                if not OTPHandler.verify_otp(access, email, provided_otp):
+                    return Response({'error': 'Invalid or expired OTP'}, status=400)
 
-            # Construct full URL
-            if request.is_secure():
-                protocol = 'https://'
-            else:
-                protocol = 'http://'
-            domain = request.get_host()
-            full_image_url = f"{protocol}{domain}{image_url}"
+                # Update access log to successful
+                access_log.action_type = 'VIEW'
+                access_log.success = True
+                access_log.save()
 
-            return Response({
-                'message': 'Access granted',
-                'image_url': full_image_url,
-                'allow_download': access.allow_download,
-                'protection_features': access.protection_features
-            })
+                # Use the pre-generated protected image if available
+                image_url = access.protected_image.url if access.protected_image else access.user_image.image.url
 
-        except ImageAccess.DoesNotExist:
-            return Response({'error': 'Invalid token'}, status=404)
-        except Exception as e:
-            print(f"Error: {str(e)}")
-            return Response({'error': 'Verification failed'}, status=500)
+                # Construct full URL
+                protocol = 'https://' if request.is_secure() else 'http://'
+                domain = request.get_host()
+                full_image_url = f"{protocol}{domain}{image_url}"
+
+                # Return success response
+                return Response({
+                    'message': 'Access granted',
+                    'image_url': full_image_url,
+                    'allow_download': access.allow_download,
+                    'protection_features': access.protection_features
+                })
+
+            except Exception as e:
+                logger.error(f"Error in VerifyOTPView: {str(e)}", exc_info=True)
+                return Response(
+                    {'error': f'Verification failed: {str(e)}'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from .models import AccessLog, UserImage
+from .serializers import AccessLogSerializer
+from django.db.models import Q
+
+class AccessLogView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Get query parameters
+        image_id = request.query_params.get('image_id')
+        date_from = request.query_params.get('date_from')
+        date_to = request.query_params.get('date_to')
+        action_type = request.query_params.get('action_type')
+        search = request.query_params.get('search')
+
+        # Base queryset - get logs for all images owned by the user
+        queryset = AccessLog.objects.filter(
+            image_access__user_image__user=request.user
+        )
+
+        # Apply filters
+        if image_id:
+            queryset = queryset.filter(image_access__user_image_id=image_id)
+
+        if date_from:
+            queryset = queryset.filter(accessed_at__gte=date_from)
+
+        if date_to:
+            queryset = queryset.filter(accessed_at__lte=date_to)
+
+        if action_type:
+            queryset = queryset.filter(action_type=action_type)
+
+        if search:
+            queryset = queryset.filter(
+                Q(email__icontains=search) |
+                Q(location__icontains=search) |
+                Q(ip_address__icontains=search)
+            )
+
+        # Serialize and return data
+        serializer = AccessLogSerializer(queryset, many=True)
+
+        return Response({
+            'count': queryset.count(),
+            'results': serializer.data
+        })
+
+    def delete(self, request):
+        # Allow users to clear their access logs
+        image_id = request.query_params.get('image_id')
+
+        if image_id:
+            # Delete logs for specific image
+            AccessLog.objects.filter(
+                image_access__user_image_id=image_id,
+                image_access__user_image__user=request.user
+            ).delete()
+        else:
+            # Delete all logs for user's images
+            AccessLog.objects.filter(
+                image_access__user_image__user=request.user
+            ).delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -1290,3 +1290,669 @@ Cleaned up temporary file: /tmp/tmp8p9zvtxj.png
 Cleaned up temporary file: /tmp/tmpxj9vzyaj.png
 Saving final protected image...
 Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Image: failed to import FpxImagePlugin: No module named 'olefile'
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Image: failed to import MicImagePlugin: No module named 'olefile'
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+Not Found: /image/undefined
+Not Found: /image/undefined
+Not Found: /image/undefined
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpvp6b4lyv.png
+Cleaned up temporary file: /tmp/tmpvp6b4lyv.png
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpqnrzzohr.png
+Output will be saved to: /tmp/tmpbxpmqz46.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpqnrzzohr.png /tmp/tmpbxpmqz46.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpqnrzzohr.png
+Cleaned up temporary file: /tmp/tmpbxpmqz46.png
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmptyhxcqhy.png
+Output will be saved to: /tmp/tmpz5s_1dl1.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmptyhxcqhy.png /tmp/tmpz5s_1dl1.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmptyhxcqhy.png
+Cleaned up temporary file: /tmp/tmpz5s_1dl1.png
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp52qrg4yz.png
+Output will be saved to: /tmp/tmpnix_w0in.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp52qrg4yz.png /tmp/tmpnix_w0in.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp52qrg4yz.png
+Cleaned up temporary file: /tmp/tmpnix_w0in.png
+Saving final protected image...
+Protection chain completed successfully
+Internal Server Error: /images/6/access/
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpnae29yxb.png
+Output will be saved to: /tmp/tmpyuhzn_t7.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpnae29yxb.png /tmp/tmpyuhzn_t7.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: Error applying watermark: TimeoutError: Navigation timeout of 30000 ms exceeded
+    at new Deferred (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/util/Deferred.js:60:34)
+    at Deferred.create (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/util/Deferred.js:21:16)
+    at new LifecycleWatcher (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/LifecycleWatcher.js:69:60)
+    at CdpFrame.setContent (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Frame.js:232:29)
+    at async CdpPage.setContent (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:568:13)
+    at async applyWatermark (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:141:3)
+
+Cleaned up temporary file: /tmp/tmpnae29yxb.png
+Cleaned up temporary file: /tmp/tmpyuhzn_t7.png
+Saving final protected image...
+Protection chain completed successfully
+Internal Server Error: /images/6/access/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpo9seqn8w.png
+Output will be saved to: /tmp/tmpo3wt6x8g.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpo9seqn8w.png /tmp/tmpo3wt6x8g.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpo9seqn8w.png
+Cleaned up temporary file: /tmp/tmpo3wt6x8g.png
+Saving final protected image...
+Protection chain completed successfully
+Internal Server Error: /images/6/access/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp9j90zbsc.png
+Output will be saved to: /tmp/tmpzfe1_5x_.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp9j90zbsc.png /tmp/tmpzfe1_5x_.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp9j90zbsc.png
+Cleaned up temporary file: /tmp/tmpzfe1_5x_.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp97o9i_oe.png
+Output will be saved to: /tmp/tmp0aipnh2f.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp97o9i_oe.png /tmp/tmp0aipnh2f.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp97o9i_oe.png
+Cleaned up temporary file: /tmp/tmp0aipnh2f.png
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpdlm0qxfk.png
+Output will be saved to: /tmp/tmpfkhmlqys.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpdlm0qxfk.png /tmp/tmpfkhmlqys.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpdlm0qxfk.png
+Cleaned up temporary file: /tmp/tmpfkhmlqys.png
+Saving final protected image...
+Protection chain completed successfully
+Internal Server Error: /images/6/access/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpb7mmvish.png
+Output will be saved to: /tmp/tmpa821y2nm.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpb7mmvish.png /tmp/tmpa821y2nm.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpb7mmvish.png
+Cleaned up temporary file: /tmp/tmpa821y2nm.png
+Saving final protected image...
+Protection chain completed successfully
+Internal Server Error: /images/6/access/
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpmkof21qv.png
+Output will be saved to: /tmp/tmp5tokeqng.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpmkof21qv.png /tmp/tmp5tokeqng.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpmkof21qv.png
+Cleaned up temporary file: /tmp/tmp5tokeqng.png
+Saving final protected image...
+Protection chain completed successfully
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Saving final protected image...
+Protection chain completed successfully
+Internal Server Error: /access/f4vXmr_MKMCbDYwsFItNfr0Eyn2XwJqu6YhWyXVcHxQ/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /access/f4vXmr_MKMCbDYwsFItNfr0Eyn2XwJqu6YhWyXVcHxQ/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): ipinfo.io:443
+https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting new HTTPS connection (1): ipinfo.io:443
+https://ipinfo.io:443 "GET /127.0.0.1/json HTTP/1.1" 200 None
+Unauthorized: /verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 5
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/3d-character-red-hair-01_ci3zgVV.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Saving final protected image...
+Protection chain completed successfully
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 4
+Internal Server Error: /access/nYba92PkmovFIHaJfVWqpV42AtNzs9vYWKvwm2npyB8/verify/
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 511, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 423, in finalize_response
+    assert isinstance(response, HttpResponseBase), (
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Expected a `Response`, `HttpResponse` or `StreamingHttpResponse` to be returned from the view, but received a `<class 'NoneType'>`
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 5
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 6
+Bad Request: /access/nYba92PkmovFIHaJfVWqpV42AtNzs9vYWKvwm2npyB8/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 7
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpb8wto1of.png
+Cleaned up temporary file: /tmp/tmpb8wto1of.png
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp2uguc8o1.png
+Output will be saved to: /tmp/tmpob780g09.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp2uguc8o1.png /tmp/tmpob780g09.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp2uguc8o1.png
+Cleaned up temporary file: /tmp/tmpob780g09.png
+Saving final protected image...
+Protection chain completed successfully
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp0ghrnyu2.png
+Output will be saved to: /tmp/tmpl7jer2q3.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp0ghrnyu2.png /tmp/tmpl7jer2q3.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp0ghrnyu2.png
+Cleaned up temporary file: /tmp/tmpl7jer2q3.png
+Saving final protected image...
+Protection chain completed successfully
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 8
+Bad Request: /access/_EDPLrhCt_5F2zb5KuWAELJDkkIIOFO6EPzk3wOw_nk/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 9
+Starting protection chain for image 6
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Saving final protected image...
+Protection chain completed successfully
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /access-logs/
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py", line 927, in get
+    'results': serializer.data
+               ^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 714, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 523, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 384, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 372, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 1103, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 1249, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 1367, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `user_agent` is not valid for model `AccessLog` in `backend.serializers.AccessLogSerializer`.
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /access-logs/
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py", line 927, in get
+    'results': serializer.data
+               ^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 714, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 523, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 384, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ~~~~~~~~~^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 372, in fields
+    for key, value in self.get_fields().items():
+                      ~~~~~~~~~~~~~~~^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 1103, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ~~~~~~~~~~~~~~~~^
+        source, info, model, depth
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 1249, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 1367, in build_unknown_field
+    raise ImproperlyConfigured(
+    ...<2 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: Field name `location` is not valid for model `AccessLog` in `backend.serializers.AccessLogSerializer`.
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 6
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Opening original image from path: /home/sagar/Documents/FYP/igaurdian/backend/media/uploads/WhatsApp_Image_2024-12-24_at_5.49.21_PM.png
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 65536
+Initial image size: (1200, 1600)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmp11i1lzwn.png
+Cleaned up temporary file: /tmp/tmp11i1lzwn.png
+Applying watermark with settings: {'font': 'Georgia', 'text': '© ankit', 'color': '#000000', 'opacity': 66, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 48, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmp_8s3qbyz.png
+Output will be saved to: /tmp/tmponh59oo8.png
+Watermark settings: {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp_8s3qbyz.png /tmp/tmponh59oo8.png {"text": "\u00a9 ankit", "font": "Georgia", "fontSize": 48, "color": "#000000", "opacity": 66.0, "rotation": 45.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp_8s3qbyz.png
+Cleaned up temporary file: /tmp/tmponh59oo8.png
+Saving final protected image...
+Protection chain completed successfully

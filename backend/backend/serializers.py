@@ -236,3 +236,69 @@ class AccessVerificationSerializer(serializers.Serializer):
 class OTPVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()
     otp = serializers.CharField()
+
+
+
+
+from rest_framework import serializers
+from .models import AccessLog
+
+class AccessLogSerializer(serializers.ModelSerializer):
+    image_name = serializers.SerializerMethodField()
+    image_id = serializers.SerializerMethodField()
+    action_type = serializers.CharField()
+    accessed_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    location = serializers.SerializerMethodField()
+    protection_features = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AccessLog
+        fields = [
+            'id',
+            'email',
+            'ip_address',
+            'country',
+            'region',
+            'city',
+            'accessed_at',
+            'action_type',
+            'success',
+            'image_id',
+            'image_name',
+            'location',
+            'protection_features'
+        ]
+
+    def get_image_name(self, obj):
+        try:
+            return obj.image_access.user_image.image_name
+        except AttributeError:
+            return None
+
+    def get_image_id(self, obj):
+        try:
+            return obj.image_access.user_image.id
+        except AttributeError:
+            return None
+
+    def get_location(self, obj):
+        location_parts = []
+        if obj.city:
+            location_parts.append(obj.city)
+        if obj.region:
+            location_parts.append(obj.region)
+        if obj.country:
+            location_parts.append(obj.country)
+        return ", ".join(filter(None, location_parts))
+
+    def get_protection_features(self, obj):
+        try:
+            return obj.image_access.protection_features
+        except AttributeError:
+            return {}
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        # Format action type for display
+        data['action_type'] = instance.action_type.replace('_', ' ').title()
+        return data

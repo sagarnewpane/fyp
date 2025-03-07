@@ -308,3 +308,107 @@ class ProtectionChain:
         except Exception as e:
             print(f"Metadata stripping error: {str(e)}")
             return image
+
+
+import requests
+from django.core.cache import cache
+import logging
+
+logger = logging.getLogger(__name__)
+
+class SimpleLocationCollector:
+    @staticmethod
+    def get_client_ip(request):
+        """Get client IP address from request object."""
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0].strip()
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+
+        # For development/testing, if IP is localhost/127.0.0.1, use a default public IP
+        if ip in ['127.0.0.1', 'localhost', '::1']:
+            ip = '8.8.8.8'  # Using Google's DNS IP as default for testing
+
+        return ip
+
+    @staticmethod
+    def get_location_data(request):
+        """Get approximate location data based on IP address."""
+        try:
+            client_ip = SimpleLocationCollector.get_client_ip(request)
+            logger.info(f"Getting location data for IP: {client_ip}")
+
+            # Try to get cached data
+            cache_key = f'location_{client_ip}'
+            cached_data = cache.get(cache_key)
+            if cached_data:
+                logger.info(f"Retrieved cached location data for IP: {client_ip}")
+                return cached_data
+
+            # Try different free IP geolocation services
+            # Method 1: ipapi.co
+            try:
+                response = requests.get(f'https://ipapi.co/{client_ip}/json/')
+                if response.status_code == 200:
+                    data = response.json()
+                    if 'error' not in data:
+                        location_data = {
+                            'country': data.get('country_name'),
+                            'region': data.get('region'),
+                            'city': data.get('city'),
+                            'ip_address': client_ip
+                        }
+                        cache.set(cache_key, location_data, 60 * 60 * 24)  # Cache for 24 hours
+                        logger.info(f"Successfully got location data from ipapi.co: {location_data}")
+                        return location_data
+            except Exception as e:
+                logger.warning(f"ipapi.co request failed: {str(e)}")
+
+            # Method 2: ip-api.com (fallback)
+            try:
+                response = requests.get(f'http://ip-api.com/json/{client_ip}')
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get('status') == 'success':
+                        location_data = {
+                            'country': data.get('country'),
+                            'region': data.get('regionName'),
+                            'city': data.get('city'),
+                            'ip_address': client_ip
+                        }
+                        cache.set(cache_key, location_data, 60 * 60 * 24)
+                        logger.info(f"Successfully got location data from ip-api.com: {location_data}")
+                        return location_data
+            except Exception as e:
+                logger.warning(f"ip-api.com request failed: {str(e)}")
+
+            # Method 3: extreme-ip-lookup.com (second fallback)
+            try:
+                response = requests.get(f'https://extreme-ip-lookup.com/json/{client_ip}')
+                if response.status_code == 200:
+                    data = response.json()
+                    location_data = {
+                        'country': data.get('country'),
+                        'region': data.get('region'),
+                        'city': data.get('city'),
+                        'ip_address': client_ip
+                    }
+                    cache.set(cache_key, location_data, 60 * 60 * 24)
+                    logger.info(f"Successfully got location data from extreme-ip-lookup.com: {location_data}")
+                    return location_data
+            except Exception as e:
+                logger.warning(f"extreme-ip-lookup.com request failed: {str(e)}")
+
+        except Exception as e:
+            logger.error(f"Error in get_location_data: {str(e)}")
+
+        # Default response if all methods fail
+        default_data = {
+            'country': 'Unknown',
+            'region': 'Unknown',
+            'city': 'Unknown',
+            'ip_address': client_ip
+        }
+        logger.warning(f"Using default location data: {default_data}")
+        return default_data

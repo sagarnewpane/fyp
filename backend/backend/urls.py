@@ -17,7 +17,8 @@ from .views import (
     InvisibleWatermarkView,
     InitiateAccessView,
     CreateAccessView,
-    VerifyOTPView
+    VerifyOTPView,
+    AccessLogView
 
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -46,6 +47,7 @@ urlpatterns = [
     path('access/<str:token>/initiate/', InitiateAccessView.as_view()),
     path('access/<str:token>/verify/', VerifyOTPView.as_view()),
 
+    path('access-logs/', AccessLogView.as_view(), name='access-logs'),
 ]
 
 if settings.DEBUG:
