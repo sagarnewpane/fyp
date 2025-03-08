@@ -135,8 +135,9 @@
 			<CardHeader>
 				<CardTitle>Access Logs</CardTitle>
 				<CardDescription
-					>Track all access attempts and views of your protected images</CardDescription
-				>
+					>Track all access attempts and views of your protected images<br />
+					<p class="mt-2 text-muted-foreground">Double click to view more detials.</p>
+				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				{#if isLoading}

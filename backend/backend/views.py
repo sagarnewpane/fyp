@@ -573,6 +573,7 @@ class CreateAccessView(APIView):
                 access_rules = ImageAccess.objects.filter(user_image=user_image)
 
                 rules_data = [{
+                    'access_name': rule.access_name,
                     'id': rule.id,
                     'token': rule.token,
                     'allowed_emails': rule.allowed_emails,
@@ -600,39 +601,67 @@ class CreateAccessView(APIView):
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request, image_id):
-            try:
-                user_image = UserImage.objects.get(id=image_id, user=request.user)
+        try:
+            # Verify image ownership
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
 
-                # Create protected version of the image
-                protected_image = ProtectionChain.create_protected_image(
-                    user_image,
-                    request.data.get('protection_features', {})
-                )
+            # Create data dictionary with all required fields
+            access_data = {
+                'user_image': user_image.id,
+                'allowed_emails': request.data.get('allowed_emails', []),
+                'requires_password': request.data.get('requires_password', False),
+                'password': request.data.get('password'),
+                'allow_download': request.data.get('allow_download', False),
+                'max_views': request.data.get('max_views', 0),
+                'protection_features': request.data.get('protection_features', {})
+            }
 
-                if protected_image:
-                    access_rule = ImageAccess.objects.create(
-                        user_image=user_image,
-                        protected_image=protected_image,
-                        # ... other fields ...
+            # Only add access_name if it's provided, otherwise it will use the model default
+            if request.data.get('access_name'):
+                access_data['access_name'] = request.data['access_name']
+
+            # Validate and save using serializer
+            serializer = ImageAccessSerializer(data=access_data)
+            if serializer.is_valid():
+                access_rule = serializer.save()
+
+                # Create protected version of the image if protection features are specified
+                if access_data['protection_features']:
+                    protected_image = ProtectionChain.create_protected_image(
+                        user_image,
+                        access_data['protection_features']
                     )
+                    if protected_image:
+                        access_rule.protected_image = protected_image
+                        access_rule.save()
 
-                    # Update hidden_watermark_enabled flag
-                    # user_image.access_control_enabled = True
-                    # user_image.save(update_fields=['access_control_enabled'])
-
-                    return Response({
-                        'status': 'success',
-                        'access_rule_id': access_rule.id
-                    })
-                else:
-                    return Response({
-                        'error': 'Failed to create protected image'
-                    }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            except Exception as e:
                 return Response({
-                    'error': str(e)
-                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    'status': 'success',
+                    'access_rule': {
+                        'id': access_rule.id,
+                        'token': access_rule.token,
+                        'allowed_emails': access_rule.allowed_emails,
+                        'requires_password': access_rule.requires_password,
+                        'allow_download': access_rule.allow_download,
+                        'max_views': access_rule.max_views,
+                        'protection_features': access_rule.protection_features,
+                        'created_at': access_rule.created_at
+                    }
+                }, status=status.HTTP_201_CREATED)
+            else:
+                return Response({
+                    'error': 'Invalid data',
+                    'details': serializer.errors
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+        except UserImage.DoesNotExist:
+            return Response({
+                'error': 'Image not found or unauthorized access'
+            }, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def _validate_protection_features(self, user_image, features):
         """Validate that requested protection features are available"""

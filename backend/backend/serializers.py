@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from .models import UserImage, UserProfile, WatermarkSettings
+from django.contrib.auth.hashers import make_password
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -226,8 +227,34 @@ from .models import ImageAccess
 class ImageAccessSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageAccess
-        fields = '__all__'
-        read_only_fields = ('token', 'current_views')
+        fields = [
+            'id',
+            'access_name',
+            'user_image',
+            'token',
+            'allowed_emails',
+            'requires_password',
+            'password',
+            'allow_download',
+            'max_views',
+            'current_views',
+            'protection_features',
+            'created_at'
+        ]
+        read_only_fields = ['id', 'token', 'current_views', 'created_at']
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'access_name': {'required': False}
+        }
+
+    def create(self, validated_data):
+        # Handle password hashing if password is provided
+        password = validated_data.pop('password', None)
+        instance = super().create(validated_data)
+        if password:
+            instance.password = make_password(password)
+            instance.save()
+        return instance
 
 class AccessVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()

@@ -118,6 +118,7 @@ from django.contrib.auth.hashers import make_password, check_password as django_
 
 class ImageAccess(models.Model):
 
+    access_name = models.CharField(max_length=255, default='Access Log')
     user_image = models.ForeignKey('UserImage', on_delete=models.CASCADE, related_name='access_rules')
     token = models.CharField(max_length=64, unique=True, db_index=True)
     allowed_emails = models.JSONField(default=list, blank=True)
@@ -162,14 +163,6 @@ class ImageAccess(models.Model):
         if self.max_views > 0 and self.current_views >= self.max_views:
             return False
         return True
-
-class AccessLog(models.Model):
-    image_access = models.ForeignKey(ImageAccess, on_delete=models.CASCADE)
-    email = models.EmailField()
-    ip_address = models.GenericIPAddressField()
-    accessed_at = models.DateTimeField(auto_now_add=True)
-    success = models.BooleanField(default=True)
-
 
 from django.db import models
 from django.utils import timezone

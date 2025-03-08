@@ -24,8 +24,18 @@
 		Eye,
 		SpellCheck,
 		Database,
-		Brain
+		Brain,
+		MoreVertical,
+		Copy
 	} from 'lucide-svelte';
+
+	import {
+		DropdownMenu,
+		DropdownMenuTrigger,
+		DropdownMenuContent,
+		DropdownMenuItem,
+		DropdownMenuSeparator
+	} from '$lib/components/ui/dropdown-menu';
 
 	// Props
 	export let imageUrl;
@@ -37,6 +47,7 @@
 	let isSaving = false;
 	let isLoading = false;
 	let newAccess = {
+		access_name: '',
 		allowed_emails: [],
 		requires_password: false,
 		password: '',
@@ -177,6 +188,7 @@
 
 	function resetForm() {
 		newAccess = {
+			access_name: '',
 			allowed_emails: [],
 			requires_password: false,
 			password: '',
@@ -228,87 +240,125 @@
 					<!-- Active Rules Tab -->
 					<TabsContent value="current" class="space-y-4">
 						{#if isLoading}
-							<div class="flex justify-center p-4">
-								<div class="h-8 w-8 animate-spin rounded-full border-b-2 border-primary" />
+							<div class="flex justify-center p-6">
+								<div
+									class="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"
+								/>
 							</div>
 						{:else if activeAccessRules.length === 0}
-							<Alert>
-								<AlertTitle>No active rules</AlertTitle>
-								<AlertDescription>
+							<div class="flex flex-col items-center justify-center p-8 text-center">
+								<Shield class="mb-4 h-12 w-12 text-muted-foreground" />
+								<AlertTitle class="mb-2 text-xl font-semibold">No active rules</AlertTitle>
+								<AlertDescription class="text-muted-foreground">
 									Create new access rules to share your image securely.
 								</AlertDescription>
-							</Alert>
+							</div>
 						{:else}
 							<div class="custom-scrollbar max-h-[45vh] space-y-4 overflow-y-auto pr-2">
 								{#each activeAccessRules as rule (rule.id)}
-									<Card>
-										<CardContent class="p-4">
-											<div class="flex items-start justify-between gap-4">
-												<div class="space-y-2">
-													<div class="flex items-center gap-2">
-														<h4 class="font-semibold">Access Rule</h4>
-														<Badge variant="secondary">
-															{rule.requires_password ? 'Password Protected' : 'Open Access'}
+									<Card class="transition-all duration-200 hover:shadow-md">
+										<CardContent class="p-5">
+											<div class="flex flex-col gap-4">
+												<!-- Header Section -->
+												<div class="flex items-start justify-between">
+													<div class="space-y-1">
+														<h4 class="text-lg font-semibold tracking-tight">{rule.access_name}</h4>
+														<Badge
+															variant={rule.requires_password ? 'secondary' : 'outline'}
+															class="font-medium"
+														>
+															{rule.requires_password ? '🔒 Password Protected' : '🔓 Open Access'}
 														</Badge>
 													</div>
 
-													<!-- Access Link -->
-													<div class="flex items-center gap-2">
-														<code class="rounded bg-muted px-2 py-1 text-sm">
-															{rule.token}
-														</code>
-														<Button
-															variant="ghost"
-															size="sm"
-															on:click={() => copyAccessLink(rule.token)}
-														>
-															<Link class="h-4 w-4" />
-														</Button>
-													</div>
+													<DropdownMenu>
+														<DropdownMenuTrigger>
+															<Button variant="ghost" size="icon" class="h-8 w-8 p-0">
+																<MoreVertical class="h-4 w-4" />
+															</Button>
+														</DropdownMenuTrigger>
+														<DropdownMenuContent>
+															<DropdownMenuItem on:click={() => copyAccessLink(rule.token)}>
+																<Link class="mr-2 h-4 w-4" />
+																<span>Copy link</span>
+															</DropdownMenuItem>
+															<DropdownMenuSeparator />
+															<DropdownMenuItem
+																class="text-destructive"
+																on:click={() => deleteAccessRule(rule.id)}
+															>
+																<Trash2 class="mr-2 h-4 w-4" />
+																<span>Delete</span>
+															</DropdownMenuItem>
+														</DropdownMenuContent>
+													</DropdownMenu>
+												</div>
 
-													<!-- Allowed Emails -->
-													{#if rule.allowed_emails.length > 0}
+												<!-- Access Link Section -->
+												<div class="flex items-center gap-2 rounded-md bg-muted p-2">
+													<code class="flex-1 overflow-x-auto whitespace-nowrap text-sm">
+														{rule.token}
+													</code>
+													<Button
+														variant="ghost"
+														size="sm"
+														class="shrink-0"
+														on:click={() => copyAccessLink(rule.token)}
+													>
+														<Copy class="h-4 w-4" />
+													</Button>
+												</div>
+
+												<!-- Allowed Emails Section -->
+												{#if rule.allowed_emails && rule.allowed_emails.length > 0}
+													<div class="space-y-2">
+														<label class="text-xs font-medium text-muted-foreground">
+															Authorized Emails
+														</label>
 														<div class="flex flex-wrap gap-2">
 															{#each rule.allowed_emails as email}
-																<Badge variant="outline">{email}</Badge>
+																<Badge variant="secondary" class="flex items-center gap-1">
+																	<Mail class="h-3 w-3" />
+																	{email}
+																</Badge>
 															{/each}
 														</div>
-													{/if}
+													</div>
+												{/if}
 
-													<!-- Stats & Features -->
-													<div class="flex flex-wrap gap-3 text-sm text-muted-foreground">
+												<!-- Stats & Features Section -->
+												<div class="border-t pt-3">
+													<div class="flex flex-wrap gap-4 text-sm text-muted-foreground">
 														{#if rule.max_views > 0}
-															<span class="flex items-center gap-1">
-																<Eye class="h-4 w-4" />
-																{rule.current_views}/{rule.max_views} views
-															</span>
+															<div class="flex items-center gap-2">
+																<div class="rounded-full bg-muted p-1">
+																	<Eye class="h-4 w-4" />
+																</div>
+																<span>{rule.current_views}/{rule.max_views} views</span>
+															</div>
 														{/if}
 														{#if rule.allow_download}
-															<span class="flex items-center gap-1">
-																<Download class="h-4 w-4" />
-																Downloads allowed
-															</span>
+															<div class="flex items-center gap-2">
+																<div class="rounded-full bg-muted p-1">
+																	<Download class="h-4 w-4" />
+																</div>
+																<span>Downloads allowed</span>
+															</div>
 														{/if}
 														{#if rule.protection_features}
 															{#each Object.entries(protectionStatus) as [key, status]}
 																{#if rule.protection_features[key]}
-																	<span class="flex items-center gap-1">
-																		<svelte:component this={status.icon} class="h-4 w-4" />
-																		{status.title}
-																	</span>
+																	<div class="flex items-center gap-2">
+																		<div class="rounded-full bg-muted p-1">
+																			<svelte:component this={status.icon} class="h-4 w-4" />
+																		</div>
+																		<span>{status.title}</span>
+																	</div>
 																{/if}
 															{/each}
 														{/if}
 													</div>
 												</div>
-
-												<Button
-													variant="destructive"
-													size="sm"
-													on:click={() => deleteAccessRule(rule.id)}
-												>
-													<Trash2 class="h-4 w-4" />
-												</Button>
 											</div>
 										</CardContent>
 									</Card>
@@ -320,6 +370,17 @@
 					<!-- Create New Rule Tab -->
 					<TabsContent value="new" class="space-y-4">
 						<div class="grid gap-4">
+							<!-- Email Input -->
+							<div class="space-y-2">
+								<Label>Access Name (Optional)</Label>
+								<div class="flex gap-2">
+									<Input
+										type="text"
+										placeholder="Give a name to Access"
+										bind:value={newAccess.access_name}
+									/>
+								</div>
+							</div>
 							<!-- Email Input -->
 							<div class="space-y-2">
 								<Label>Allowed Emails (Optional)</Label>

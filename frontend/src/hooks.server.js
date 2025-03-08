@@ -2,7 +2,7 @@
 import { redirect } from '@sveltejs/kit';
 
 const CONFIG = {
-	PROTECTED_ROUTES: ['/images', '/profile'],
+	PROTECTED_ROUTES: ['/images', '/profile', '/user', '/watermark', '/logs', '/access'],
 	API_ENDPOINTS: {
 		VERIFY: 'http://localhost:8000/verify/',
 		REFRESH: 'http://localhost:8000/token/refresh/'
