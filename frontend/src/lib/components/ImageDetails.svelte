@@ -1,7 +1,17 @@
 <script>
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
-	import { Image, FileText, Calendar, Layout, Shield, Circle, CheckCircle2 } from 'lucide-svelte';
+	import {
+		Image,
+		FileText,
+		Calendar,
+		Layout,
+		Shield,
+		Circle,
+		CheckCircle2,
+		Clock
+	} from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
 	export let imageInfo;
 
 	// Function to format the string
@@ -20,6 +30,16 @@
 				Image Protection Details
 			</h2>
 			<p class="text-sm text-muted-foreground">Manage and view your protected image settings</p>
+		</div>
+
+		<!-- Add the logs button here -->
+		<div class="flex items-center gap-2">
+			<Button variant="default">
+				<a href={`/logs/${imageInfo.id}`} class="flex items-center gap-2">
+					<Clock class="h-4 w-4" />
+					Access Logs
+				</a>
+			</Button>
 		</div>
 	</div>
 

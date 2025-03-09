@@ -1,7 +1,8 @@
-<script lang="js">
-	import Overview from '$lib/components/Overview.svelte';
+<script>
+	import ImageLog from './ImageLog.svelte';
+	import { page } from '$app/stores';
+
+	const imageId = $page.params.id;
 </script>
 
-<main class="flex-1 space-y-8 overflow-y-auto p-6 md:p-8">
-	<Overview />
-</main>
+<ImageLog {imageId} />

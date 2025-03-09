@@ -5,9 +5,15 @@
 	import ImageUpload from '$lib/components/ImageUpload.svelte';
 	import ImageFilters from '$lib/components/ImageFilters.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import { Button } from '$lib/components/ui/button';
 
 	export let data;
 	let showUpload = false;
+
+	// Toggle upload section visibility
+	function toggleUpload() {
+		showUpload = !showUpload;
+	}
 
 	function handleUploadSuccess() {
 		showUpload = false;
@@ -87,25 +93,36 @@
 				<h1 class="text-2xl font-bold tracking-tight text-gray-900">Image Gallery</h1>
 				<p class="mt-1 text-sm text-gray-500">Upload, organize, and browse your images</p>
 			</div>
+			<!-- Upload button -->
+			<Button on:click={toggleUpload}>
+				{showUpload ? 'Hide Upload' : 'Upload Image'}
+			</Button>
 		</div>
 
+		<!-- Upload Section - Only show if showUpload is true -->
+		{#if showUpload}
+			<section class="overflow-hidden rounded-lg border bg-white shadow-sm">
+				<div class="border-b bg-gray-50/50 px-4 py-3 sm:px-6">
+					<h2 class="font-semibold text-gray-900">Upload Images</h2>
+				</div>
+				<div class="p-4 sm:p-6">
+					<ImageUpload on:uploadSuccess={handleUploadSuccess} />
+				</div>
+			</section>
+		{/if}
 		<!-- Upload Section -->
-		<section class="overflow-hidden rounded-lg border bg-white shadow-sm">
+		<!-- <section class="overflow-hidden rounded-lg border bg-white shadow-sm">
 			<div class="border-b bg-gray-50/50 px-4 py-3 sm:px-6">
 				<h2 class="font-semibold text-gray-900">Upload Images</h2>
 			</div>
 			<div class="p-4 sm:p-6">
 				<ImageUpload on:uploadSuccess={() => location.reload()} />
 			</div>
-		</section>
+		</section> -->
 
 		<!-- Browse Images Section -->
 		<section class="space-y-4">
 			<div class="flex items-center justify-between px-1">
-				<div>
-					<h2 class="text-xl font-semibold text-gray-900">Browse Images</h2>
-					<p class="mt-1 text-sm text-gray-500">Search and filter your image collection</p>
-				</div>
 				{#if data?.images?.results?.length > 0}
 					<p class="text-sm text-gray-500">
 						Showing {data.images.results.length} of {data.images.total} images

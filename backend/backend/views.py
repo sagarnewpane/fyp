@@ -973,3 +973,53 @@ class AccessLogView(APIView):
             ).delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ImageAccessLogView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, image_id):
+        # Base queryset - get logs for specific image owned by the user
+        queryset = AccessLog.objects.filter(
+            image_access__user_image__user=request.user,
+            image_access__user_image_id=image_id
+        )
+
+        # Get query parameters
+        date_from = request.query_params.get('date_from')
+        date_to = request.query_params.get('date_to')
+        action_type = request.query_params.get('action_type')
+        search = request.query_params.get('search')
+
+        # Apply filters
+        if date_from:
+            queryset = queryset.filter(accessed_at__gte=date_from)
+
+        if date_to:
+            queryset = queryset.filter(accessed_at__lte=date_to)
+
+        if action_type:
+            queryset = queryset.filter(action_type=action_type)
+
+        if search:
+            queryset = queryset.filter(
+                Q(email__icontains=search) |
+                Q(location__icontains=search) |
+                Q(ip_address__icontains=search)
+            )
+
+        # Serialize and return data
+        serializer = AccessLogSerializer(queryset, many=True)
+
+        return Response({
+            'count': queryset.count(),
+            'results': serializer.data
+        })
+
+    def delete(self, request, image_id):
+        # Delete logs for specific image
+        AccessLog.objects.filter(
+            image_access__user_image_id=image_id,
+            image_access__user_image__user=request.user
+        ).delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

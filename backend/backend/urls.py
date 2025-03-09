@@ -18,7 +18,8 @@ from .views import (
     InitiateAccessView,
     CreateAccessView,
     VerifyOTPView,
-    AccessLogView
+    AccessLogView,
+    ImageAccessLogView
 
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -48,6 +49,7 @@ urlpatterns = [
     path('access/<str:token>/verify/', VerifyOTPView.as_view()),
 
     path('access-logs/', AccessLogView.as_view(), name='access-logs'),
+    path('access-logs/<int:image_id>/', ImageAccessLogView.as_view(), name='image-logs'),
 ]
 
 if settings.DEBUG:
