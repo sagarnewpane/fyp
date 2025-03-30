@@ -83,14 +83,17 @@ from django.core.files.base import ContentFile
 import numpy as np
 from .models import WatermarkSettings, InvisibleWatermarkSettings
 from .scripts.steg import TextSteganography
+from .metadata_utils import MetadataExtractor
 import subprocess
 import json
 import os
 import cv2
+from django.conf import settings
+from datetime import datetime
 
 class ProtectionChain:
     @staticmethod
-    def create_protected_image(user_image, protection_features):
+    def create_protected_image(user_image, protection_features, access_rule):
             """Create a protected version of the image with selected features"""
             logger.info(f"Starting protection chain for image {user_image.id}")
             logger.info(f"Protection features requested: {protection_features}")
@@ -134,17 +137,48 @@ class ProtectionChain:
                     except WatermarkSettings.DoesNotExist:
                         logger.warning("No watermark settings found")
 
+                # Apply metadata protection
+                # if protection_features.get('metadata') and user_image.metadata_enabled:
+                #     logger.info("Applying metadata protection...")
+                #     protected_image = ProtectionChain._apply_metadata(protected_image, user_image.metadata)
+
+                # If metadata is enabled, use the processed file
                 if protection_features.get('metadata') and user_image.metadata_enabled:
-                    logger.info("Stripping metadata...")
-                    protected_image = ProtectionChain._strip_metadata(protected_image)
+                    logger.info("Applying metadata protection...")
+                    result = ProtectionChain._apply_metadata(protected_image, user_image.metadata)
+
+                    if result:
+                        file_path = os.path.join(result['temp_dir'], result['filename'])
+                        logger.info(f"Attempting to open file at: {file_path}")
+
+                        # Save the processed file to the model
+                        with open(file_path, 'rb') as f:
+                            access_rule.protected_image.save(
+                                f'protected_{user_image.image_name}',
+                                ContentFile(f.read()),
+                                save=True
+                            )
+
+                        # Clean up the processing file
+                        try:
+                            os.remove(file_path)
+                            logger.info(f"Cleaned up processing file: {file_path}")
+                        except Exception as e:
+                            logger.warning(f"Could not remove processing file: {str(e)}")
+
+                        return True
+                    else:
+                        logger.error("Metadata protection failed")
+                        return False
 
                 # Save the final protected image
-                logger.info("Saving final protected image...")
                 output = BytesIO()
                 protected_image.save(output, format='PNG')
-                final_image = ContentFile(output.getvalue(), name=f'protected_{user_image.image_name}')
-                logger.info("Protection chain completed successfully")
-                return final_image
+                access_rule.protected_image.save(
+                    f'protected_{user_image.image_name}',
+                    ContentFile(output.getvalue()),
+                    save=True
+                )
 
             except Exception as e:
                 logger.error(f"Error in protection chain: {str(e)}", exc_info=True)
@@ -297,17 +331,65 @@ class ProtectionChain:
         return image
 
     @staticmethod
-    def _strip_metadata(image):
-        """Strip metadata from the image"""
+    def _apply_metadata(image, metadata):
+        """Apply metadata to the image"""
+        logger.info("Starting metadata application")
+
         try:
-            # Create a new image without metadata
-            data = list(image.getdata())
-            clean_image = Image.new(image.mode, image.size)
-            clean_image.putdata(data)
-            return clean_image
+            # Convert BASE_DIR to string and create temp directory path
+            base_dir = str(settings.BASE_DIR)
+            temp_dir = os.path.join(base_dir, 'backend', 'temp')
+
+            # Ensure the temp directory exists
+            os.makedirs(temp_dir, exist_ok=True)
+            logger.info(f"Temp directory created/verified at: {temp_dir}")
+
+            # Generate a unique filename
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            unique_filename = f'processing_{timestamp}.png'
+            processing_path = os.path.join(temp_dir, unique_filename)
+
+            logger.info(f"Attempting to save image to: {processing_path}")
+
+            # Save the PIL Image
+            image.save(processing_path, 'PNG')
+            logger.info("Image saved successfully")
+
+            # Apply metadata
+            result = MetadataExtractor.embed_metadata(processing_path, metadata)
+
+            if result and result.get('success'):
+                logger.info("Metadata embedding successful")
+                # Return both the filename and the full path
+                return {
+                    'filename': unique_filename,
+                    'full_path': processing_path,
+                    'temp_dir': temp_dir
+                }
+            else:
+                logger.error(f"Metadata embedding failed: {result.get('error', 'Unknown error')}")
+                return None
+
         except Exception as e:
-            print(f"Metadata stripping error: {str(e)}")
-            return image
+            logger.error(f"Error in metadata embedding: {str(e)}", exc_info=True)
+            return None
+
+
+    @staticmethod
+    def verify_metadata(image_path):
+        """Verify metadata in the image"""
+        try:
+            result = subprocess.run(
+                ['exiftool', '-json', image_path],
+                capture_output=True, text=True, check=True
+            )
+            metadata = json.loads(result.stdout)
+            logger.info(f"Verified metadata: {metadata}")
+            return metadata
+        except Exception as e:
+            logger.error(f"Error verifying metadata: {str(e)}")
+            return None
+
 
 
 import requests

@@ -108,6 +108,7 @@ class PasswordResetConfirmView(APIView):
                 )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ImageUploadView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -123,8 +124,6 @@ class ImageUploadView(APIView):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -629,11 +628,12 @@ class CreateAccessView(APIView):
                 if access_data['protection_features']:
                     protected_image = ProtectionChain.create_protected_image(
                         user_image,
-                        access_data['protection_features']
+                        access_data['protection_features'],
+                        access_rule
                     )
-                    if protected_image:
-                        access_rule.protected_image = protected_image
-                        access_rule.save()
+                    # if protected_image:
+                    #     access_rule.protected_image = protected_image
+                    #     access_rule.save()
 
                 return Response({
                     'status': 'success',
@@ -792,10 +792,12 @@ class InitiateAccessView(APIView):
                     [email],
                     fail_silently=False,
                 )
+
                 return Response({
                     'message': 'OTP sent successfully'
                 }, status=status.HTTP_200_OK)
             except Exception as e:
+                print(e)
                 return Response({
                     'error': 'Failed to send OTP'
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -1023,3 +1025,151 @@ class ImageAccessLogView(APIView):
         ).delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from .models import UserImage
+from .serializers import ImageMetadataSerializer
+from .metadata_utils import MetadataExtractor
+import tempfile
+import os
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from .models import UserImage
+
+class ImageMetadataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_image_object(self, image_id, user):
+        """Helper method to get image with permission check"""
+        try:
+            return user.images.get(id=image_id)
+        except UserImage.DoesNotExist:
+            return None
+
+    def get(self, request, image_id):
+        """Get metadata for a specific image"""
+        try:
+            user_image = self.get_image_object(image_id, request.user)
+
+            if not user_image:
+                return Response(
+                    {'error': 'Image not found or access denied'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            return Response({
+                'metadata': user_image.metadata
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                'error': f'Unexpected error: {str(e)}'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request, image_id):
+        """Update metadata for a specific image"""
+        try:
+            user_image = self.get_image_object(image_id, request.user)
+            if not user_image:
+                return Response(
+                    {'error': 'Image not found or access denied'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            updates = request.data.get('updates', [])
+            if not updates:
+                return Response(
+                    {'message': 'No updates provided'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Get current metadata
+            current_metadata = user_image.metadata
+
+            # Apply updates
+            for update in updates:
+                category = update.get('category')
+                section = update.get('section')
+                field = update.get('field')
+                value = update.get('value')
+
+                if category and section and field is not None:
+                    # Ensure the nested structure exists
+                    if category not in current_metadata:
+                        current_metadata[category] = {}
+                    if section not in current_metadata[category]:
+                        current_metadata[category][section] = {}
+
+                    # Update the value
+                    if field in current_metadata[category][section]:
+                        current_metadata[category][section][field]['value'] = value
+
+            # Save the updated metadata
+            user_image.metadata = current_metadata
+            user_image.save(update_fields=['metadata'])
+
+            return Response({
+                'message': 'Metadata updated successfully',
+                'metadata': current_metadata
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                'error': f'Failed to update metadata: {str(e)}'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class CustomMetadataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, image_id):
+        try:
+            # Get the image
+            image = UserImage.objects.get(id=image_id, user=request.user)
+
+            # Get the data from request
+            tag_name = request.data.get('tag_name')
+            value = request.data.get('value')
+
+            if not tag_name or value is None:
+                return Response({
+                    'error': 'Both tag_name and value are required'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            # Get current metadata
+            metadata = image.metadata or {}
+
+            # Ensure custom section exists
+            if 'custom' not in metadata:
+                metadata['custom'] = {}
+
+            # Add new custom field
+            metadata['custom'][tag_name] = {
+                'value': value,
+                'type': 'string',
+                'label': tag_name
+            }
+
+            # Save updated metadata
+            image.metadata = metadata
+            image.save(update_fields=['metadata'])
+
+            return Response({
+                'tag_name': tag_name,
+                'value': value
+            })
+
+        except UserImage.DoesNotExist:
+            return Response({
+                'error': 'Image not found'
+            }, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

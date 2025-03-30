@@ -329,3 +329,30 @@ class AccessLogSerializer(serializers.ModelSerializer):
         # Format action type for display
         data['action_type'] = instance.action_type.replace('_', ' ').title()
         return data
+
+
+class MetadataSerializer(serializers.Serializer):
+    basic = serializers.DictField(required=False)
+    exif = serializers.DictField(required=False)
+    iptc = serializers.DictField(required=False)
+    xmp = serializers.DictField(required=False)
+    copyright = serializers.DictField(required=False)
+
+class ImageMetadataSerializer(serializers.ModelSerializer):
+    metadata = serializers.SerializerMethodField()
+    raw_metadata = serializers.SerializerMethodField()
+    created_at = serializers.DateTimeField(format="%B %d, %Y %I:%M %p")
+
+    class Meta:
+        model = UserImage
+        fields = ['id', 'image_name', 'created_at', 'file_size', 'file_type', 'metadata', 'raw_metadata']
+
+    def get_metadata(self, obj):
+        if obj.metadata:
+            return obj.metadata.get('categorized', {})
+        return {}
+
+    def get_raw_metadata(self, obj):
+        if obj.metadata:
+            return obj.metadata.get('raw', {})
+        return {}

@@ -19,7 +19,9 @@ from .views import (
     CreateAccessView,
     VerifyOTPView,
     AccessLogView,
-    ImageAccessLogView
+    ImageAccessLogView,
+    ImageMetadataView,
+    CustomMetadataView
 
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -50,6 +52,9 @@ urlpatterns = [
 
     path('access-logs/', AccessLogView.as_view(), name='access-logs'),
     path('access-logs/<int:image_id>/', ImageAccessLogView.as_view(), name='image-logs'),
+
+    path('api/image/<int:image_id>/metadata/', ImageMetadataView.as_view(), name='image-metadata'),
+    path('api/image/<int:image_id>/metadata/custom/', CustomMetadataView.as_view(), name='custom-metadata'),
 ]
 
 if settings.DEBUG:

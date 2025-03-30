@@ -10,6 +10,7 @@ import secrets
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+from .metadata_utils import MetadataExtractor
 
 class UserImage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='images')
@@ -26,13 +27,32 @@ class UserImage(models.Model):
     metadata_enabled = models.BooleanField(default=False)
     ai_protection_enabled = models.BooleanField(default=False)
 
+    metadata = models.JSONField(default=dict, blank=True)
+
     def __str__(self):
         return f"{self.user.username}'s image - {self.image_name}"
 
     def save(self, *args, **kwargs):
-        if self.image and not self.id:  # Only convert on new uploads
+        new_upload = not self.id  # Check if it's a new upload
+
+        super().save(*args, **kwargs)  # Save first to ensure file exists
+
+        if new_upload and self.image:  # Only process new uploads
+            image_path = self.image.path  # File now exists
+
+            # Extract metadata from original image
+            try:
+                self.metadata = MetadataExtractor.extract_metadata(image_path)
+                print('Metadata: ',self.metadata)
+                self.metadata_enabled = True
+            except Exception as e:
+                print(f"Metadata extraction failed: {str(e)}")
+                self.metadata = {}
+                self.metadata_enabled = False
+
             # Open the image
-            img = Image.open(self.image)
+            img = Image.open(image_path)
+
             # Convert to RGB if necessary
             if img.mode != 'RGB':
                 img = img.convert('RGB')
@@ -48,7 +68,7 @@ class UserImage(models.Model):
             self.file_type = 'png'
             self.file_size = self.image.size
 
-        super().save(*args, **kwargs)
+            super().save(update_fields=["metadata", "metadata_enabled", "image", "image_name", "file_type", "file_size"])
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
