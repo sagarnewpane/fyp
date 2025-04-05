@@ -27,6 +27,14 @@
 		goto(`?${params.toString()}`);
 	}
 
+	function handleImageDeleted(event) {
+		// Update the local data by removing the deleted image
+		const deletedImageId = event.detail.imageId;
+		data.images.results = data.images.results.filter((img) => img.id !== deletedImageId);
+		data.images.count -= 1;
+		data.images.total -= 1;
+	}
+
 	function handleFilters(event) {
 		console.log('Filter event received:', event);
 		console.log('Filter detail:', event.detail);
@@ -142,7 +150,7 @@
 
 				<div class="p-4 sm:p-6">
 					{#if data?.images?.results?.length > 0}
-						<ImageGrid images={data.images.results} />
+						<ImageGrid images={data.images.results} on:imageDeleted={handleImageDeleted} />
 
 						{#if totalPages > 1}
 							<div class="mt-6 border-t pt-6">

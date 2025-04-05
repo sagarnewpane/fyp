@@ -137,11 +137,6 @@ class ProtectionChain:
                     except WatermarkSettings.DoesNotExist:
                         logger.warning("No watermark settings found")
 
-                # Apply metadata protection
-                # if protection_features.get('metadata') and user_image.metadata_enabled:
-                #     logger.info("Applying metadata protection...")
-                #     protected_image = ProtectionChain._apply_metadata(protected_image, user_image.metadata)
-
                 # If metadata is enabled, use the processed file
                 if protection_features.get('metadata') and user_image.metadata_enabled:
                     logger.info("Applying metadata protection...")

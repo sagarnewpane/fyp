@@ -43,7 +43,6 @@ class UserImage(models.Model):
             # Extract metadata from original image
             try:
                 self.metadata = MetadataExtractor.extract_metadata(image_path)
-                print('Metadata: ',self.metadata)
                 self.metadata_enabled = True
             except Exception as e:
                 print(f"Metadata extraction failed: {str(e)}")

@@ -34,7 +34,8 @@
 			description: 'Secure sensitive image metadata and control what information is shared.',
 			icon: FileText,
 			applied: protectionStatus.metadata,
-			action: 'Manage Metadata'
+			action: 'Manage Metadata',
+			url: `/metadata/${imageId}`
 		},
 		{
 			title: 'AI Protection',

@@ -223,8 +223,11 @@
 		toast.success('Changes reset');
 	}
 
+	console.log(metadata);
+
 	// Computed: detect changes
 	$: hasChanges = JSON.stringify(metadata) !== JSON.stringify(editedMetadata);
+	$: console.log(metadata);
 	// For tab iteration, we use all categories except custom
 	$: categories = Object.keys(metadata).filter((key) => key !== 'custom');
 </script>

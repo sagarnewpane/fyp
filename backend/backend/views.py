@@ -208,9 +208,9 @@ class ImageListView(generics.ListAPIView):
         return queryset
 
 
-class UserImageView(generics.RetrieveAPIView):
+class UserImageView(generics.RetrieveDestroyAPIView):  # Changed to RetrieveDestroyAPIView
     """
-    View for retrieving a single user image.
+    View for retrieving and deleting a single user image.
     Handles permissions for public/private images.
     """
     serializer_class = SpecificImageSerializer
@@ -223,9 +223,45 @@ class UserImageView(generics.RetrieveAPIView):
         image = super().get_object()
         if image.user != self.request.user:
             raise PermissionDenied(
-                "You do not have permission to view this image."
+                "You do not have permission to access this image."
             )
         return image
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Delete a specific image
+        """
+        try:
+            image = self.get_object()
+
+            # Delete the actual image file from storage
+            if image.image:
+                image.image.delete(save=False)
+
+            # Delete the database record
+            image.delete()
+
+            return Response({
+                "message": "Image successfully deleted",
+                "status": "success"
+            }, status=status.HTTP_204_NO_CONTENT)
+
+        except UserImage.DoesNotExist:
+            return Response({
+                "message": "Image not found",
+                "status": "error"
+            }, status=status.HTTP_404_NOT_FOUND)
+        except PermissionDenied as e:
+            return Response({
+                "message": str(e),
+                "status": "error"
+            }, status=status.HTTP_403_FORBIDDEN)
+        except Exception as e:
+            return Response({
+                "message": "An error occurred while deleting the image",
+                "status": "error",
+                "detail": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import UserProfile
@@ -1046,70 +1082,81 @@ from .models import UserImage
 class ImageMetadataView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get_image_object(self, image_id, user):
-        """Helper method to get image with permission check"""
-        try:
-            return user.images.get(id=image_id)
-        except UserImage.DoesNotExist:
-            return None
-
     def get(self, request, image_id):
-        """Get metadata for a specific image"""
         try:
-            user_image = self.get_image_object(image_id, request.user)
-
-            if not user_image:
-                return Response(
-                    {'error': 'Image not found or access denied'},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
             return Response({
-                'metadata': user_image.metadata
+                'metadata': user_image.metadata or {}
             }, status=status.HTTP_200_OK)
-
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found or access denied'},
+                status=status.HTTP_404_NOT_FOUND
+            )
         except Exception as e:
-            return Response({
-                'error': f'Unexpected error: {str(e)}'
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {'error': f'Unexpected error: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     def put(self, request, image_id):
-        """Update metadata for a specific image"""
         try:
-            user_image = self.get_image_object(image_id, request.user)
-            if not user_image:
-                return Response(
-                    {'error': 'Image not found or access denied'},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
             updates = request.data.get('updates', [])
+
             if not updates:
                 return Response(
                     {'message': 'No updates provided'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Get current metadata
-            current_metadata = user_image.metadata
+            # Get current metadata or initialize if None
+            current_metadata = user_image.metadata if user_image.metadata else {
+                'XMP': {
+                    'Basic Information': {},
+                    'Protection & Copyright': {}
+                },
+                'EXIF': {
+                    'Location Data': {},
+                    'Protection & Copyright': {},
+                    'Basic Image Information': {},
+                    'Camera & Device Information': {}
+                },
+                'IPTC': {
+                    'Location Data': {},
+                    'Creator and Copyright Information': {}
+                },
+                'custom': {}
+            }
 
             # Apply updates
             for update in updates:
-                category = update.get('category')
-                section = update.get('section')
-                field = update.get('field')
+                type_ = update.get('type')
+                field_name = update.get('field_name')
                 value = update.get('value')
 
-                if category and section and field is not None:
-                    # Ensure the nested structure exists
-                    if category not in current_metadata:
-                        current_metadata[category] = {}
-                    if section not in current_metadata[category]:
-                        current_metadata[category][section] = {}
+                if not all([type_, field_name]):
+                    continue
 
-                    # Update the value
-                    if field in current_metadata[category][section]:
-                        current_metadata[category][section][field]['value'] = value
+                # Handle custom metadata
+                if type_ == 'custom':
+                    if 'custom' not in current_metadata:
+                        current_metadata['custom'] = {}
+                    if field_name not in current_metadata['custom']:
+                        current_metadata['custom'][field_name] = {}
+                    current_metadata['custom'][field_name]['value'] = value
+                    current_metadata['custom'][field_name]['type'] = 'string'
+                    current_metadata['custom'][field_name]['label'] = field_name
+                else:
+                    # Handle regular metadata
+                    type_upper = type_.upper()
+                    if type_upper in current_metadata:
+                        # Find the section containing the field
+                        for section_name, section in current_metadata[type_upper].items():
+                            for field, field_data in section.items():
+                                if field == field_name:
+                                    section[field_name]['value'] = value
+                                    break
 
             # Save the updated metadata
             user_image.metadata = current_metadata
@@ -1118,12 +1165,18 @@ class ImageMetadataView(APIView):
             return Response({
                 'message': 'Metadata updated successfully',
                 'metadata': current_metadata
-            }, status=status.HTTP_200_OK)
+            })
 
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found or access denied'},
+                status=status.HTTP_404_NOT_FOUND
+            )
         except Exception as e:
-            return Response({
-                'error': f'Failed to update metadata: {str(e)}'
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {'error': f'Failed to update metadata: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class CustomMetadataView(APIView):
     permission_classes = [IsAuthenticated]
