@@ -11,6 +11,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
 from .metadata_utils import MetadataExtractor
+import time
 
 class UserImage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='images')
@@ -29,18 +30,25 @@ class UserImage(models.Model):
 
     metadata = models.JSONField(default=dict, blank=True)
 
+    encryption_key = models.CharField(max_length=255, blank=True, null=True)
+    encryption_params = models.JSONField(default=dict, blank=True)  # To store permutation and XOR streams
+
     def __str__(self):
         return f"{self.user.username}'s image - {self.image_name}"
 
     def save(self, *args, **kwargs):
         new_upload = not self.id  # Check if it's a new upload
 
-        super().save(*args, **kwargs)  # Save first to ensure file exists
+        # For new uploads with an image
+        if new_upload and self.image:
+            # First save to get an ID and save the original image file
+            super().save(*args, **kwargs)
 
-        if new_upload and self.image:  # Only process new uploads
-            image_path = self.image.path  # File now exists
+            # Now we can access the image path
+            image_path = self.image.path
+            print('IMAGE NAME',self.image.name)
 
-            # Extract metadata from original image
+            # Extract metadata as before
             try:
                 self.metadata = MetadataExtractor.extract_metadata(image_path)
                 self.metadata_enabled = True
@@ -49,25 +57,111 @@ class UserImage(models.Model):
                 self.metadata = {}
                 self.metadata_enabled = False
 
-            # Open the image
-            img = Image.open(image_path)
+            # Generate encryption key with improved randomness
+            import hashlib
+            import secrets
+            import time
+            import os
+            import random
 
-            # Convert to RGB if necessary
-            if img.mode != 'RGB':
-                img = img.convert('RGB')
+            salt = secrets.token_hex(8)
+            current_time = str(time.time())
+            random_num = str(random.randint(100000, 999999999))
+            process_id = str(os.getpid())
 
-            # Save as PNG
-            buffer = BytesIO()
-            img.save(buffer, format='PNG')
-            file_name = f"{Path(self.image.name).stem}.png"
+            # Generate a secure key for AES encryption
+            encryption_key = hashlib.sha256(
+                f"{self.user.id}:{self.id}:{salt}:{current_time}:{random_num}:{process_id}".encode()
+            ).digest()[:32]  # Use binary digest for AES, only need 32 bytes
 
-            # Save the converted image
-            self.image.save(file_name, ContentFile(buffer.getvalue()), save=False)
-            self.image_name = file_name
-            self.file_type = 'png'
+            # Store hex string of key in database
+            self.encryption_key = encryption_key.hex()
+
+            # Encrypt the image using AES
+            from .encryption import encrypt_aes_cbc
+
+            # Read the original file
+            with open(image_path, 'rb') as f:
+                original_data = f.read()
+
+            # Encrypt the data
+            encrypted_data = encrypt_aes_cbc(original_data, encryption_key)
+
+            # Save the encrypted file
+            import tempfile
+            from django.core.files.base import ContentFile
+            from pathlib import Path
+
+            file_name = f"{Path(self.image.name).stem}.enc"
+            print('FILE NAME',file_name)
+
+            # Replace the original file with the encrypted version
+            self.image.save(file_name, ContentFile(encrypted_data), save=False)
+
+            # Update other fields
+            self.image_name = Path(file_name).stem
+            self.file_type = 'png'  # Custom file type for encrypted files
             self.file_size = self.image.size
 
-            super().save(update_fields=["metadata", "metadata_enabled", "image", "image_name", "file_type", "file_size"])
+            # No need to store permutation params for AES
+            self.encryption_params = {
+                'algorithm': 'AES-CBC',
+                'key_length': len(encryption_key) * 8  # in bits
+            }
+
+            # Save the changes with update_fields
+            super().save(update_fields=[
+                'metadata', 'metadata_enabled', 'encryption_key', 'encryption_params',
+                'image', 'image_name', 'file_type', 'file_size'
+            ])
+        else:
+            # For updates or records without images, just save normally
+            super().save(*args, **kwargs)
+    def get_decrypted_image(self):
+        """Return the decrypted image as a numpy array"""
+        try:
+            if not self.encryption_key or not self.encryption_params:
+                # If not encrypted, just read the image directly
+                import cv2
+                print(f"Reading unencrypted image at {self.image.path}")
+                img = cv2.imread(self.image.path)
+                if img is None:
+                    raise ValueError(f"Failed to read image at {self.image.path}")
+                return img
+
+            # Read the encrypted image file
+            with open(self.image.path, 'rb') as f:
+                encrypted_data = f.read()
+
+            # Convert hex encryption key to bytes
+            encryption_key = bytes.fromhex(self.encryption_key)
+
+            # Decrypt the data using AES
+            from .encryption import decrypt_aes_cbc
+            decrypted_data = decrypt_aes_cbc(encrypted_data, encryption_key)
+
+            # Convert decrypted bytes to numpy array for OpenCV
+            import cv2
+            import numpy as np
+
+            # Create in-memory file-like object
+            import io
+            buffer = io.BytesIO(decrypted_data)
+
+            # Decode image from memory buffer
+            image_array = np.asarray(bytearray(buffer.read()), dtype=np.uint8)
+            img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+
+            if img is None:
+                raise ValueError("Failed to decode decrypted image data")
+
+            return img
+
+        except Exception as e:
+            print(f"Error in get_decrypted_image: {type(e).__name__}: {str(e)}")
+            import traceback
+            print(traceback.format_exc())
+            raise
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -78,6 +172,7 @@ class UserProfile(models.Model):
         return f"{self.user.username}'s profile"
 
 # Signal to create/update UserProfile when User is created/updated
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:

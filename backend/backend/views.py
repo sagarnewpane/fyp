@@ -1,4 +1,5 @@
 from django.contrib.auth.tokens import default_token_generator
+from django.db.models.manager import QuerySet
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
@@ -13,6 +14,42 @@ from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from .models import UserImage, WatermarkSettings, InvisibleWatermarkSettings
+from rest_framework.parsers import MultiPartParser, FormParser  #
+
+
+from django.http import HttpResponse, Http404
+import cv2
+import os
+import traceback
+
+def serve_decrypted_image(request, image_id):
+    """
+    View that decrypts and serves an image in real-time
+    """
+    try:
+        # Get the image without filtering by user first
+        user_image = UserImage.objects.get(id=image_id)
+
+        # Decrypt the image
+        decrypted_img = user_image.get_decrypted_image()
+
+        # Convert to bytes for HTTP response
+        success, buffer = cv2.imencode('.png', decrypted_img)
+        if not success:
+            return HttpResponse("Failed to encode image", status=500)
+
+        # Create response
+        response = HttpResponse(buffer.tobytes(), content_type="image/png")
+        response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+
+        return response
+
+    except UserImage.DoesNotExist:
+        print(f"Image not found in database: {image_id}")
+        raise Http404("Image not found - does not exist")
+    except Exception as e:
+        print(f"Unexpected error: {str(e)}")
+        return HttpResponse(f"Error: {str(e)}", status=500)
 
 
 class RegisterView(generics.CreateAPIView):
@@ -39,9 +76,6 @@ class VerifyView(generics.RetrieveAPIView):
             'email': user.email
         }
         return Response(data, status=status.HTTP_200_OK)
-
-
-
 
 
 class PasswordResetRequestView(APIView):
@@ -111,13 +145,11 @@ class PasswordResetConfirmView(APIView):
 
 class ImageUploadView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]  # Add these parser classes
 
     def post(self, request):
-        # Add the user to the data
-        data = request.data.copy()
-
-        # Create serializer with the data
-        serializer = UserImageSerializer(data=data)
+        # Don't copy the request data - use it directly
+        serializer = UserImageSerializer(data=request.data)
 
         if serializer.is_valid():
             # Save the image and associate it with the user
@@ -173,6 +205,12 @@ class ImageListView(generics.ListAPIView):
     serializer_class = UserImageListSerializer
     pagination_class = StandardResultsSetPagination
 
+    def get_serializer_context(self):
+        """Add request to serializer context"""
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
     def get_queryset(self):
         queryset = UserImage.objects.filter(user=self.request.user)
         params = self.request.query_params
@@ -204,6 +242,8 @@ class ImageListView(generics.ListAPIView):
         ]
         if sort_by in valid_sort_fields:
             queryset = queryset.order_by(sort_by)
+
+        print(queryset)
 
         return queryset
 

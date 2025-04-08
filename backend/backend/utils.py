@@ -99,9 +99,24 @@ class ProtectionChain:
             logger.info(f"Protection features requested: {protection_features}")
 
             try:
-                # Start with the original image
-                logger.info(f"Opening original image from path: {user_image.image.path}")
-                current_image = Image.open(user_image.image.path)
+                # Check if image is encrypted and handle accordingly
+                if user_image.encryption_key and user_image.encryption_params:
+                    logger.info("Image is encrypted, decrypting first...")
+
+                    # Get decrypted image as numpy array using your existing method
+                    decrypted_img = user_image.get_decrypted_image()
+
+                    # Convert from OpenCV (BGR) format to RGB for PIL
+                    rgb_image = cv2.cvtColor(decrypted_img, cv2.COLOR_BGR2RGB)
+
+                    # Create PIL Image from numpy array
+                    current_image = Image.fromarray(rgb_image)
+                    logger.info("Successfully decrypted and converted to PIL Image")
+                else:
+                    # If not encrypted, open directly as before
+                    logger.info(f"Opening original image from path: {user_image.image.path}")
+                    current_image = Image.open(user_image.image.path)
+
                 protected_image = current_image
 
                 # Log initial image details

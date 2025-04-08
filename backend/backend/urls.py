@@ -25,7 +25,7 @@ from .views import (
 
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from .views import serve_decrypted_image
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -55,6 +55,8 @@ urlpatterns = [
 
     path('api/image/<int:image_id>/metadata/', ImageMetadataView.as_view(), name='image-metadata'),
     path('api/image/<int:image_id>/metadata/custom/', CustomMetadataView.as_view(), name='custom-metadata'),
+
+    path('images/<int:image_id>/decrypted/', serve_decrypted_image, name='serve_decrypted_image'),
 ]
 
 if settings.DEBUG:

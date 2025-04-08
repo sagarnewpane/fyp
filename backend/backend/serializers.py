@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from .models import UserImage, UserProfile, WatermarkSettings
 from django.contrib.auth.hashers import make_password
+from django.urls import reverse
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -69,23 +70,28 @@ class UserImageSerializer(serializers.ModelSerializer):
 
 
 
+from django.urls import reverse
+
 class UserImageListSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
-    created_at = serializers.SerializerMethodField()
-    file_size = serializers.IntegerField()  # Add this
-    file_type = serializers.CharField()     # Add this
 
     class Meta:
         model = UserImage
-        fields = ['id', 'image_url', 'image_name', 'created_at', 'file_size', 'file_type']  # Include new fields
+        fields = ['id', 'image_url', 'image_name', 'file_size', 'file_type', 'created_at',
+                 'watermark_enabled', 'hidden_watermark_enabled', 'metadata_enabled',
+                 'ai_protection_enabled', 'access_control_enabled']
 
     def get_image_url(self, obj):
-        if obj.image:
-            return self.context['request'].build_absolute_uri(obj.image.url)
-        return None
-
-    def get_created_at(self, obj):
-        return obj.created_at.strftime("%B %d, %Y %I:%M %p")
+        request = self.context.get('request')
+        if request:
+            if obj.encryption_key and obj.encryption_params:
+                # Return URL to decryption view for encrypted images
+                return request.build_absolute_uri(
+                    reverse('serve_decrypted_image', args=[obj.id])
+                )
+            # If not encrypted, return direct URL
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url
 
 
 class SpecificImageSerializer(serializers.ModelSerializer):
@@ -125,9 +131,15 @@ class SpecificImageSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         request = self.context.get('request')
-        if obj.image and request:
+        if request:
+            if obj.encryption_key and obj.encryption_params:
+                # Return URL to decryption view for encrypted images
+                return request.build_absolute_uri(
+                    reverse('serve_decrypted_image', args=[obj.id])
+                )
+            # If not encrypted, return direct URL
             return request.build_absolute_uri(obj.image.url)
-        return None
+        return obj.image.url
 
     def _format_file_size(self, size_in_bytes):
         # Convert bytes to human readable format
