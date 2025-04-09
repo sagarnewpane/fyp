@@ -1,60 +1,3 @@
-<!-- <script>
-	import { goto } from '$app/navigation';
-	import { Trash2 } from 'lucide-svelte';
-	import { Button } from '$lib/components/ui/button';
-	import {
-		Dialog,
-		DialogContent,
-		DialogHeader,
-		DialogTitle,
-		DialogDescription,
-		DialogFooter
-	} from '$lib/components/ui/dialog';
-	import { createEventDispatcher } from 'svelte';
-	import { toast } from 'svelte-sonner';
-
-	export let images = [];
-	const dispatch = createEventDispatcher();
-
-	// Dialog state
-	let deleteDialogOpen = false;
-	let selectedImage = null;
-
-	function openDeleteDialog(image, event) {
-		event.preventDefault();
-		event.stopPropagation();
-		selectedImage = image;
-		deleteDialogOpen = true;
-	}
-
-	async function handleDelete() {
-		if (!selectedImage) return;
-
-		try {
-			const response = await fetch(`/api/images/${selectedImage.id}`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-
-			if (response.ok) {
-				dispatch('imageDeleted', { imageId: selectedImage.id });
-				deleteDialogOpen = false;
-				selectedImage = null;
-				// Show success toast
-				toast.success('Image deleted successfully');
-			} else {
-				throw new Error('Failed to delete image');
-			}
-		} catch (error) {
-			console.error('Error deleting image:', error);
-			// Show error toast
-			toast.error('Failed to delete image. Please try again.');
-		}
-	}
-</script>-->
-
 <script>
 	import { goto } from '$app/navigation';
 	import { Trash2 } from 'lucide-svelte';
@@ -67,12 +10,12 @@
 		DialogDescription,
 		DialogFooter
 	} from '$lib/components/ui/dialog';
-	import { createEventDispatcher } from 'svelte';
+	// import { createEventDispatcher } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
 
 	export let images = [];
-	const dispatch = createEventDispatcher();
+	// const dispatch = createEventDispatcher();
 
 	let deleteDialogOpen = false;
 	let selectedImage = null;
@@ -97,11 +40,10 @@
 
 			if (response.ok) {
 				deleteDialogOpen = false;
+				// Update images locally instead of invalidating everything
+				images = images.filter((img) => img.id !== selectedImage.id);
 				selectedImage = null;
 				toast.success('Image deleted successfully');
-
-				// Invalidate and refresh data instead of reloading
-				await invalidateAll();
 			} else {
 				throw new Error('Failed to delete image');
 			}

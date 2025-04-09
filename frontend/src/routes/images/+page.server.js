@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 
-export async function load({ request, fetch, cookies, url }) {
+export async function load({ request, fetch, cookies, url, depends }) {
 	const accessToken = cookies.get('access_token');
 	if (!accessToken) {
 		throw error(401, 'Unauthorized');
@@ -9,6 +9,8 @@ export async function load({ request, fetch, cookies, url }) {
 	try {
 		// Get all query parameters
 		const params = new URLSearchParams(url.searchParams);
+
+		depends('data:images');
 
 		const res = await fetch(`http://localhost:8000/images/?${params.toString()}`, {
 			method: 'GET',

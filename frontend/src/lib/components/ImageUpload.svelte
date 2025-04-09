@@ -48,35 +48,50 @@
 		uploadProgress = 0;
 
 		try {
-			const xhr = new XMLHttpRequest();
-
-			xhr.upload.onprogress = (e) => {
-				if (e.lengthComputable) {
-					uploadProgress = Math.round((e.loaded / e.total) * 100);
-				}
-			};
-
 			const uploadPromise = new Promise((resolve, reject) => {
-				xhr.onload = () => {
-					if (xhr.status === 200) {
-						resolve(xhr.response);
-					} else {
-						reject(new Error('Upload failed'));
+				const xhr = new XMLHttpRequest();
+
+				xhr.upload.onprogress = (e) => {
+					if (e.lengthComputable) {
+						uploadProgress = Math.round((e.loaded / e.total) * 100);
 					}
 				};
-				xhr.onerror = () => reject(new Error('Upload failed'));
+
+				xhr.onload = () => {
+					if (xhr.status >= 200 && xhr.status < 300) {
+						try {
+							// Parse the JSON response
+							const data = JSON.parse(xhr.responseText);
+							resolve(data);
+						} catch (e) {
+							console.error('Failed to parse response:', xhr.responseText);
+							reject(new Error('Invalid response format'));
+						}
+					} else {
+						console.error('Server error:', xhr.status, xhr.statusText, xhr.responseText);
+						reject(new Error(`Server returned ${xhr.status}`));
+					}
+				};
+
+				xhr.onerror = () => {
+					console.error('Network error during upload');
+					reject(new Error('Network error'));
+				};
 
 				xhr.open('POST', 'api/upload');
 				xhr.send(formData);
 			});
 
-			await uploadPromise;
+			const responseData = await uploadPromise;
+			console.log('Upload successful, response:', responseData);
 
 			uploadStatus = 'Image uploaded successfully!';
 			preview = null;
-			dispatch('uploadSuccess');
+			fileInput.value = ''; // Clear the file input
+
+			dispatch('uploadSuccess', responseData);
 		} catch (error) {
-			console.error('Error:', error);
+			console.error('Error during upload:', error);
 			uploadStatus = 'An error occurred while uploading.';
 		} finally {
 			isUploading = false;

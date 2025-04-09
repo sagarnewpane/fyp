@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { invalidate } from '$app/navigation';
 	import ImageGrid from '$lib/components/ImageGrid.svelte';
 	import ImageUpload from '$lib/components/ImageUpload.svelte';
 	import ImageFilters from '$lib/components/ImageFilters.svelte';
@@ -15,9 +16,12 @@
 		showUpload = !showUpload;
 	}
 
-	function handleUploadSuccess() {
+	async function handleUploadSuccess() {
+		// Hide the upload component
 		showUpload = false;
-		location.reload();
+
+		// Force re-fetch of the images data
+		await invalidate('data:images'); // This should match your load function dependency key
 	}
 
 	function handleSearch(event) {
