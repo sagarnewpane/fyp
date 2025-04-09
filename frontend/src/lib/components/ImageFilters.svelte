@@ -1,7 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { Search, SlidersHorizontal } from 'lucide-svelte';
-	import { slide } from 'svelte/transition';
+	import { Search, SlidersHorizontal, X } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
@@ -13,7 +12,7 @@
 	export let searchQuery = '';
 	let search = searchQuery;
 	let searchTimeout;
-	let showAdvanced = false;
+	let filtersExpanded = true;
 
 	// Initialize filter values
 	let imageType = 'all';
@@ -62,7 +61,7 @@
 		if (selected) {
 			selectedImageType = selected;
 			imageType = selected.value;
-			console.log('Image type selected:', imageType);
+			applyFilters();
 		}
 	}
 
@@ -70,7 +69,7 @@
 		if (selected) {
 			selectedSizeFilter = selected;
 			sizeFilter = selected.value;
-			console.log('Size filter selected:', sizeFilter);
+			applyFilters();
 		}
 	}
 
@@ -78,14 +77,12 @@
 		if (selected) {
 			selectedSortBy = selected;
 			sortBy = selected.value;
-			console.log('Sort by selected:', sortBy);
+			applyFilters();
 		}
 	}
 
 	// Get size range values based on filter selection
 	function getSizeRangeValues(size) {
-		console.log('Getting size range for:', size);
-
 		const ranges = {
 			small: { size_min: 0, size_max: 1 },
 			medium: { size_min: 1, size_max: 5 },
@@ -98,8 +95,6 @@
 
 	// Apply filters
 	function applyFilters() {
-		console.log('Current selections:', { imageType, sizeFilter, sortBy });
-
 		const filterData = {
 			file_type: imageType !== 'all' ? [imageType] : [],
 			...(sizeFilter !== 'all'
@@ -108,7 +103,6 @@
 			sort: sortBy
 		};
 
-		console.log('Filter data being dispatched:', filterData);
 		dispatch('applyFilters', filterData);
 	}
 
@@ -124,50 +118,61 @@
 
 		applyFilters();
 	}
+
+	// Toggle filters on mobile
+	function toggleFilters() {
+		filtersExpanded = !filtersExpanded;
+	}
 </script>
 
 <div class="mb-8 w-full">
-	<div class="rounded-xl border bg-white p-6 shadow-sm">
-		<!-- Header Section -->
-		<div class="mb-6 flex items-center justify-between">
-			<h2 class="text-sm font-semibold text-gray-500">Search Image</h2>
-			<div class="flex items-center gap-2">
-				<span class="text-sm text-gray-500">Filter & Sort</span>
-			</div>
-		</div>
+	<!-- Header Section with Toggle -->
+	<div class="mb-5 flex items-center justify-between">
+		<h2 class="text-sm font-semibold text-gray-500">Image Filters</h2>
+		<!-- Mobile Toggle Button -->
+		<Button variant="ghost" size="sm" on:click={toggleFilters} class="text-gray-500 md:hidden">
+			{filtersExpanded ? 'Hide Filters' : 'Show Filters'}
+			<SlidersHorizontal class="ml-2 h-4 w-4" />
+		</Button>
+	</div>
 
-		<!-- Search and Advanced Toggle -->
-		<div class="flex gap-3">
-			<div class="relative flex-1">
-				<Search class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-				<Input
-					bind:value={search}
-					type="search"
-					placeholder="Search images..."
-					class="border-gray-200 bg-gray-50 pl-10"
-					on:input={handleSearch}
-				/>
+	<!-- Filters Container -->
+	<div
+		class={cn(
+			'transition-all duration-300 ease-in-out',
+			filtersExpanded ? 'block' : 'hidden md:block'
+		)}
+	>
+		<div class="flex flex-col gap-4 md:flex-row md:items-end">
+			<!-- Search Input - Visually Distinguished -->
+			<div class="md:w-1/3 md:border-r md:pr-4">
+				<Label class="mb-1.5 block text-xs font-medium text-gray-700">Search Images</Label>
+				<div class="relative">
+					<Search class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+					<Input
+						bind:value={search}
+						type="search"
+						placeholder="Search by name..."
+						class="border-primary/20 bg-primary/5 pl-10 focus:border-primary focus:ring-1 focus:ring-primary"
+						on:input={handleSearch}
+					/>
+				</div>
 			</div>
-			<Button
-				variant="outline"
-				size="default"
-				on:click={() => (showAdvanced = !showAdvanced)}
-				class={cn(
-					'inline-flex items-center gap-2',
-					showAdvanced && 'border-primary/20 bg-primary/10'
-				)}
-			>
-				<SlidersHorizontal class="h-4 w-4" />
-				<span>Filters</span>
-			</Button>
-		</div>
 
-		{#if showAdvanced}
-			<div transition:slide class="mt-4 space-y-6">
-				<div class="grid gap-4 md:grid-cols-3">
+			<!-- Visual Divider for Mobile -->
+			<div class="my-2 border-t md:hidden"></div>
+
+			<!-- Filter Options Section -->
+			<div class="flex flex-1 flex-col gap-4 md:flex-row">
+				<div class="flex w-full flex-col items-center md:flex-row md:items-end md:gap-4">
+					<!-- Filter Label for Mobile -->
+					<div class="mb-2 self-start md:hidden">
+						<span class="text-xs font-medium text-gray-500">Filter Options</span>
+					</div>
+
 					<!-- Image Type Select -->
-					<div class="space-y-2">
-						<Label class="text-sm font-medium text-gray-700">Image Type</Label>
+					<div class="w-full md:w-auto md:flex-1">
+						<Label class="mb-1.5 block text-xs font-medium text-gray-700">Image Type</Label>
 						<Select.Root
 							selected={selectedImageType}
 							onSelectedChange={onImageTypeSelect}
@@ -187,8 +192,8 @@
 					</div>
 
 					<!-- Size Filter Select -->
-					<div class="space-y-2">
-						<Label class="text-sm font-medium text-gray-700">File Size</Label>
+					<div class="w-full md:w-auto md:flex-1">
+						<Label class="mb-1.5 block text-xs font-medium text-gray-700">File Size</Label>
 						<Select.Root
 							selected={selectedSizeFilter}
 							onSelectedChange={onSizeFilterSelect}
@@ -208,8 +213,8 @@
 					</div>
 
 					<!-- Sort By Select -->
-					<div class="space-y-2">
-						<Label class="text-sm font-medium text-gray-700">Sort By</Label>
+					<div class="w-full md:w-auto md:flex-1">
+						<Label class="mb-1.5 block text-xs font-medium text-gray-700">Sort By</Label>
 						<Select.Root selected={selectedSortBy} onSelectedChange={onSortBySelect} class="w-full">
 							<Select.Trigger class="w-full border-gray-200 bg-gray-50">
 								<Select.Value placeholder="Sort by" />
@@ -223,16 +228,26 @@
 							</Select.Content>
 						</Select.Root>
 					</div>
-				</div>
 
-				<!-- Action Buttons -->
-				<div class="flex justify-end gap-2 border-t pt-2">
-					<Button variant="outline" on:click={handleReset} class="text-gray-600">Reset</Button>
-					<Button on:click={applyFilters} class="bg-primary hover:bg-primary/90">
-						Apply Filters
-					</Button>
+					<!-- Action Buttons -->
+					<div class="mt-4 flex w-full gap-2 md:mt-0 md:w-auto">
+						<Button
+							variant="outline"
+							size="default"
+							on:click={handleReset}
+							class="flex-1 md:flex-initial"
+						>
+							Reset
+						</Button>
+						<Button
+							on:click={applyFilters}
+							class="flex-1 bg-primary hover:bg-primary/90 md:flex-initial"
+						>
+							Apply
+						</Button>
+					</div>
 				</div>
 			</div>
-		{/if}
+		</div>
 	</div>
 </div>
