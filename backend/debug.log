@@ -12328,3 +12328,388 @@ Location data received: {'country': 'United States', 'region': 'California', 'ci
 Access log created: 26
 /home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
 Watching for file changes with StatReloader
+Not Found: /media/uploads/watermarked-image_11.enc.png
+Not Found: /media/uploads/body_RMDXKPx.enc.png
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+Bad Request: /api/image/140/invisible-watermark/
+Not Found: /favicon.ico
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'diagonal', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 29, 'horizontalOffset': -43}
+Starting watermark application
+Saving input image to: /tmp/tmpi6wp9s3e.png
+Output will be saved to: /tmp/tmpblfkb2sl.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "diagonal", "spacing": 61.0, "horizontalOffset": -43.0, "verticalOffset": 29.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpi6wp9s3e.png /tmp/tmpblfkb2sl.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "diagonal", "spacing": 61.0, "horizontalOffset": -43.0, "verticalOffset": 29.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpi6wp9s3e.png
+Cleaned up temporary file: /tmp/tmpblfkb2sl.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 27
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 28
+Bad Request: /access/wSZFnkgJ7HURXgadkhCvyOvistz9Tu70CtpoCe0Nmcc/verify/
+Watching for file changes with StatReloader
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'diagonal', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 29, 'horizontalOffset': -43}
+Starting watermark application
+Saving input image to: /tmp/tmpatqpvfk7.png
+Output will be saved to: /tmp/tmpcx2s7_au.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "diagonal", "spacing": 61.0, "horizontalOffset": -43.0, "verticalOffset": 29.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpatqpvfk7.png /tmp/tmpcx2s7_au.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "diagonal", "spacing": 61.0, "horizontalOffset": -43.0, "verticalOffset": 29.0}
+Watermark script failed with return code 1
+stdout: 
+stderr: Error applying watermark: TimeoutError: Navigation timeout of 30000 ms exceeded
+    at new Deferred (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/util/Deferred.js:60:34)
+    at Deferred.create (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/util/Deferred.js:21:16)
+    at new LifecycleWatcher (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/LifecycleWatcher.js:69:60)
+    at CdpFrame.setContent (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Frame.js:232:29)
+    at async CdpPage.setContent (/home/sagar/Documents/FYP/igaurdian/frontend/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:568:13)
+    at async applyWatermark (/home/sagar/Documents/FYP/igaurdian/frontend/watermark.cjs:141:3)
+
+Cleaned up temporary file: /tmp/tmpatqpvfk7.png
+Cleaned up temporary file: /tmp/tmpcx2s7_au.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_191928.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_191928.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_191928.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 29
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpgww6xt9v.png
+Output will be saved to: /tmp/tmpax4wxepr.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpgww6xt9v.png /tmp/tmpax4wxepr.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpgww6xt9v.png
+Cleaned up temporary file: /tmp/tmpax4wxepr.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_193355.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_193355.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_193355.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 30
+Bad Request: /api/image/140/invisible-watermark/
+Bad Request: /api/image/140/invisible-watermark/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 31
+Bad Request: /access/q2ycAU6d7-ARHTarWqaeQ_X9qNLpHYPPVI9S_TNgCu4/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 32
+Bad Request: /access/q2ycAU6d7-ARHTarWqaeQ_X9qNLpHYPPVI9S_TNgCu4/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpbx49tgqr.png
+Cleaned up temporary file: /tmp/tmpbx49tgqr.png
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpn4ynfvbo.png
+Output will be saved to: /tmp/tmpj29wcyae.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpn4ynfvbo.png /tmp/tmpj29wcyae.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpn4ynfvbo.png
+Cleaned up temporary file: /tmp/tmpj29wcyae.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_203339.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_203339.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250409_203339.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 33
+Bad Request: /access/I8i107FP8D-c9I8jC6tyVi13EH5wKAbHXkzpe2o1GXk/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 34
+Bad Request: /access/I8i107FP8D-c9I8jC6tyVi13EH5wKAbHXkzpe2o1GXk/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmp_23t0onu.png
+Output will be saved to: /tmp/tmpf66u81t8.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmp_23t0onu.png /tmp/tmpf66u81t8.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmp_23t0onu.png
+Cleaned up temporary file: /tmp/tmpf66u81t8.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Error in VerifyOTPView: column "image_id" of relation "backend_accesslog" does not exist
+LINE 1: ...SERT INTO "backend_accesslog" ("image_access_id", "image_id"...
+                                                             ^
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column "image_id" of relation "backend_accesslog" does not exist
+LINE 1: ...SERT INTO "backend_accesslog" ("image_access_id", "image_id"...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py", line 948, in post
+    access_log = AccessLog.objects.create(
+        image_access=access,
+    ...<6 lines>...
+        success=False
+    )
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/base.py", line 892, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/base.py", line 998, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/base.py", line 1161, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/base.py", line 1202, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/query.py", line 1847, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1836, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column "image_id" of relation "backend_accesslog" does not exist
+LINE 1: ...SERT INTO "backend_accesslog" ("image_access_id", "image_id"...
+                                                             ^
+
+Internal Server Error: /access/PMYKJEUFxxq8lLh0wnarlaAzbpBTRT_LMwo78T23_3A/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 35
+Bad Request: /access/PMYKJEUFxxq8lLh0wnarlaAzbpBTRT_LMwo78T23_3A/verify/
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpe5mp0sct.png
+Output will be saved to: /tmp/tmpkr0ecw7c.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpe5mp0sct.png /tmp/tmpkr0ecw7c.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpe5mp0sct.png
+Cleaned up temporary file: /tmp/tmpkr0ecw7c.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 36
+Bad Request: /access/4k7C9SkP0ZQMogPKj9IbNhCBfmozO-cJ_TpF2_R8Tek/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 37
+Bad Request: /access/4k7C9SkP0ZQMogPKj9IbNhCBfmozO-cJ_TpF2_R8Tek/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 38
+Bad Request: /access/4k7C9SkP0ZQMogPKj9IbNhCBfmozO-cJ_TpF2_R8Tek/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 39
+Bad Request: /access/4k7C9SkP0ZQMogPKj9IbNhCBfmozO-cJ_TpF2_R8Tek/verify/

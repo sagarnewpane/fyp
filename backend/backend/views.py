@@ -470,10 +470,14 @@ class InvisibleWatermarkView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
+            # Get decrypted image
+            decrypted_img = user_image.get_decrypted_image()
+
+            # Create a temporary file with the decrypted image
             with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
                 temp_path = temp_file.name
-                with open(temp_path, 'wb') as f:
-                    f.write(user_image.image.read())
+                # Save the numpy array as an image
+                cv2.imwrite(temp_path, decrypted_img)
 
             stego = TextSteganography()
 
@@ -528,10 +532,14 @@ class InvisibleWatermarkView(APIView):
                     status=status.HTTP_404_NOT_FOUND
                 )
 
+            # Get the decrypted image
+            decrypted_img = user_image.get_decrypted_image()
+
+            # Create a temporary file with the decrypted image
             with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
                 temp_path = temp_file.name
-                with open(temp_path, 'wb') as f:
-                    f.write(user_image.image.read())
+                # Save the numpy array as an image
+                cv2.imwrite(temp_path, decrypted_img)
 
             stego = TextSteganography()
 

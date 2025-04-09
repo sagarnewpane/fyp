@@ -297,7 +297,16 @@ class OTPSecret(models.Model):
 
 
 class AccessLog(models.Model):
-    image_access = models.ForeignKey(ImageAccess, on_delete=models.CASCADE)
+    image_access = models.ForeignKey(ImageAccess, on_delete=models.SET_NULL, null=True)
+
+    # Fields to store information that would be lost on deletion
+    image_id = models.IntegerField(null=True, blank=True)
+    image_name = models.CharField(max_length=255, null=True, blank=True)
+    access_rule_token = models.CharField(max_length=64, null=True, blank=True)
+    access_rule_name = models.CharField(max_length=255, null=True, blank=True)
+    user_id = models.IntegerField(null=True, blank=True)
+    username = models.CharField(max_length=150, null=True, blank=True)
+
     email = models.EmailField()
     ip_address = models.GenericIPAddressField(null=True)
     country = models.CharField(max_length=100, null=True, blank=True)
@@ -348,3 +357,23 @@ def update_access_control_status(sender, instance, **kwargs):
     if image.access_control_enabled != has_access_rules:
         image.access_control_enabled = has_access_rules
         image.save(update_fields=['access_control_enabled'])
+
+from django.db.models.signals import pre_delete
+@receiver(pre_delete, sender=ImageAccess)
+def store_access_rule_info_before_delete(sender, instance, **kwargs):
+    """Preserve information from ImageAccess before it gets deleted"""
+    try:
+        # Get all related access logs
+        access_logs = AccessLog.objects.filter(image_access=instance)
+
+        # Store relevant info
+        access_logs.update(
+            access_rule_token=instance.token,
+            access_rule_name=instance.access_name,
+            image_id=instance.user_image.id if instance.user_image else None,
+            image_name=instance.user_image.image_name if instance.user_image else None,
+            user_id=instance.user_image.user.id if instance.user_image and instance.user_image.user else None,
+            username=instance.user_image.user.username if instance.user_image and instance.user_image.user else None
+        )
+    except Exception as e:
+        print(f"Error preserving access log data: {str(e)}")

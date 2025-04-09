@@ -289,6 +289,7 @@ class AccessLogSerializer(serializers.ModelSerializer):
     accessed_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     location = serializers.SerializerMethodField()
     protection_features = serializers.SerializerMethodField()
+    access_rule_name = serializers.SerializerMethodField()
 
     class Meta:
         model = AccessLog
@@ -305,20 +306,27 @@ class AccessLogSerializer(serializers.ModelSerializer):
             'image_id',
             'image_name',
             'location',
-            'protection_features'
+            'protection_features',
+            'access_rule_name'
         ]
 
     def get_image_name(self, obj):
         try:
-            return obj.image_access.user_image.image_name
+            if obj.image_access and obj.image_access.user_image:
+                return obj.image_access.user_image.image_name
+            # Fall back to stored value if relation is broken
+            return obj.image_name
         except AttributeError:
-            return None
+            return obj.image_name or None
 
     def get_image_id(self, obj):
         try:
-            return obj.image_access.user_image.id
+            if obj.image_access and obj.image_access.user_image:
+                return obj.image_access.user_image.id
+            # Fall back to stored value
+            return obj.image_id
         except AttributeError:
-            return None
+            return obj.image_id or None
 
     def get_location(self, obj):
         location_parts = []
@@ -332,9 +340,21 @@ class AccessLogSerializer(serializers.ModelSerializer):
 
     def get_protection_features(self, obj):
         try:
-            return obj.image_access.protection_features
+            if obj.image_access:
+                return obj.image_access.protection_features
+            # Return empty dict for preserved logs
+            return {}
         except AttributeError:
             return {}
+
+    def get_access_rule_name(self, obj):
+        try:
+            if obj.image_access:
+                return obj.image_access.access_name
+            # Fall back to stored access rule name
+            return obj.access_rule_name
+        except AttributeError:
+            return obj.access_rule_name or "Deleted Access Rule"
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
