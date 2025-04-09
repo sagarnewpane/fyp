@@ -21,7 +21,7 @@ export async function load({ request, fetch, cookies, url }) {
 		}
 
 		const data = await res.json();
-		const recent = data.results.slice(0, 4);
+		const recent = data.results.slice(0, 5);
 		return { images: recent };
 	} catch (err) {
 		console.error('Error fetching images:', err);

@@ -12,7 +12,6 @@
 	} from '$lib/components/ui/dialog';
 	// import { createEventDispatcher } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import { invalidateAll } from '$app/navigation';
 
 	export let images = [];
 	// const dispatch = createEventDispatcher();
@@ -78,7 +77,7 @@
 	</DialogContent>
 </Dialog>
 
-<section class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+<section class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
 	{#if images.length === 0}
 		<div
 			class="col-span-full flex min-h-[300px] items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50"
