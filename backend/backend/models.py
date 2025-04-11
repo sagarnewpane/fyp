@@ -232,7 +232,7 @@ from django.contrib.auth.hashers import make_password, check_password as django_
 
 class ImageAccess(models.Model):
 
-    access_name = models.CharField(max_length=255, default='Access Log')
+    access_name = models.CharField(max_length=255, default='')
     user_image = models.ForeignKey('UserImage', on_delete=models.CASCADE, related_name='access_rules')
     token = models.CharField(max_length=64, unique=True, db_index=True)
     allowed_emails = models.JSONField(default=list, blank=True)
@@ -326,6 +326,26 @@ class AccessLog(models.Model):
     def __str__(self):
         return f"{self.email} - {self.action_type} - {self.accessed_at}"
 
+
+class AccessRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('denied', 'Denied')
+    ]
+
+    image_access = models.ForeignKey('ImageAccess', on_delete=models.CASCADE, related_name='access_requests')
+    email = models.EmailField()
+    message = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('image_access', 'email')  # Prevent duplicate requests
+
+    def __str__(self):
+        return f"{self.email} - {self.status} - {self.image_access.token}"
 
 # SIGNALS
 

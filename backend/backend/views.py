@@ -691,6 +691,7 @@ class CreateAccessView(APIView):
             # Create data dictionary with all required fields
             access_data = {
                 'user_image': user_image.id,
+                'access_name': request.data['access_name'],
                 'allowed_emails': request.data.get('allowed_emails', []),
                 'requires_password': request.data.get('requires_password', False),
                 'password': request.data.get('password'),
@@ -698,10 +699,6 @@ class CreateAccessView(APIView):
                 'max_views': request.data.get('max_views', 0),
                 'protection_features': request.data.get('protection_features', {})
             }
-
-            # Only add access_name if it's provided, otherwise it will use the model default
-            if request.data.get('access_name'):
-                access_data['access_name'] = request.data['access_name']
 
             # Validate and save using serializer
             serializer = ImageAccessSerializer(data=access_data)
@@ -836,23 +833,78 @@ class InitiateAccessView(APIView):
                     'error': 'Email is required'
                 }, status=status.HTTP_400_BAD_REQUEST)
 
-            # Check if email is allowed
-            if access.allowed_emails:
-                email_lower = email.lower()
-                allowed_emails_lower = [e.lower() for e in access.allowed_emails]
-                if email_lower not in allowed_emails_lower:
-                    return Response({
-                        'error': 'Email not authorized'
-                    }, status=status.HTTP_403_FORBIDDEN)
+            # Debug info
+            print(f"Access check - Token: {token}, Email: {email}")
+            print(f"Allowed emails: {access.allowed_emails}")
 
-            # Check if this is the initial email check
+            # Only check email restrictions if allowed_emails is not empty
+            if access.allowed_emails:
+                # Check if email is allowed
+                email_lower = email.lower()
+                allowed_emails_lower = [e.lower() for e in access.allowed_emails if e]
+                print(f"Checking if {email_lower} is in {allowed_emails_lower}")
+                is_allowed = email_lower in allowed_emails_lower
+
+                # If email is not allowed
+                if not is_allowed:
+                    print(f"Email {email} not authorized")
+                    # Check for existing access requests
+                    try:
+                        access_request = AccessRequest.objects.get(
+                            image_access=access,
+                            email=email_lower
+                        )
+
+                        print(f"Found existing access request with status: {access_request.status}")
+
+                        if access_request.status == 'approved':
+                            # If approved, add to allowed emails
+                            allowed_emails = access.allowed_emails or []
+                            allowed_emails.append(email_lower)
+                            access.allowed_emails = allowed_emails
+                            access.save()
+                            is_allowed = True
+                            print(f"Request was approved, added to allowed emails")
+                        elif access_request.status == 'pending':
+                            print(f"Request is pending approval")
+                            return Response({
+                                'error': 'Your access request is pending approval',
+                                'request_status': 'pending'
+                            }, status=status.HTTP_403_FORBIDDEN)
+                        else:  # denied
+                            print(f"Request was denied")
+                            return Response({
+                                'error': 'Your access request was denied',
+                                'request_status': 'denied',
+                                'can_request_again': True
+                            }, status=status.HTTP_403_FORBIDDEN)
+                    except AccessRequest.DoesNotExist:
+                        print(f"No existing access request, can request access")
+                        # Allow user to request access
+                        return Response({
+                            'error': 'Email not authorized',
+                            'can_request_access': True
+                        }, status=status.HTTP_403_FORBIDDEN)
+                    except Exception as e:
+                        print(f"Error checking access request: {str(e)}")
+                        # Still allow requesting access on error
+                        return Response({
+                            'error': 'Email not authorized',
+                            'can_request_access': True
+                        }, status=status.HTTP_403_FORBIDDEN)
+            else:
+                # If allowed_emails is empty, access is open to all
+                print("No email restrictions, access open to all")
+                is_allowed = True
+
+            # Check if password is required
             if not password and access.requires_password:
                 return Response({
                     'requires_password': True,
                     'message': 'Password required'
                 }, status=status.HTTP_200_OK)
 
-            # If password is required, validate it
+            # Validate password if required
             if access.requires_password:
                 if not password:
                     return Response({
@@ -864,10 +916,9 @@ class InitiateAccessView(APIView):
                         'error': 'Invalid password'
                     }, status=status.HTTP_400_BAD_REQUEST)
 
-            # Generate and store OTP
+            # Generate and send OTP
             otp = OTPHandler.generate_and_store_otp(access, email)
 
-            # Send email with OTP
             try:
                 send_mail(
                     'Access Verification Code',
@@ -881,16 +932,18 @@ class InitiateAccessView(APIView):
                     'message': 'OTP sent successfully'
                 }, status=status.HTTP_200_OK)
             except Exception as e:
-                print(e)
+                print(f"Error sending OTP: {str(e)}")
                 return Response({
                     'error': 'Failed to send OTP'
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except ImageAccess.DoesNotExist:
+            print(f"No access rule found for token: {token}")
             return Response({
                 'error': 'Invalid access token'
             }, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
+            print(f"Unexpected error: {str(e)}")
             return Response({
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -1274,3 +1327,168 @@ class CustomMetadataView(APIView):
             return Response({
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+from .models import AccessRequest
+
+class RequestAccessView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, token):
+        try:
+            access = ImageAccess.objects.get(token=token)
+            email = request.data.get('email')
+            message = request.data.get('message', '')
+
+            if not email:
+                return Response({'error': 'Email is required'}, status=400)
+
+            # Check existing request
+            try:
+                existing_request = AccessRequest.objects.get(
+                    image_access=access,
+                    email=email.lower()
+                )
+
+                if existing_request.status == 'pending':
+                    return Response({
+                        'message': 'Your access request is already pending',
+                        'request_status': 'pending'
+                    }, status=403)
+                elif existing_request.status == 'denied':
+                    # Update the existing request with new message
+                    existing_request.message = message
+                    existing_request.status = 'pending'
+                    existing_request.save()
+
+                    return Response({
+                        'message': 'New access request submitted successfully',
+                        'request_status': 'pending'
+                    }, status=201)
+                elif existing_request.status == 'approved':
+                    return Response({
+                        'message': 'Your access has already been approved',
+                        'request_status': 'approved'
+                    }, status=200)
+
+            except AccessRequest.DoesNotExist:
+                # Create new request
+                AccessRequest.objects.create(
+                    image_access=access,
+                    email=email.lower(),
+                    message=message,
+                    status='pending'
+                )
+
+                # Send notification to owner
+                try:
+                    owner_email = access.user_image.user.email
+                    send_mail(
+                        'New Access Request',
+                        f'{email} has requested access to your protected image.\n\nMessage: {message}',
+                        settings.EMAIL_HOST_USER,
+                        [owner_email],
+                        fail_silently=True,
+                    )
+                except Exception as e:
+                    print(f"Failed to send notification: {str(e)}")
+
+                return Response({
+                    'message': 'Access request submitted successfully',
+                    'request_status': 'pending'
+                }, status=201)
+
+        except ImageAccess.DoesNotExist:
+            return Response({'error': 'Invalid access token'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+
+from .models import AccessRequest
+from .serializers import AccessRequestSerializer
+
+class ManageAccessRequestsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Get all access requests for user's images"""
+        try:
+            # Get all requests for user's images
+            queryset = AccessRequest.objects.filter(
+                image_access__user_image__user=request.user,
+                status='pending'
+            ).order_by('-created_at')
+
+            serializer = AccessRequestSerializer(queryset, many=True)
+
+            return Response({
+                'results': serializer.data,
+                'count': queryset.count()
+            })
+
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    def post(self, request, request_id=None):
+        """Handle approve/deny actions"""
+        if not request_id:
+            return Response(
+                {'error': 'Request ID is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            access_request = AccessRequest.objects.get(
+                id=request_id,
+                image_access__user_image__user=request.user
+            )
+
+            action = request.data.get('action')
+            if action not in ['approve', 'deny']:
+                return Response(
+                    {'error': 'Invalid action. Must be either "approve" or "deny"'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Update status based on action
+            access_request.status = 'approved' if action == 'approve' else 'denied'
+            access_request.save()
+
+            # If approved, add email to allowed_emails
+            if action == 'approve':
+                image_access = access_request.image_access
+                allowed_emails = image_access.allowed_emails or []
+                if access_request.email.lower() not in [email.lower() for email in allowed_emails]:
+                    allowed_emails.append(access_request.email)
+                    image_access.allowed_emails = allowed_emails
+                    image_access.save()
+
+            # Send notification email
+            try:
+                status_text = 'approved' if action == 'approve' else 'denied'
+                send_mail(
+                    f'Access Request {status_text.capitalize()}',
+                    f'Your request to access the protected image has been {status_text}.',
+                    settings.EMAIL_HOST_USER,
+                    [access_request.email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print(f"Failed to send notification: {str(e)}")
+
+            return Response({
+                'message': f'Request successfully {action}ed',
+                'status': access_request.status
+            })
+
+        except AccessRequest.DoesNotExist:
+            return Response(
+                {'error': 'Request not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

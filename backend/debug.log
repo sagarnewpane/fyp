@@ -12867,3 +12867,537 @@ Importing XVThumbImagePlugin
 STREAM b'IHDR' 16 13
 STREAM b'sRGB' 41 1
 STREAM b'IDAT' 54 8192
+Watching for file changes with StatReloader
+Not Found: /image/watermark.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/access-control.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/slider1.webp
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Starting protection chain for image 157
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1547, 1911)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250410_114137.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250410_114137.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250410_114137.png
+Starting protection chain for image 157
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1547, 1911)
+Initial image mode: RGB
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 40
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 41
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 42
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 43
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 44
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 45
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 46
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Watching for file changes with StatReloader
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 47
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 48
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 49
+Bad Request: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Internal Server Error: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 50
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /access-requests/
+Not Found: /access-requests/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Not Found: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Not Found: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Not Found: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+Not Found: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/request/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Starting protection chain for image 158
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (618, 764)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_115346.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_115346.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_115346.png
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Starting protection chain for image 158
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (618, 764)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_121647.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_121647.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_121647.png
+Forbidden: /access/vqG4VWzw58ON8ATKr5v58KPep5cDtCCWNiJmuEmc8Hw/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Forbidden: /access/Ui94sHlleJie7b_hzbi1j_0WKuyWPf0bjRHCFqjPfW4/initiate/
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Starting protection chain for image 158
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (618, 764)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_125051.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_125051.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_125051.png
+Starting protection chain for image 158
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (618, 764)
+Initial image mode: RGB
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Bad Request: /access-requests/16/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Forbidden: /access/IRfn4OPFmWsOvNympjmlHwqN_KzBTlt9K9l9Q52PEcQ/initiate/
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Watching for file changes with StatReloader
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+Forbidden: /access/0bEdyZnOLETT-55WQEkkuH-z4lOS6yMKFkWORxeDlG0/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Watching for file changes with StatReloader
+Bad Request: /images/157/access/
+Starting protection chain for image 157
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1547, 1911)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_150528.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_150528.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250411_150528.png
+Bad Request: /images/157/access/
+Starting protection chain for image 157
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1547, 1911)
+Initial image mode: RGB
+Starting protection chain for image 157
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1547, 1911)
+Initial image mode: RGB

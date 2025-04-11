@@ -21,7 +21,10 @@ from .views import (
     AccessLogView,
     ImageAccessLogView,
     ImageMetadataView,
-    CustomMetadataView
+    CustomMetadataView,
+    RequestAccessView,
+    ManageAccessRequestsView
+
 
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -49,6 +52,15 @@ urlpatterns = [
     path('images/<int:image_id>/access/<int:rule_id>/', CreateAccessView.as_view(), name='image-access-detail'),
     path('access/<str:token>/initiate/', InitiateAccessView.as_view()),
     path('access/<str:token>/verify/', VerifyOTPView.as_view()),
+    path('access/<str:token>/request/', RequestAccessView.as_view(), name='request-access'),
+    path('access-requests/',
+             ManageAccessRequestsView.as_view(),
+             name='access-requests-list'),
+
+        # Endpoint for handling specific request actions (approve/deny)
+        path('access-requests/<int:request_id>/',
+             ManageAccessRequestsView.as_view(),
+             name='access-request-detail'),
 
     path('access-logs/', AccessLogView.as_view(), name='access-logs'),
     path('access-logs/<int:image_id>/', ImageAccessLogView.as_view(), name='image-logs'),

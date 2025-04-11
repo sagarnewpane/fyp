@@ -388,3 +388,21 @@ class ImageMetadataSerializer(serializers.ModelSerializer):
         if obj.metadata:
             return obj.metadata.get('raw', {})
         return {}
+
+
+from .models import AccessRequest
+
+class AccessRequestSerializer(serializers.ModelSerializer):
+    image_name = serializers.SerializerMethodField()
+    image_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AccessRequest
+        fields = ['id', 'email', 'message', 'status', 'created_at', 'image_name', 'image_id']
+        read_only_fields = ['id', 'status', 'created_at']
+
+    def get_image_name(self, obj):
+        return obj.image_access.user_image.image_name if obj.image_access.user_image else "Unknown"
+
+    def get_image_id(self, obj):
+        return obj.image_access.user_image.id if obj.image_access.user_image else None
