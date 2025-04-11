@@ -1,85 +1,162 @@
 <script>
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import {
 		Card,
 		CardContent,
 		CardHeader,
 		CardTitle,
-		CardDescription
+		CardDescription,
+		CardFooter
 	} from '$lib/components/ui/card';
-	import { Check, X, Clock } from 'lucide-svelte';
+	import { Check, X, Clock, ArrowRight, RefreshCw, AlertCircle, Loader2 } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
 	import { Badge } from '$lib/components/ui/badge';
+	import { toast } from 'svelte-sonner';
 
-	let requests = [
-		{
-			id: 1,
-			user: 'John Doe',
-			avatar: '',
-			item: 'photo54.png',
-			requestedAt: '10 minutes ago',
-			message: 'Need access for project review'
-		},
-		{
-			id: 2,
-			user: 'Jane Smith',
-			avatar: '',
-			item: 'photo54.png',
-			requestedAt: '2 hours ago',
-			message: 'Would like to see the final version'
+	let requests = [];
+	let isLoading = true;
+	let error = null;
+	let totalCount = 0;
+	let processing = {};
+
+	async function fetchRequests() {
+		isLoading = true;
+		try {
+			const response = await fetch('/api/access-requests');
+			if (!response.ok) throw new Error('Failed to fetch requests');
+			const data = await response.json();
+			requests = data.results;
+			totalCount = data.count;
+		} catch (err) {
+			error = err.message;
+			toast.error('Failed to fetch requests');
+		} finally {
+			isLoading = false;
 		}
-	];
+	}
+
+	async function handleAction(id, action) {
+		if (processing[id]) return;
+		processing[id] = action;
+
+		try {
+			const response = await fetch(`/api/access-requests/${id}`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ action })
+			});
+
+			if (!response.ok) throw new Error(`Failed to ${action} request`);
+			toast.success(`Request successfull!`);
+			await fetchRequests();
+		} catch (err) {
+			toast.error(err.message);
+		} finally {
+			processing[id] = null;
+		}
+	}
+
+	function handleViewAll() {
+		goto('/user?tab=overview');
+	}
+
+	function formatTimeAgo(timestamp) {
+		const date = new Date(timestamp);
+		const now = new Date();
+		const seconds = Math.floor((now - date) / 1000);
+
+		if (seconds < 60) return 'just now';
+		const minutes = Math.floor(seconds / 60);
+		if (minutes < 60) return `${minutes} minutes ago`;
+		const hours = Math.floor(minutes / 60);
+		if (hours < 24) return `${hours} hours ago`;
+		const days = Math.floor(hours / 24);
+		return `${days} days ago`;
+	}
+
+	onMount(fetchRequests);
 </script>
 
-<Card>
+<Card class="flex h-[400px] flex-col">
 	<CardHeader>
 		<div class="flex items-center justify-between">
 			<div>
 				<CardTitle>Access Requests</CardTitle>
 				<CardDescription>People waiting for your approval</CardDescription>
 			</div>
-			<Badge variant="secondary">{requests.length} pending</Badge>
+			<div class="flex items-center gap-2">
+				<Button variant="ghost" size="icon" on:click={fetchRequests} title="Refresh">
+					<RefreshCw class="h-4 w-4" />
+				</Button>
+				<Badge variant="secondary" class="hidden sm:inline-flex">
+					{totalCount} pending
+				</Badge>
+			</div>
 		</div>
 	</CardHeader>
-	<CardContent>
-		<div class="space-y-4">
-			{#if requests.length === 0}
-				<div class="flex flex-col items-center justify-center py-6 text-center">
-					<div class="rounded-full bg-primary/10 p-3">
-						<Check class="h-6 w-6 text-primary" />
-					</div>
-					<h3 class="mt-4 text-sm font-medium">All Clear!</h3>
-					<p class="text-sm text-muted-foreground">No pending access requests</p>
+
+	<CardContent class="flex-1">
+		<div class="space-y-2">
+			{#if isLoading}
+				<div class="flex justify-center py-8">Loading...</div>
+			{:else if error}
+				<div class="flex flex-col items-center py-8 text-center text-red-500">
+					<AlertCircle class="mb-2 h-8 w-8" />
+					<p>{error}</p>
 				</div>
+			{:else if requests.length === 0}
+				<div class="py-8 text-center text-muted-foreground">No pending requests</div>
 			{:else}
-				{#each requests as request}
-					<div class="group rounded-lg border p-4 transition-all hover:bg-muted/50">
-						<div class="flex items-start justify-between gap-4">
-							<div class="flex items-start space-x-4">
-								<Avatar class="h-10 w-10 border-2 border-background">
-									<AvatarImage src={request.avatar} alt={request.user} />
-									<AvatarFallback class="font-medium">{request.user[0]}</AvatarFallback>
-								</Avatar>
-								<div class="space-y-1">
-									<p class="text-sm font-medium leading-none">{request.user}</p>
-									<div class="flex items-center gap-2">
-										<Badge variant="secondary" class="font-normal">
-											{request.item}
-										</Badge>
-									</div>
-									<p class="text-sm text-muted-foreground">{request.message}</p>
-									<div class="flex items-center gap-1 text-xs text-muted-foreground">
-										<Clock class="h-3 w-3" />
-										<span>{request.requestedAt}</span>
-									</div>
-								</div>
+				{#each requests.slice(0, 2) as request}
+					<div
+						class="group flex items-start space-x-4 rounded-lg px-3 py-2 transition-colors hover:bg-muted/50"
+					>
+						<div class="rounded-full bg-primary/10 p-2 text-primary">
+							<Clock class="h-4 w-4" />
+						</div>
+						<div class="flex-1">
+							<div class="flex items-center justify-between">
+								<p class="text-sm font-medium leading-none">
+									<span class="font-semibold">{request.email}</span>
+									<span class="text-muted-foreground"> requested access</span>
+								</p>
+								<time class="text-xs text-muted-foreground">
+									{formatTimeAgo(request.created_at)}
+								</time>
 							</div>
-							<div class="flex flex-col gap-2">
-								<Button size="sm" variant="default" class="w-full">
-									<Check class="mr-1 h-4 w-4" /> Approve
+							<p class="mt-1 break-all text-sm text-muted-foreground">{request.image_name}</p>
+							{#if request.message}
+								<p class="mt-0.5 text-sm italic text-muted-foreground">{request.message}</p>
+							{/if}
+							<div class="mt-1.5 flex justify-end gap-2">
+								<Button
+									size="sm"
+									variant="outline"
+									class="h-8 min-w-[80px] bg-green-100 text-green-700 hover:bg-green-200"
+									disabled={!!processing[request.id]}
+									on:click={() => handleAction(request.id, 'approve')}
+								>
+									{#if processing[request.id] === 'approve'}
+										<Loader2 class="mr-1.5 h-3.5 w-3.5 animate-spin" />
+									{:else}
+										<Check class="mr-1.5 h-3.5 w-3.5" />
+									{/if}
+									Approve
 								</Button>
-								<Button size="sm" variant="outline" class="w-full">
-									<X class="mr-1 h-4 w-4" /> Deny
+								<Button
+									size="sm"
+									variant="outline"
+									class="h-8 min-w-[80px] bg-red-100 text-red-700 hover:bg-red-200"
+									disabled={!!processing[request.id]}
+									on:click={() => handleAction(request.id, 'deny')}
+								>
+									{#if processing[request.id] === 'deny'}
+										<Loader2 class="mr-1.5 h-3.5 w-3.5 animate-spin" />
+									{:else}
+										<X class="mr-1.5 h-3.5 w-3.5" />
+									{/if}
+									Deny
 								</Button>
 							</div>
 						</div>
@@ -88,4 +165,11 @@
 			{/if}
 		</div>
 	</CardContent>
+
+	<CardFooter class="flex justify-end pb-4">
+		<Button variant="default" class="group" on:click={handleViewAll}>
+			<span>View All Activities</span>
+			<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+		</Button>
+	</CardFooter>
 </Card>

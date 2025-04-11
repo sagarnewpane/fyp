@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Shield, Fingerprint, FileText, Brain } from 'lucide-svelte';
 
@@ -19,7 +18,8 @@
 			icon: Shield,
 			applied: protectionStatus.access_control,
 			action: 'Manage Access',
-			url: `/access/${imageId}`
+			url: `/access/${imageId}`,
+			image: '/slider1.webp'
 		},
 		{
 			title: 'Watermarking Protection',
@@ -27,7 +27,8 @@
 			icon: Fingerprint,
 			applied: protectionStatus.watermark,
 			action: 'Apply Watermark',
-			url: `/watermark/${imageId}`
+			url: `/watermark/${imageId}`,
+			image: '/images/watermark.jpg'
 		},
 		{
 			title: 'Metadata Protection',
@@ -35,14 +36,17 @@
 			icon: FileText,
 			applied: protectionStatus.metadata,
 			action: 'Manage Metadata',
-			url: `/metadata/${imageId}`
+			url: `/metadata/${imageId}`,
+			image: '/images/metadata.jpg'
 		},
 		{
 			title: 'AI Protection',
 			description: 'Implement AI-based protection against unauthorized copying and manipulation.',
 			icon: Brain,
 			applied: protectionStatus.ai_protection,
-			action: 'Apply Protection'
+			action: 'Apply Protection',
+			url: `/ai-protection/${imageId}`,
+			image: '/images/ai-protection.jpg'
 		}
 	];
 </script>
@@ -50,27 +54,54 @@
 <section>
 	<h2 class="mb-6 text-2xl font-semibold">Security Settings</h2>
 
-	<div class="grid gap-6">
+	<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 		{#each securityFeatures as feature}
-			<Card>
-				<CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-					<CardTitle class="flex items-center gap-2 text-xl font-semibold">
-						<svelte:component this={feature.icon} class="h-5 w-5" />
-						{feature.title}
-					</CardTitle>
-					<Badge variant={feature.applied ? 'default' : 'secondary'}>
-						{feature.applied ? 'Applied' : 'Not Applied'}
-					</Badge>
-				</CardHeader>
-				<CardContent>
-					<p class="mb-4 text-muted-foreground">{feature.description}</p>
+			<div
+				class="security-box flex h-80 overflow-hidden rounded-lg border shadow-md transition-all duration-300 hover:border-primary/50 hover:shadow-lg"
+			>
+				<!-- Content on left -->
+				<div class="flex flex-1 flex-col justify-between p-5">
+					<div>
+						<div class="mb-2 flex items-center justify-between">
+							<h3 class="flex items-center gap-2 text-xl font-semibold">
+								<svelte:component this={feature.icon} class="h-6 w-6 text-primary" />
+								{feature.title}
+							</h3>
+							<Badge variant={feature.applied ? 'default' : 'secondary'} class="ml-2">
+								{feature.applied ? 'Applied' : 'Not Applied'}
+							</Badge>
+						</div>
 
-					<div class="flex items-center justify-between">
-						<Button href={`${feature.url}`} variant="default">{feature.action}</Button>
-						<Button variant="link" class="text-sm">Learn more</Button>
+						<p class="mb-4 text-muted-foreground">{feature.description}</p>
 					</div>
-				</CardContent>
-			</Card>
+
+					<div class="flex items-center">
+						<Button href={feature.url} variant="default" class="mr-3">{feature.action}</Button>
+						<Button variant="outline" size="sm">Learn more</Button>
+					</div>
+				</div>
+
+				<!-- Image on right -->
+				<div class="relative w-1/2 flex-shrink-0 overflow-hidden">
+					{#if feature.image}
+						<img
+							src={feature.image}
+							alt={feature.title}
+							class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+						/>
+					{:else}
+						<div class="flex h-full w-full items-center justify-center bg-gray-100">
+							<svelte:component this={feature.icon} class="h-16 w-16 text-gray-300" />
+						</div>
+					{/if}
+				</div>
+			</div>
 		{/each}
 	</div>
 </section>
+
+<style>
+	.security-box {
+		background-color: white;
+	}
+</style>

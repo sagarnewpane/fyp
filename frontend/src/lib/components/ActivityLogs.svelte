@@ -150,7 +150,7 @@
 			{/if}
 		</div>
 	</CardContent>
-	<CardFooter class="flex justify-center pb-4">
+	<CardFooter class="flex justify-end pb-4">
 		<Button variant="default" class="group" on:click={navigateToAllLogs}>
 			<span>View All Activities</span>
 			<ArrowRight class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

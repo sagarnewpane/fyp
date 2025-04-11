@@ -36,6 +36,7 @@
 		DropdownMenuItem,
 		DropdownMenuSeparator
 	} from '$lib/components/ui/dropdown-menu';
+	import { z } from 'zod';
 
 	// Props
 	export let imageUrl;
@@ -61,6 +62,20 @@
 			ai_protection: false
 		}
 	};
+
+	// Validation schemas
+	const accessNameSchema = z
+		.string()
+		.min(3, { message: 'Access name must be at least 3 characters' })
+		.max(50, { message: 'Access name must not exceed 50 characters' })
+		.trim()
+		.refine((val) => val.length > 0, { message: 'Access name is required' });
+
+	const emailSchema = z.string().email({ message: 'Invalid email address' }).trim();
+
+	// Validation state
+	let accessNameError = '';
+	let emailError = '';
 
 	// Computed property for protection availability
 	$: protectionStatus = {
@@ -90,6 +105,28 @@
 		}
 	};
 
+	function validateAccessName(name) {
+		try {
+			accessNameSchema.parse(name);
+			accessNameError = '';
+			return true;
+		} catch (error) {
+			accessNameError = error.errors[0].message;
+			return false;
+		}
+	}
+
+	function validateEmail(email) {
+		try {
+			emailSchema.parse(email);
+			emailError = '';
+			return true;
+		} catch (error) {
+			emailError = error.errors[0].message;
+			return false;
+		}
+	}
+
 	// Fetch access rules function
 	async function fetchAccessRules() {
 		try {
@@ -116,15 +153,14 @@
 	}
 
 	function addEmail() {
-		if (newAccess.emailInput && isValidEmail(newAccess.emailInput)) {
+		if (newAccess.emailInput && validateEmail(newAccess.emailInput)) {
 			if (!newAccess.allowed_emails.includes(newAccess.emailInput)) {
 				newAccess.allowed_emails = [...newAccess.allowed_emails, newAccess.emailInput];
 				newAccess.emailInput = '';
+				emailError = '';
 			} else {
 				toast.error('Email already added');
 			}
-		} else {
-			toast.error('Please enter a valid email');
 		}
 	}
 
@@ -133,6 +169,11 @@
 	}
 
 	async function createAccessRule() {
+		if (!validateAccessName(newAccess.access_name)) {
+			toast.error(accessNameError);
+			return;
+		}
+
 		try {
 			isSaving = true;
 			const accessData = {
@@ -372,44 +413,55 @@
 						<div class="grid gap-4">
 							<!-- Email Input -->
 							<div class="space-y-2">
-								<Label>Access Name (Optional)</Label>
-								<div class="flex gap-2">
+								<Label>Access Name</Label>
+								<div class="flex flex-col gap-2">
 									<Input
 										type="text"
 										placeholder="Give a name to Access"
 										bind:value={newAccess.access_name}
+										class={accessNameError ? 'border-destructive' : ''}
+										on:blur={() => validateAccessName(newAccess.access_name)}
 									/>
+									{#if accessNameError}
+										<p class="text-sm text-destructive">{accessNameError}</p>
+									{/if}
 								</div>
 							</div>
 							<!-- Email Input -->
 							<div class="space-y-2">
 								<Label>Allowed Emails (Optional)</Label>
-								<div class="flex gap-2">
-									<Input
-										type="email"
-										placeholder="Add email address"
-										bind:value={newAccess.emailInput}
-										on:keydown={(e) => e.key === 'Enter' && addEmail()}
-									/>
-									<Button on:click={addEmail}>
-										<Plus class="h-4 w-4" />
-									</Button>
-								</div>
-								{#if newAccess.allowed_emails.length > 0}
-									<div class="flex flex-wrap gap-2">
-										{#each newAccess.allowed_emails as email}
-											<Badge variant="secondary" class="flex items-center gap-1">
-												{email}
-												<button
-													class="ml-1 text-muted-foreground hover:text-foreground"
-													on:click={() => removeEmail(email)}
-												>
-													<X class="h-3 w-3" />
-												</button>
-											</Badge>
-										{/each}
+								<div class="flex flex-col gap-2">
+									<div class="flex gap-2">
+										<Input
+											type="email"
+											placeholder="Add email address"
+											bind:value={newAccess.emailInput}
+											class={emailError ? 'border-destructive' : ''}
+											on:keydown={(e) => e.key === 'Enter' && addEmail()}
+										/>
+										<Button on:click={addEmail}>
+											<Plus class="h-4 w-4" />
+										</Button>
 									</div>
-								{/if}
+									{#if emailError}
+										<p class="text-sm text-destructive">{emailError}</p>
+									{/if}
+									{#if newAccess.allowed_emails.length > 0}
+										<div class="flex flex-wrap gap-2">
+											{#each newAccess.allowed_emails as email}
+												<Badge variant="secondary" class="flex items-center gap-1">
+													{email}
+													<button
+														class="ml-1 text-muted-foreground hover:text-foreground"
+														on:click={() => removeEmail(email)}
+													>
+														<X class="h-3 w-3" />
+													</button>
+												</Badge>
+											{/each}
+										</div>
+									{/if}
+								</div>
 							</div>
 
 							<!-- Protection Features -->
