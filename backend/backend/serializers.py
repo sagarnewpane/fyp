@@ -96,12 +96,10 @@ class UserImageListSerializer(serializers.ModelSerializer):
 
 class SpecificImageSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
-    file_size = serializers.IntegerField()  # Add this
+    file_size = serializers.SerializerMethodField()
     file_type = serializers.CharField()     # Add this
     security = serializers.SerializerMethodField()
     image_url = serializers.SerializerMethodField()
-
-    # dimensions = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -119,15 +117,6 @@ class SpecificImageSerializer(serializers.ModelSerializer):
             'metadata': obj.metadata_enabled,
             'ai_protection': obj.ai_protection_enabled
         }
-        # def get_dimensions(self, obj):
-        #     try:
-        #         metadata = obj.metadata
-        #         return {
-        #             'width': metadata.width,
-        #             'height': metadata.height
-        #         }
-        #     except ImageMetadata.DoesNotExist:
-        #         return None
 
     def get_image_url(self, obj):
         request = self.context.get('request')
@@ -140,6 +129,10 @@ class SpecificImageSerializer(serializers.ModelSerializer):
             # If not encrypted, return direct URL
             return request.build_absolute_uri(obj.image.url)
         return obj.image.url
+
+
+    def get_file_size(self, obj):
+        return self._format_file_size(obj.file_size)
 
     def _format_file_size(self, size_in_bytes):
         # Convert bytes to human readable format

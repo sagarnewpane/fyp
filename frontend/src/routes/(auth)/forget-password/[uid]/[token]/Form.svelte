@@ -6,7 +6,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Alert from '$lib/components/ui/alert';
 	import FeatureCarousel from '$lib/components/FeatureCarousel.svelte';
-	import { registerFeatures } from '$lib/config/features';
+	import { Features } from '$lib/config/features';
 
 	export let data;
 
@@ -68,5 +68,5 @@
 			</div>
 		</div>
 	</div>
-	<FeatureCarousel features={registerFeatures} />
+	<FeatureCarousel features={Features} />
 </div>

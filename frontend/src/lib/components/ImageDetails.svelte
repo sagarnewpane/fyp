@@ -86,7 +86,7 @@
 						<dl class="grid gap-4 text-sm">
 							<div class="grid grid-cols-2 items-center gap-4">
 								<dt class="font-medium text-muted-foreground">File Name</dt>
-								<dd class="truncate font-medium">{imageInfo.name}</dd>
+								<dd class="truncate font-medium">{imageInfo.image_name}</dd>
 							</div>
 							<div class="grid grid-cols-2 items-center gap-4">
 								<dt class="font-medium text-muted-foreground">Size</dt>
@@ -95,14 +95,6 @@
 							<div class="grid grid-cols-2 items-center gap-4">
 								<dt class="font-medium text-muted-foreground">Type</dt>
 								<dd class="font-medium">{imageInfo.file_type.toUpperCase() || 'N/A'}</dd>
-							</div>
-							<div class="grid grid-cols-2 items-center gap-4">
-								<dt class="font-medium text-muted-foreground">Dimensions</dt>
-								<dd class="font-medium">
-									{imageInfo.dimensions
-										? `${imageInfo.dimensions.width}x${imageInfo.dimensions.height}`
-										: 'N/A'}
-								</dd>
 							</div>
 							<div class="grid grid-cols-2 items-center gap-4">
 								<dt class="font-medium text-muted-foreground">Upload Date</dt>
@@ -127,10 +119,7 @@
 										{/if}
 										<span class="text-sm font-medium">{formatString(key)}</span>
 									</div>
-									<Badge
-										variant={value ? 'default' : 'secondary'}
-										class="bg-primary/10 text-primary"
-									>
+									<Badge variant={value ? 'default' : 'secondary'} class="ml-2">
 										{value ? 'Applied' : 'Not Applied'}
 									</Badge>
 								</div>

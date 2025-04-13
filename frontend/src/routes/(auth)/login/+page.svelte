@@ -3,6 +3,4 @@
 	export let data;
 </script>
 
-<div class="">
-	<Form data={data.form} />
-</div>
+<Form data={data.form} />

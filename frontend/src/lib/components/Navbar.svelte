@@ -2,6 +2,7 @@
 	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
+	import { page } from '$app/stores';
 	import { authStore } from '$lib/stores/auth';
 	import { goto, invalidate } from '$app/navigation';
 	import {
@@ -12,6 +13,8 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
 	import { fetchUserAvatar } from '$lib/utils/avatar';
+
+	let currentPath = $derived($page.url.pathname);
 
 	const user = $derived($authStore?.user || null);
 	const isAuthenticated = $derived(Boolean($authStore?.isAuthenticated));
@@ -70,22 +73,25 @@
 </script>
 
 <nav
-	class="supports-[backdrop-filter]:bg-background/0.1 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur"
+	class="supports-[backdrop-filter]:bg-background/0.1 sticky top-0 z-50 w-full border-b bg-background/95 shadow-sm backdrop-blur"
 >
 	<div class="px-4">
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo and brand -->
-			<div class="group flex items-center gap-2">
+			<div class="group flex items-center">
 				<div
-					class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary transition-transform duration-300 group-hover:scale-110"
+					class="flex h-8 w-8 items-center justify-center transition-transform duration-300 group-hover:scale-110"
 				>
-					<Shield class="h-6 w-6 text-white" />
+					<img src="/crop.png" alt="Authograph Logo" class="rounded-full shadow-sm" />
 				</div>
 				<a href="/">
 					<span
-						class="relative cursor-pointer text-xl font-semibold after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 group-hover:after:w-full"
-						>IGuardian</span
+						class="relative cursor-pointer text-xl font-semibold text-primary transition-colors duration-300
+            after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary
+            after:transition-all after:duration-300 group-hover:after:w-full"
 					>
+						uthograph
+					</span>
 				</a>
 			</div>
 
@@ -94,7 +100,10 @@
 				{#each navItems as item}
 					<a
 						href={item.href}
-						class="relative px-2 text-muted-foreground transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:text-foreground hover:after:w-full"
+						class="relative px-2 text-[#1A202C] transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#2B6CB0] after:transition-all after:duration-300 hover:text-[#2B6CB0] hover:after:w-full {currentPath ===
+						item.href
+							? 'text-[#2B6CB0] after:w-full'
+							: ''}"
 					>
 						{item.label}
 					</a>
@@ -107,7 +116,9 @@
 					<DropdownMenu>
 						<div class="flex items-center gap-2">
 							<DropdownMenuTrigger class="focus:outline-none">
-								<Avatar class="border-2 ">
+								<Avatar
+									class="border-2 border-primary/20 transition-all duration-300 hover:border-primary/50"
+								>
 									{#if avatarUrl}
 										<AvatarImage src={avatarUrl} alt="User avatar" on:error={handleAvatarError} />
 									{/if}
@@ -134,11 +145,11 @@
 				{:else}
 					<Button
 						variant="ghost"
-						class="relative overflow-hidden px-3 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+						class="relative overflow-hidden px-3 text-[#1A202C] transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#2B6CB0] after:transition-all after:duration-300 hover:text-[#2B6CB0] hover:after:w-full"
 						href="/login">Login</Button
 					>
 					<Button
-						class="px-4 py-2 transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20"
+						class="bg-[#2B6CB0] px-4 py-2 text-white transition-transform duration-300 hover:scale-105 hover:bg-[#235A94] hover:shadow-lg hover:shadow-[#2B6CB0]/20"
 						href="/register">Register</Button
 					>
 				{/if}
@@ -149,7 +160,10 @@
 				variant="ghost"
 				size="icon"
 				on:click={toggleMobileMenu}
-				class="relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full md:hidden"
+				class="relative transition-all duration-300 after:absolute
+           after:bottom-0 after:left-0 after:h-[2px] after:w-0
+           after:bg-primary after:transition-all after:duration-300 hover:bg-primary/5
+           hover:after:w-full md:hidden"
 			>
 				{#if isMobileMenuOpen}
 					<div in:fade={{ duration: 200 }}>
@@ -252,7 +266,10 @@
 </nav>
 
 <style>
-	/* Additional mobile-friendly styles */
+	nav {
+		background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+	}
+
 	@media (max-width: 768px) {
 		nav {
 			position: fixed;
@@ -260,6 +277,14 @@
 			top: 0;
 			left: 0;
 			z-index: 50;
+			backdrop-filter: blur(8px);
 		}
+	}
+
+	/* Smooth transition for dropdown */
+	:global(.dropdown-content) {
+		transition:
+			transform 0.2s ease-in-out,
+			opacity 0.2s ease-in-out;
 	}
 </style>

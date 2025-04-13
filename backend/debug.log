@@ -13401,3 +13401,490 @@ Image is encrypted, decrypting first...
 Successfully decrypted and converted to PIL Image
 Initial image size: (1547, 1911)
 Initial image mode: RGB
+Watching for file changes with StatReloader
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Unauthorized: /token/
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Watching for file changes with StatReloader
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Watching for file changes with StatReloader
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Watching for file changes with StatReloader
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 51
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+STREAM b'IHDR' 16 13
+STREAM b'sBIT' 41 4
+b'sBIT' 41 4 (unknown)
+STREAM b'pHYs' 57 9
+STREAM b'tEXt' 78 28
+STREAM b'IDAT' 118 8192
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/metadata.jpg
+Not Found: /image/ai-protection.jpg
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /image/142/
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/generics.py", line 272, in get
+    return self.retrieve(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/mixins.py", line 56, in retrieve
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 538, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/fields.py", line 1869, in to_representation
+    method = getattr(self.parent, self.method_name)
+AttributeError: 'SpecificImageSerializer' object has no attribute 'get_file_size'
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /image/metadata.jpg
+Not Found: /image/watermark.jpg
+Not Found: /image/ai-protection.jpg
+Starting protection chain for image 160
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (800, 834)
+Initial image mode: RGB
+No invisible watermark settings found
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar', 'color': '#000000', 'opacity': 50, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpds8gnr53.png
+Output will be saved to: /tmp/tmpliz5mad_.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#000000", "opacity": 50.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpds8gnr53.png /tmp/tmpliz5mad_.png {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 24, "color": "#000000", "opacity": 50.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpds8gnr53.png
+Cleaned up temporary file: /tmp/tmpliz5mad_.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_095118.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_095118.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_095118.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 52
+Bad Request: /api/image/142/invisible-watermark/
+Bad Request: /api/image/142/invisible-watermark/
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpzb7xqyug.png
+Cleaned up temporary file: /tmp/tmpzb7xqyug.png
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpdyioanb3.png
+Output will be saved to: /tmp/tmpxlkz4o_k.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpdyioanb3.png /tmp/tmpxlkz4o_k.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpdyioanb3.png
+Cleaned up temporary file: /tmp/tmpxlkz4o_k.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_095917.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_095917.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_095917.png
+Watching for file changes with StatReloader
+Not Found: /access/NrrW3lpnLLSuHWgl5OytXTvFW6XMB1HUnp1oQoA5Bbg/initiate/
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/verify/
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/verify/
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/initiate/
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/initiate/
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/initiate/
+Starting protection chain for image 140
+Protection features requested: {'watermark': False, 'hidden_watermark': True, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmphe5hjla_.png
+Cleaned up temporary file: /tmp/tmphe5hjla_.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_111648.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_111648.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_111648.png
+Bad Request: /access/DNBNOvSOwf_0FmqXTbY25GTZBfcEiTKD_dyPLjiy2OQ/initiate/
+Bad Request: /access/DNBNOvSOwf_0FmqXTbY25GTZBfcEiTKD_dyPLjiy2OQ/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 53
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmp85fkgfdn.png
+Cleaned up temporary file: /tmp/tmp85fkgfdn.png
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpzm4mczm5.png
+Output will be saved to: /tmp/tmp6t12sib4.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpzm4mczm5.png /tmp/tmp6t12sib4.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpzm4mczm5.png
+Cleaned up temporary file: /tmp/tmp6t12sib4.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 54
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmppocn5whs.png
+Cleaned up temporary file: /tmp/tmppocn5whs.png
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar chor', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpk0uenqrg.png
+Output will be saved to: /tmp/tmpav8ylf0o.png
+Watermark settings: {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpk0uenqrg.png /tmp/tmpav8ylf0o.png {"text": "sagar chor", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpk0uenqrg.png
+Cleaned up temporary file: /tmp/tmpav8ylf0o.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_113804.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_113804.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_113804.png
+Forbidden: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 55
+Forbidden: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 56
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 57
+Starting protection chain for image 140
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 58
+Starting protection chain for image 140
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_115632.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_115632.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_115632.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 59
+Starting protection chain for image 140
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_115726.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_115726.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250413_115726.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 60
+Unauthorized: /token/
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

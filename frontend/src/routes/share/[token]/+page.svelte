@@ -38,7 +38,8 @@
 		CheckCircle2,
 		Info,
 		HelpCircle,
-		Clock
+		Clock,
+		Shield
 	} from 'lucide-svelte';
 
 	import { toast } from 'svelte-sonner';
@@ -59,6 +60,8 @@
 	let requestMessage = '';
 	let isRequestPending = false;
 	let apiResult = null;
+	let showProtectionInfo = false;
+	let imageLoaded = false;
 
 	// Validation functions
 	function validateEmail() {
@@ -105,6 +108,60 @@
 		}
 	}
 
+	// Security functions
+	function handleContextMenu(event: MouseEvent) {
+		event.preventDefault();
+		toast.warning('Right-click is disabled for image protection');
+		return false;
+	}
+
+	function handleImageLoad() {
+		imageLoaded = true;
+	}
+
+	function getProtectionFeatures() {
+		if (!imageData?.protection_features) return [];
+
+		const features = [];
+		const pf = imageData.protection_features;
+
+		if (pf.watermark) features.push('Visible Watermark');
+		if (pf.hidden_watermark) features.push('Hidden Watermark');
+		if (pf.metadata) features.push('Protected Metadata');
+		if (pf.ai_protection) features.push('AI Protection');
+		if (!imageData.allow_download) features.push('Download Restricted');
+
+		return features;
+	}
+
+	async function handleRequestAccess(event: Event) {
+		event.preventDefault();
+		if (!validateAccessRequest()) return;
+
+		isRequestPending = true;
+		try {
+			const response = await fetch(`/api/access/${data.token}/request/`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email, message: requestMessage })
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) {
+				throw new Error(result.error || 'Failed to submit access request');
+			}
+
+			showRequestForm = false;
+			toast.success('Access request submitted successfully');
+			accessFormError = 'Your access request is pending approval.';
+		} catch (error) {
+			handleError(error);
+		} finally {
+			isRequestPending = false;
+		}
+	}
+
 	function openRequestForm() {
 		if (apiResult?.request_status === 'pending') {
 			toast.error('You already have a pending access request');
@@ -130,7 +187,6 @@
 
 			if (response.status === 403) {
 				apiResult = result;
-				// Handle the case where there's an existing request
 				if (result.error?.includes('pending')) {
 					toast.info('Access Request Pending');
 					accessFormError = result.error;
@@ -146,7 +202,6 @@
 				throw new Error(result.error || 'Failed to verify email');
 			}
 
-			// Handle successful response
 			if (result.requires_password) {
 				accessStep = 'password';
 				toast.info('Password required for access');
@@ -163,48 +218,30 @@
 		}
 	}
 
-	function updateRequestStatus(status: string, message: string) {
-		apiResult = { ...apiResult, request_status: status };
-		accessFormError = message;
-		showRequestForm = false;
-	}
+	async function handlePasswordSubmit() {
+		if (!validatePassword() || !browser) return;
 
-	async function handleRequestAccess() {
-		if (!validateAccessRequest() || isRequestPending) return;
-
-		isRequestPending = true;
+		isLoading = true;
 		try {
-			const response = await fetch(`/api/access/${data.token}/request/`, {
+			const response = await fetch(`/api/access/${data.token}/initiate/`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email, message: requestMessage })
+				body: JSON.stringify({ email, password })
 			});
 
 			const result = await response.json();
 
-			if (response.status === 403) {
-				if (result.request_status === 'pending') {
-					toast.info('Request Already Pending');
-					accessFormError = 'You already have a pending access request';
-					showRequestForm = false;
-				} else if (result.request_status === 'denied') {
-					toast.error('Previous Request Denied');
-					accessFormError = 'Your previous request was denied. You may submit a new request.';
-				}
-			} else if (response.status === 201 || response.status === 200) {
-				// Successful submission
-				toast.success(result.message || 'Request submitted successfully');
-				showRequestForm = false;
-				accessFormError = result.message;
-				apiResult = { ...apiResult, request_status: 'pending' };
-			} else {
-				throw new Error(result.error || 'Failed to submit request');
+			if (!response.ok) {
+				throw new Error(result.error || 'Invalid password');
 			}
+
+			accessStep = 'otp';
+			toast.success('Verification code sent to your email');
+			accessFormError = '';
 		} catch (error) {
-			toast.error('Failed to submit request');
-			accessFormError = error.message;
+			handleError(error);
 		} finally {
-			isRequestPending = false;
+			isLoading = false;
 		}
 	}
 
@@ -234,7 +271,7 @@
 		}
 	}
 
-	function handleError(error) {
+	function handleError(error: Error) {
 		console.error('Error:', error);
 		accessFormError = error.message || 'An unexpected error occurred';
 		toast.error(accessFormError);
@@ -257,10 +294,6 @@
 		toast.success('Link copied to clipboard');
 	}
 
-	function toggleInfo() {
-		showInfo = !showInfo;
-	}
-
 	function goBack() {
 		if (accessStep === 'password') {
 			password = '';
@@ -271,7 +304,28 @@
 		}
 		accessFormError = '';
 	}
+
+	onMount(() => {
+		document.addEventListener('contextmenu', handleContextMenu);
+		return () => {
+			document.removeEventListener('contextmenu', handleContextMenu);
+		};
+	});
 </script>
+
+<svelte:head>
+	{#if accessStep === 'viewing'}
+		<style>
+			img {
+				-webkit-user-drag: none;
+				-khtml-user-drag: none;
+				-moz-user-drag: none;
+				-o-user-drag: none;
+				user-drag: none;
+			}
+		</style>
+	{/if}
+</svelte:head>
 
 {#if showRequestForm}
 	<Dialog open={showRequestForm} onOpenChange={(open: boolean) => (showRequestForm = open)}>
@@ -339,9 +393,9 @@
 {/if}
 
 <!-- Main Content -->
-<div class="container mx-auto flex min-h-screen max-w-md items-center px-4 py-8 sm:px-6 lg:px-8">
+<div class="container mx-auto min-h-screen px-4 py-8 sm:px-6 lg:px-8">
 	{#if ['email', 'password', 'otp'].includes(accessStep)}
-		<Card class="w-full border-2 shadow-lg">
+		<Card class="mx-auto w-full max-w-md border-2 shadow-lg">
 			<CardHeader class="space-y-4 pb-6 text-center">
 				<div
 					class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary/25"
@@ -491,25 +545,102 @@
 			</CardContent>
 		</Card>
 	{:else if accessStep === 'viewing' && imageData}
-		<!-- Protected Image Viewing Section -->
-		<div class="relative w-full rounded-lg bg-background shadow-xl">
-			<div class="absolute right-4 top-4 z-10 flex items-center gap-2">
-				{#if imageData.allow_download}
-					<Button variant="secondary" size="icon" on:click={handleDownload}>
-						<Download class="h-4 w-4" />
-					</Button>
-				{/if}
-				<Button variant="secondary" size="icon" on:click={handleShare}>
-					<Share2 class="h-4 w-4" />
-				</Button>
+		<div class="mx-auto max-w-4xl space-y-6">
+			<!-- Protection Info Banner -->
+			<div class="rounded-lg bg-muted/50 p-4 backdrop-blur-sm">
+				<div class="flex items-start gap-4">
+					<div class="rounded-full bg-primary/10 p-2">
+						<Shield class="h-5 w-5 text-primary" />
+					</div>
+					<div class="flex-1 space-y-1">
+						<h3 class="text-sm font-medium">Protected Content</h3>
+						<p class="text-sm text-muted-foreground">
+							This image is protected with multiple security features.
+							<button
+								class="inline-flex items-center gap-1 text-primary hover:underline"
+								on:click={() => (showProtectionInfo = !showProtectionInfo)}
+							>
+								<Info class="h-3 w-3" />
+								{showProtectionInfo ? 'Hide Details' : 'View Details'}
+							</button>
+						</p>
+
+						{#if showProtectionInfo}
+							<div class="mt-3 space-y-2" transition:slide>
+								<div class="flex flex-wrap gap-2">
+									{#each getProtectionFeatures() as feature}
+										<span
+											class="rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary"
+										>
+											{feature}
+										</span>
+									{/each}
+								</div>
+								<p class="text-xs text-muted-foreground">
+									This image is monitored and protected against unauthorized usage. Any attempt to
+									circumvent these protections may be logged.
+								</p>
+							</div>
+						{/if}
+					</div>
+				</div>
 			</div>
 
-			<img
-				src={imageData.image_url}
-				alt="Protected Content"
-				class="w-full rounded-lg"
-				style="pointer-events: none"
-			/>
+			<!-- Image Container -->
+			<div class="relative overflow-hidden rounded-lg bg-background shadow-xl">
+				<!-- Loading State -->
+				{#if !imageLoaded}
+					<div class="absolute inset-0 flex items-center justify-center bg-background">
+						<div
+							class="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"
+						/>
+					</div>
+				{/if}
+
+				<!-- Action Buttons -->
+				<div class="absolute right-4 top-4 z-10 flex items-center gap-2 backdrop-blur-sm">
+					{#if imageData.allow_download}
+						<Button variant="secondary" size="icon" on:click={handleDownload}>
+							<Download class="h-4 w-4" />
+						</Button>
+					{/if}
+					<Button variant="secondary" size="icon" on:click={handleShare}>
+						<Share2 class="h-4 w-4" />
+					</Button>
+				</div>
+
+				<!-- Protected Image -->
+				<div class="relative" style="contain: paint;">
+					<img
+						src={imageData.image_url}
+						alt="Protected Content"
+						class="w-full select-none"
+						style="pointer-events: none; -webkit-user-select: none; -webkit-touch-callout: none;"
+						on:load={handleImageLoad}
+						draggable="false"
+					/>
+
+					<!-- Invisible overlay to prevent selection -->
+					<div class="absolute inset-0" style="background: transparent;" />
+				</div>
+			</div>
+
+			<!-- Additional Info -->
+			<div class="text-center">
+				<p class="text-sm text-muted-foreground">
+					Having trouble accessing the content?
+					<button
+						class="text-primary hover:underline"
+						on:click={() => {
+							accessStep = 'email';
+							imageData = null;
+							imageLoaded = false;
+						}}
+					>
+						Try again
+					</button>
+				</p>
+			</div>
 		</div>
 	{:else}
 		<Alert variant="destructive" class="w-full">
@@ -523,6 +654,29 @@
 <style>
 	:global(body) {
 		overflow-y: auto;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	:global(body.modal-open) {
+		overflow: hidden;
+	}
+
+	img {
+		user-select: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+	}
+
+	:global(body) {
+		overflow-y: auto;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 
 	:global(body.modal-open) {

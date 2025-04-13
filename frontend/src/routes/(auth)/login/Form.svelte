@@ -6,7 +6,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Alert from '$lib/components/ui/alert';
 	import FeatureCarousel from '$lib/components/FeatureCarousel.svelte';
-	import { loginFeatures } from '$lib/config/features';
+	import { Features } from '$lib/config/features';
 
 	export let data;
 
@@ -16,7 +16,7 @@
 	const { form: formData, enhance, message } = form;
 </script>
 
-<div class="grid min-h-screen w-full lg:grid-cols-[40%_60%]">
+<div class=" grid min-h-screen w-full lg:grid-cols-[40%_60%]">
 	<div
 		class="flex min-h-screen items-center justify-center bg-gradient-to-b from-primary/10 to-primary/5 px-4 py-8 lg:min-h-full"
 	>
@@ -28,7 +28,7 @@
 				<div class="grid gap-3 text-center">
 					<h1 class="text-2xl font-bold sm:text-3xl">Login</h1>
 					<p class="text-balance text-sm text-muted-foreground sm:text-base">
-						Enter your email below to login to your account
+						Enter your Username below to login to your account
 					</p>
 				</div>
 
@@ -75,5 +75,5 @@
 			</div>
 		</div>
 	</div>
-	<FeatureCarousel features={loginFeatures} />
+	<FeatureCarousel features={Features} />
 </div>

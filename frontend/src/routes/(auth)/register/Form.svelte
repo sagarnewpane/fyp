@@ -6,7 +6,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import * as Alert from '$lib/components/ui/alert';
 	import FeatureCarousel from '$lib/components/FeatureCarousel.svelte';
-	import { registerFeatures } from '$lib/config/features';
+	import { Features } from '$lib/config/features';
 
 	export let data;
 
@@ -72,7 +72,7 @@
 							<Form.Control let:attrs>
 								<div class="grid gap-2">
 									<Form.Label>Email</Form.Label>
-									<Input {...attrs} bind:value={$formData.email} placeholder="Optional" />
+									<Input {...attrs} bind:value={$formData.email} />
 								</div>
 							</Form.Control>
 							<Form.FieldErrors />
@@ -105,5 +105,5 @@
 			</div>
 		</div>
 	</div>
-	<FeatureCarousel features={registerFeatures} />
+	<FeatureCarousel features={Features} />
 </div>

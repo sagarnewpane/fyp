@@ -304,7 +304,9 @@
 										<TableCell>
 											<div class="flex items-center gap-3">
 												<Avatar class="h-8 w-8">
-													<AvatarFallback>{log.email[0]}</AvatarFallback>
+													<AvatarFallback class="bg-primary/10 p-2 text-primary"
+														>{log.email[0]}</AvatarFallback
+													>
 												</Avatar>
 												<span class="text-sm font-medium leading-none">{log.email}</span>
 											</div>
@@ -316,10 +318,7 @@
 											<span class="text-sm">{log.location}</span>
 										</TableCell>
 										<TableCell>
-											<Badge
-												variant="secondary"
-												class="flex w-fit items-center gap-1 group-hover:bg-background"
-											>
+											<Badge variant="secondary" class="flex w-fit items-center gap-1">
 												<svelte:component this={getActionIcon(log.action_type)} class="h-3 w-3" />
 												{log.action_type}
 											</Badge>
@@ -333,7 +332,10 @@
 											</div>
 										</TableCell>
 										<TableCell>
-											<Badge class="w-20 justify-center font-medium">
+											<Badge
+												class="w-20 justify-center font-medium "
+												variant={log.success ? 'success' : 'destructive'}
+											>
 												{log.success ? 'Success' : 'Failed'}
 											</Badge>
 										</TableCell>

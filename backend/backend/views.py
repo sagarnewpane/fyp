@@ -818,6 +818,136 @@ from .models import ImageAccess, UserImage, OTPSecret
 from .utils import OTPHandler
 from .serializers import AccessVerificationSerializer, ImageAccessSerializer
 
+# class InitiateAccessView(APIView):
+#     permission_classes = [AllowAny]
+
+#     def post(self, request, token):
+#         try:
+#             access = ImageAccess.objects.get(token=token)
+#             email = request.data.get('email')
+#             password = request.data.get('password', None)
+
+#             # Validate email
+#             if not email:
+#                 return Response({
+#                     'error': 'Email is required'
+#                 }, status=status.HTTP_400_BAD_REQUEST)
+
+#             # Debug info
+#             print(f"Access check - Token: {token}, Email: {email}")
+#             print(f"Allowed emails: {access.allowed_emails}")
+
+#             # Only check email restrictions if allowed_emails is not empty
+#             if access.allowed_emails:
+#                 # Check if email is allowed
+#                 email_lower = email.lower()
+#                 allowed_emails_lower = [e.lower() for e in access.allowed_emails if e]
+#                 print(f"Checking if {email_lower} is in {allowed_emails_lower}")
+#                 is_allowed = email_lower in allowed_emails_lower
+
+#                 # If email is not allowed
+#                 if not is_allowed:
+#                     print(f"Email {email} not authorized")
+#                     # Check for existing access requests
+#                     try:
+#                         access_request = AccessRequest.objects.get(
+#                             image_access=access,
+#                             email=email_lower
+#                         )
+
+#                         print(f"Found existing access request with status: {access_request.status}")
+
+#                         if access_request.status == 'approved':
+#                             # If approved, add to allowed emails
+#                             allowed_emails = access.allowed_emails or []
+#                             allowed_emails.append(email_lower)
+#                             access.allowed_emails = allowed_emails
+#                             access.save()
+#                             is_allowed = True
+#                             print(f"Request was approved, added to allowed emails")
+#                         elif access_request.status == 'pending':
+#                             print(f"Request is pending approval")
+#                             return Response({
+#                                 'error': 'Your access request is pending approval',
+#                                 'request_status': 'pending'
+#                             }, status=status.HTTP_403_FORBIDDEN)
+#                         else:  # denied
+#                             print(f"Request was denied")
+#                             return Response({
+#                                 'error': 'Your access request was denied',
+#                                 'request_status': 'denied',
+#                                 'can_request_again': True
+#                             }, status=status.HTTP_403_FORBIDDEN)
+#                     except AccessRequest.DoesNotExist:
+#                         print(f"No existing access request, can request access")
+#                         # Allow user to request access
+#                         return Response({
+#                             'error': 'Email not authorized',
+#                             'can_request_access': True
+#                         }, status=status.HTTP_403_FORBIDDEN)
+#                     except Exception as e:
+#                         print(f"Error checking access request: {str(e)}")
+#                         # Still allow requesting access on error
+#                         return Response({
+#                             'error': 'Email not authorized',
+#                             'can_request_access': True
+#                         }, status=status.HTTP_403_FORBIDDEN)
+#             else:
+#                 # If allowed_emails is empty, access is open to all
+#                 print("No email restrictions, access open to all")
+#                 is_allowed = True
+
+#             # Check if password is required
+#             if not password and access.requires_password:
+#                 return Response({
+#                     'requires_password': True,
+#                     'message': 'Password required'
+#                 }, status=status.HTTP_200_OK)
+
+#             # Validate password if required
+#             if access.requires_password:
+#                 if not password:
+#                     return Response({
+#                         'error': 'Password is required'
+#                     }, status=status.HTTP_400_BAD_REQUEST)
+
+#                 if not access.check_password(password):
+#                     return Response({
+#                         'error': 'Invalid password'
+#                     }, status=status.HTTP_400_BAD_REQUEST)
+
+#             # Generate and send OTP
+#             otp = OTPHandler.generate_and_store_otp(access, email)
+
+#             try:
+#                 send_mail(
+#                     'Access Verification Code',
+#                     f'Your verification code is: {otp}\nValid for 5 minutes.',
+#                     settings.EMAIL_HOST_USER,
+#                     [email],
+#                     fail_silently=False,
+#                 )
+
+#                 return Response({
+#                     'message': 'OTP sent successfully'
+#                 }, status=status.HTTP_200_OK)
+#             except Exception as e:
+#                 print(f"Error sending OTP: {str(e)}")
+#                 return Response({
+#                     'error': 'Failed to send OTP'
+#                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+#         except ImageAccess.DoesNotExist:
+#             print(f"No access rule found for token: {token}")
+#             return Response({
+#                 'error': 'Invalid access token'
+#             }, status=status.HTTP_404_NOT_FOUND)
+#         except Exception as e:
+#             print(f"Unexpected error: {str(e)}")
+#             return Response({
+#                 'error': str(e)
+#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class InitiateAccessView(APIView):
     permission_classes = [AllowAny]
 
@@ -929,7 +1059,8 @@ class InitiateAccessView(APIView):
                 )
 
                 return Response({
-                    'message': 'OTP sent successfully'
+                    'message': 'OTP sent successfully',
+                    'requires_otp': True
                 }, status=status.HTTP_200_OK)
             except Exception as e:
                 print(f"Error sending OTP: {str(e)}")

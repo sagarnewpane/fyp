@@ -10,12 +10,9 @@
 		DialogDescription,
 		DialogFooter
 	} from '$lib/components/ui/dialog';
-	// import { createEventDispatcher } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
 	export let images = [];
-	// const dispatch = createEventDispatcher();
-
 	let deleteDialogOpen = false;
 	let selectedImage = null;
 
@@ -39,7 +36,6 @@
 
 			if (response.ok) {
 				deleteDialogOpen = false;
-				// Update images locally instead of invalidating everything
 				images = images.filter((img) => img.id !== selectedImage.id);
 				selectedImage = null;
 				toast.success('Image deleted successfully');
@@ -55,7 +51,7 @@
 
 <!-- Delete Confirmation Dialog -->
 <Dialog bind:open={deleteDialogOpen} onOpenChange={() => (selectedImage = null)}>
-	<DialogContent class="sm:max-w-md">
+	<DialogContent class=" sm:max-w-md">
 		<DialogHeader>
 			<DialogTitle>Delete Image</DialogTitle>
 			<DialogDescription>

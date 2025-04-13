@@ -47,13 +47,11 @@
 	];
 </script>
 
-<footer
-	class="relative overflow-hidden bg-gradient-to-br from-zinc-900 to-zinc-950 px-4 py-16 text-zinc-300"
->
-	<!-- Background Pattern -->
+<footer class="relative overflow-hidden bg-[#1A202C] px-4 py-16 text-[#A0AEC0]">
+	<!-- Background Pattern - adjusted for dark navy -->
 	<div class="absolute inset-0 opacity-5">
 		<div
-			class="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#3b82f6,transparent)]"
+			class="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_200px,#2B6CB0,transparent)]"
 		></div>
 	</div>
 
@@ -62,15 +60,16 @@
 		<div class="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
 			<!-- Company Info -->
 			<div class="space-y-6">
-				<div class="flex items-center space-x-2">
-					<Shield class="text-muted-foreground h-5 w-5" />
-					<h2
-						class="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-2xl font-bold text-transparent"
-					>
-						ImageGuard
-					</h2>
+				<div class="group flex items-center">
+					<div class="flex h-8 w-8 items-center justify-center">
+						<!-- LOGO  -->
+						<img src="/crop.png" alt="Authograph Logo" />
+					</div>
+					<a href="/">
+						<span class="relative text-xl font-semibold"> uthograph </span>
+					</a>
 				</div>
-				<p class="text-sm leading-relaxed text-zinc-400">
+				<p class="text-sm leading-relaxed text-[#A0AEC0]">
 					Protecting your visual assets with advanced technology and industry-leading security
 					measures.
 				</p>
@@ -79,15 +78,16 @@
 			<!-- Quick Links -->
 			<div class="space-y-6">
 				<h3 class="text-lg font-semibold text-white">Quick Links</h3>
-				<ul class="space-y-3">
+				<ul class="space-y-2">
+					<!-- Changed from space-y-3 to space-y-2 for 8px spacing -->
 					{#each quickLinks as link}
 						<li>
 							<a
 								href={link.href}
-								class="group flex items-center text-sm text-zinc-400 transition-colors duration-300 hover:text-white"
+								class="group flex items-center text-sm text-[#A0AEC0] transition-colors duration-200 hover:text-white"
 							>
 								<span
-									class="mr-0 h-[2px] w-0 bg-blue-500 transition-all duration-300 group-hover:mr-2 group-hover:w-2"
+									class="mr-0 h-[2px] w-0 bg-[#2B6CB0] transition-all duration-200 group-hover:mr-2 group-hover:w-2"
 								></span>
 								{link.text}
 							</a>
@@ -99,15 +99,16 @@
 			<!-- Legal -->
 			<div class="space-y-6">
 				<h3 class="text-lg font-semibold text-white">Legal</h3>
-				<ul class="space-y-3">
+				<ul class="space-y-2">
+					<!-- Changed from space-y-3 to space-y-2 for 8px spacing -->
 					{#each legalLinks as link}
 						<li>
 							<a
 								href={link.href}
-								class="group flex items-center text-sm text-zinc-400 transition-colors duration-300 hover:text-white"
+								class="group flex items-center text-sm text-[#A0AEC0] transition-colors duration-200 hover:text-white"
 							>
 								<span
-									class="mr-0 h-[2px] w-0 bg-blue-500 transition-all duration-300 group-hover:mr-2 group-hover:w-2"
+									class="mr-0 h-[2px] w-0 bg-[#2B6CB0] transition-all duration-200 group-hover:mr-2 group-hover:w-2"
 								></span>
 								{link.text}
 							</a>
@@ -125,7 +126,7 @@
 							{href}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-zinc-400 {hoverColor} transition-colors duration-300"
+							class="text-[#A0AEC0] {hoverColor} transition-colors duration-300"
 							aria-label={label}
 						>
 							<Icon size={24} />
@@ -136,11 +137,13 @@
 		</div>
 
 		<!-- Divider -->
-		<div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+		<div
+			class="h-px bg-gradient-to-r from-transparent via-[#A0AEC0] to-transparent opacity-20"
+		></div>
 
 		<!-- Copyright -->
-		<div class="mt-8 text-center text-sm text-zinc-500">
-			<p>© {currentYear} ImageGuard. All rights reserved.</p>
+		<div class="mt-8 text-center text-sm text-[#A0AEC0]">
+			<p>© {currentYear} Authograph. All rights reserved.</p>
 		</div>
 	</div>
 </footer>

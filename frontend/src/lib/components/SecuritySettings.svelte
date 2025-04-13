@@ -19,7 +19,7 @@
 			applied: protectionStatus.access_control,
 			action: 'Manage Access',
 			url: `/access/${imageId}`,
-			image: '/slider1.webp'
+			image: '/features/access.png'
 		},
 		{
 			title: 'Watermarking Protection',
@@ -28,7 +28,7 @@
 			applied: protectionStatus.watermark,
 			action: 'Apply Watermark',
 			url: `/watermark/${imageId}`,
-			image: '/images/watermark.jpg'
+			image: '/features/watermark.png'
 		},
 		{
 			title: 'Metadata Protection',
@@ -37,7 +37,7 @@
 			applied: protectionStatus.metadata,
 			action: 'Manage Metadata',
 			url: `/metadata/${imageId}`,
-			image: '/images/metadata.jpg'
+			image: '/features/metadata.png'
 		},
 		{
 			title: 'AI Protection',
@@ -46,7 +46,7 @@
 			applied: protectionStatus.ai_protection,
 			action: 'Apply Protection',
 			url: `/ai-protection/${imageId}`,
-			image: '/images/ai-protection.jpg'
+			image: '/features/ai.png'
 		}
 	];
 </script>

@@ -30,6 +30,9 @@
 	<main class="min-h-screen w-full bg-background">
 		<div class="w-full space-y-8 px-4 py-6 md:px-6 lg:px-8">
 			<ImageDetails imageInfo={imageData} />
+			<!-- Add a section header or visual divider above Security Settings -->
+			<div class="my-8 border-t border-muted"></div>
+
 			<SecuritySettings protectionStatus={imageData.security} imageId={imageData.id} />
 		</div>
 	</main>
