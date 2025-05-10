@@ -252,166 +252,189 @@
 	}
 </script>
 
-<div class="mx-auto max-w-7xl p-4 md:p-6 lg:p-8">
-	<div class="grid gap-6 lg:grid-cols-[1.2fr,1fr]">
-		<!-- Image Preview -->
-		<ImagePreview {imageUrl}>
-			<div class="space-y-2">
-				<h3 class="font-semibold text-foreground">Image Information</h3>
-				<div class="flex items-center gap-2 text-sm text-muted-foreground">
-					<span>ID: {imageId}</span>
-					<span>•</span>
-					<span>{activeAccessRules.length} Active Access Rules</span>
+<div class="grid justify-center gap-6 lg:grid-cols-[1fr,600px]">
+	<!-- Image Preview -->
+	<Card>
+		<CardHeader class="pb-2">
+			<CardTitle class="text-xl font-semibold">Access Control</CardTitle>
+		</CardHeader>
+		<CardContent class="p-4">
+			<ImagePreview {imageUrl}>
+				<div class="space-y-2">
+					<h3 class="font-semibold text-foreground">Image Information</h3>
+					<div class="flex items-center gap-2 text-sm text-muted-foreground">
+						<span>ID: {imageId}</span>
+						<span>•</span>
+						<span>{activeAccessRules.length} Active Access Rules</span>
+					</div>
 				</div>
-			</div>
-		</ImagePreview>
+			</ImagePreview>
 
-		<!-- Access Control Panel -->
-		<Card>
-			<CardHeader>
-				<CardTitle>Access Control</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<Tabs defaultValue="current">
-					<TabsList class="grid w-full grid-cols-2">
-						<TabsTrigger value="current">Active Rules</TabsTrigger>
-						<TabsTrigger value="new">Create New</TabsTrigger>
-					</TabsList>
+			<!-- Status Alert -->
+			<Alert class="mt-3 border-primary/20 bg-primary/5">
+				<Shield class="h-4 w-4 text-primary" />
+				<AlertDescription class="ml-2 text-sm">
+					Manage access rules and protection features for your image.
+				</AlertDescription>
+			</Alert>
+		</CardContent>
+	</Card>
 
-					<!-- Active Rules Tab -->
-					<TabsContent value="current" class="space-y-4">
-						{#if isLoading}
-							<div class="flex justify-center p-6">
-								<div
-									class="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"
-								/>
-							</div>
-						{:else if activeAccessRules.length === 0}
-							<div class="flex flex-col items-center justify-center p-8 text-center">
-								<Shield class="mb-4 h-12 w-12 text-muted-foreground" />
-								<AlertTitle class="mb-2 text-xl font-semibold">No active rules</AlertTitle>
-								<AlertDescription class="text-muted-foreground">
-									Create new access rules to share your image securely.
-								</AlertDescription>
-							</div>
-						{:else}
-							<div class="custom-scrollbar max-h-[45vh] space-y-4 overflow-y-auto pr-2">
-								{#each activeAccessRules as rule (rule.id)}
-									<Card class="transition-all duration-200 hover:shadow-md">
-										<CardContent class="p-5">
-											<div class="flex flex-col gap-4">
-												<!-- Header Section -->
-												<div class="flex items-start justify-between">
-													<div class="space-y-1">
-														<h4 class="text-lg font-semibold tracking-tight">{rule.access_name}</h4>
-														<Badge
-															variant={rule.requires_password ? 'secondary' : 'outline'}
-															class="font-medium"
-														>
-															{rule.requires_password ? '🔒 Password Protected' : '🔓 Open Access'}
-														</Badge>
-													</div>
+	<!-- Access Control Panel -->
+	<Card>
+		<CardHeader class="pb-2">
+			<CardTitle class="text-xl font-semibold">Access Rules</CardTitle>
+		</CardHeader>
+		<CardContent class="space-y-4">
+			<Tabs value="current">
+				<TabsList class="grid w-full grid-cols-2 border-b border-border">
+					<TabsTrigger
+						value="current"
+						class="data-[state=active]:border-b-2 data-[state=active]:border-primary"
+					>
+						Active Rules
+					</TabsTrigger>
+					<TabsTrigger
+						value="new"
+						class="data-[state=active]:border-b-2 data-[state=active]:border-primary"
+					>
+						Create New
+					</TabsTrigger>
+				</TabsList>
 
-													<DropdownMenu>
-														<DropdownMenuTrigger>
-															<Button variant="ghost" size="icon" class="h-8 w-8 p-0">
-																<MoreVertical class="h-4 w-4" />
-															</Button>
-														</DropdownMenuTrigger>
-														<DropdownMenuContent>
-															<DropdownMenuItem on:click={() => copyAccessLink(rule.token)}>
-																<Link class="mr-2 h-4 w-4" />
-																<span>Copy link</span>
-															</DropdownMenuItem>
-															<DropdownMenuSeparator />
-															<DropdownMenuItem
-																class="text-destructive"
-																on:click={() => deleteAccessRule(rule.id)}
-															>
-																<Trash2 class="mr-2 h-4 w-4" />
-																<span>Delete</span>
-															</DropdownMenuItem>
-														</DropdownMenuContent>
-													</DropdownMenu>
-												</div>
-
-												<!-- Access Link Section -->
-												<div class="flex items-center gap-2 rounded-md bg-muted p-2">
-													<code class="flex-1 overflow-x-auto whitespace-nowrap text-sm">
-														{rule.token}
-													</code>
-													<Button
-														variant="ghost"
-														size="sm"
-														class="shrink-0"
-														on:click={() => copyAccessLink(rule.token)}
+				<!-- Active Rules Tab -->
+				<TabsContent value="current" class="h-[calc(100vh-16rem)]">
+					{#if isLoading}
+						<div class="flex justify-center p-6">
+							<div class="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+						</div>
+					{:else if activeAccessRules.length === 0}
+						<div class="flex flex-col items-center justify-center p-8 text-center">
+							<Shield class="mb-4 h-12 w-12 text-muted-foreground" />
+							<AlertTitle class="mb-2 text-xl font-semibold">No active rules</AlertTitle>
+							<AlertDescription class="text-muted-foreground">
+								Create new access rules to share your image securely.
+							</AlertDescription>
+						</div>
+					{:else}
+						<div class="custom-scrollbar h-full space-y-4 overflow-y-auto pr-2">
+							{#each activeAccessRules as rule (rule.id)}
+								<Card class="transition-all duration-200 hover:shadow-md">
+									<CardContent class="p-5">
+										<div class="flex flex-col gap-4">
+											<!-- Header Section -->
+											<div class="flex items-start justify-between">
+												<div class="space-y-1">
+													<h4 class="text-lg font-semibold tracking-tight">{rule.access_name}</h4>
+													<Badge
+														variant={rule.requires_password ? 'secondary' : 'outline'}
+														class="font-medium"
 													>
-														<Copy class="h-4 w-4" />
-													</Button>
+														{rule.requires_password ? '🔒 Password Protected' : '🔓 Open Access'}
+													</Badge>
 												</div>
 
-												<!-- Allowed Emails Section -->
-												{#if rule.allowed_emails && rule.allowed_emails.length > 0}
-													<div class="space-y-2">
-														<label class="text-xs font-medium text-muted-foreground">
-															Authorized Emails
-														</label>
-														<div class="flex flex-wrap gap-2">
-															{#each rule.allowed_emails as email}
-																<Badge variant="secondary" class="flex items-center gap-1">
-																	<Mail class="h-3 w-3" />
-																	{email}
-																</Badge>
-															{/each}
-														</div>
-													</div>
-												{/if}
+												<DropdownMenu>
+													<DropdownMenuTrigger>
+														<Button variant="ghost" size="icon" class="h-8 w-8 p-0">
+															<MoreVertical class="h-4 w-4" />
+														</Button>
+													</DropdownMenuTrigger>
+													<DropdownMenuContent>
+														<DropdownMenuItem on:click={() => copyAccessLink(rule.token)}>
+															<Link class="mr-2 h-4 w-4" />
+															<span>Copy link</span>
+														</DropdownMenuItem>
+														<DropdownMenuSeparator />
+														<DropdownMenuItem
+															class="text-destructive"
+															on:click={() => deleteAccessRule(rule.id)}
+														>
+															<Trash2 class="mr-2 h-4 w-4" />
+															<span>Delete</span>
+														</DropdownMenuItem>
+													</DropdownMenuContent>
+												</DropdownMenu>
+											</div>
 
-												<!-- Stats & Features Section -->
-												<div class="border-t pt-3">
-													<div class="flex flex-wrap gap-4 text-sm text-muted-foreground">
-														{#if rule.max_views > 0}
-															<div class="flex items-center gap-2">
-																<div class="rounded-full bg-muted p-1">
-																	<Eye class="h-4 w-4" />
-																</div>
-																<span>{rule.current_views}/{rule.max_views} views</span>
-															</div>
-														{/if}
-														{#if rule.allow_download}
-															<div class="flex items-center gap-2">
-																<div class="rounded-full bg-muted p-1">
-																	<Download class="h-4 w-4" />
-																</div>
-																<span>Downloads allowed</span>
-															</div>
-														{/if}
-														{#if rule.protection_features}
-															{#each Object.entries(protectionStatus) as [key, status]}
-																{#if rule.protection_features[key]}
-																	<div class="flex items-center gap-2">
-																		<div class="rounded-full bg-muted p-1">
-																			<svelte:component this={status.icon} class="h-4 w-4" />
-																		</div>
-																		<span>{status.title}</span>
-																	</div>
-																{/if}
-															{/each}
-														{/if}
+											<!-- Access Link Section -->
+											<div class="flex items-center gap-2 rounded-md bg-muted p-2">
+												<code class="flex-1 overflow-x-auto whitespace-nowrap text-sm">
+													{rule.token}
+												</code>
+												<Button
+													variant="ghost"
+													size="sm"
+													class="shrink-0"
+													on:click={() => copyAccessLink(rule.token)}
+												>
+													<Copy class="h-4 w-4" />
+												</Button>
+											</div>
+
+											<!-- Allowed Emails Section -->
+											{#if rule.allowed_emails && rule.allowed_emails.length > 0}
+												<div class="space-y-2">
+													<label class="text-xs font-medium text-muted-foreground">
+														Authorized Emails
+													</label>
+													<div class="flex flex-wrap gap-2">
+														{#each rule.allowed_emails as email}
+															<Badge variant="secondary" class="flex items-center gap-1">
+																<Mail class="h-3 w-3" />
+																{email}
+															</Badge>
+														{/each}
 													</div>
+												</div>
+											{/if}
+
+											<!-- Stats & Features Section -->
+											<div class="border-t pt-3">
+												<div class="flex flex-wrap gap-4 text-sm text-muted-foreground">
+													{#if rule.max_views > 0}
+														<div class="flex items-center gap-2">
+															<div class="rounded-full bg-muted p-1">
+																<Eye class="h-4 w-4" />
+															</div>
+															<span>{rule.current_views}/{rule.max_views} views</span>
+														</div>
+													{/if}
+													{#if rule.allow_download}
+														<div class="flex items-center gap-2">
+															<div class="rounded-full bg-muted p-1">
+																<Download class="h-4 w-4" />
+															</div>
+															<span>Downloads allowed</span>
+														</div>
+													{/if}
+													{#if rule.protection_features}
+														{#each Object.entries(rule.protection_features) as [key, enabled]}
+															{#if enabled && protectionStatus[key]}
+																<div class="flex items-center gap-2">
+																	<div class="rounded-full bg-muted p-1">
+																		<svelte:component this={protectionStatus[key].icon} class="h-4 w-4" />
+																	</div>
+																	<span>{protectionStatus[key].title}</span>
+																</div>
+															{/if}
+														{/each}
+													{/if}
 												</div>
 											</div>
-										</CardContent>
-									</Card>
-								{/each}
-							</div>
-						{/if}
-					</TabsContent>
+										</div>
+									</CardContent>
+								</Card>
+							{/each}
+						</div>
+					{/if}
+				</TabsContent>
 
-					<!-- Create New Rule Tab -->
-					<TabsContent value="new" class="space-y-4">
-						<div class="grid gap-4">
-							<!-- Email Input -->
+				<!-- Create New Rule Tab -->
+				<TabsContent value="new" class="h-[calc(100vh-16rem)]">
+					<div class="custom-scrollbar h-full overflow-y-auto pr-2">
+						<div class="grid gap-4 pb-4">
+							<!-- Access Name Input -->
 							<div class="space-y-2">
 								<Label>Access Name</Label>
 								<div class="flex flex-col gap-2">
@@ -427,6 +450,7 @@
 									{/if}
 								</div>
 							</div>
+
 							<!-- Email Input -->
 							<div class="space-y-2">
 								<Label>Allowed Emails (Optional)</Label>
@@ -538,18 +562,20 @@
 								/>
 							</div>
 
-							<Button class="w-full" on:click={createAccessRule} disabled={isSaving}>
-								{#if isSaving}
-									<div class="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white" />
-								{/if}
-								{isSaving ? 'Creating...' : 'Create Access Rule'}
-							</Button>
+							<div class="mt-8">
+								<Button class="w-full" on:click={createAccessRule} disabled={isSaving}>
+									{#if isSaving}
+										<div class="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white" />
+									{/if}
+									{isSaving ? 'Creating...' : 'Create Access Rule'}
+								</Button>
+							</div>
 						</div>
-					</TabsContent>
-				</Tabs>
-			</CardContent>
-		</Card>
-	</div>
+					</div>
+				</TabsContent>
+			</Tabs>
+		</CardContent>
+	</Card>
 </div>
 
 <style>

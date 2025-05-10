@@ -19,7 +19,8 @@
 			applied: protectionStatus.access_control,
 			action: 'Manage Access',
 			url: `/access/${imageId}`,
-			image: '/features/access.png'
+			image: '/features/access.png',
+			learn: '/learn/access'
 		},
 		{
 			title: 'Watermarking Protection',
@@ -28,7 +29,8 @@
 			applied: protectionStatus.watermark,
 			action: 'Apply Watermark',
 			url: `/watermark/${imageId}`,
-			image: '/features/watermark.png'
+			image: '/features/watermark.png',
+			learn: '/learn/watermark'
 		},
 		{
 			title: 'Metadata Protection',
@@ -37,7 +39,8 @@
 			applied: protectionStatus.metadata,
 			action: 'Manage Metadata',
 			url: `/metadata/${imageId}`,
-			image: '/features/metadata.png'
+			image: '/features/metadata.png',
+			learn: '/learn/metadata'
 		},
 		{
 			title: 'AI Protection',
@@ -46,7 +49,8 @@
 			applied: protectionStatus.ai_protection,
 			action: 'Apply Protection',
 			url: `/ai-protection/${imageId}`,
-			image: '/features/ai.png'
+			image: '/features/ai.png',
+			learn: '/learn/ai-protection'
 		}
 	];
 </script>
@@ -77,7 +81,7 @@
 
 					<div class="flex items-center">
 						<Button href={feature.url} variant="default" class="mr-3">{feature.action}</Button>
-						<Button variant="outline" size="sm">Learn more</Button>
+						<Button variant="outline" href={feature.learn} size="sm">Learn more</Button>
 					</div>
 				</div>
 

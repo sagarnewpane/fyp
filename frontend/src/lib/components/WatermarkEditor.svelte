@@ -626,7 +626,10 @@
 
 <div class="grid justify-center gap-6 lg:grid-cols-[1fr,500px]">
 	<Card>
-		<CardContent class="p-6">
+		<CardHeader class="pb-2">
+			<CardTitle class="text-xl font-semibold">Image Watermarking Tool</CardTitle>
+		</CardHeader>
+		<CardContent class="p-4">
 			<!-- Preview container with fixed size and scrollbars -->
 			<div
 				class="relative rounded-lg border bg-muted"
@@ -657,14 +660,14 @@
 			</div>
 
 			<!-- Zoom instructions -->
-			<Alert class="mt-2">
+			<Alert class="mt-3">
 				<AlertDescription>
 					Use Ctrl + Mouse Wheel to zoom, or use the zoom controls above.
 				</AlertDescription>
 			</Alert>
 
 			<!-- Existing alert -->
-			<Alert class="mt-2 border-primary/20 bg-primary/5">
+			<Alert class="mt-3 border-primary/20 bg-primary/5">
 				<Eye class="h-4 w-4 text-primary" />
 				<AlertDescription class="ml-2 text-sm">
 					Watermark will be applied with {settings.opacity}% opacity in a {settings.pattern} pattern.
@@ -675,8 +678,8 @@
 	</Card>
 
 	<Card>
-		<CardHeader>
-			<CardTitle>Watermark Settings</CardTitle>
+		<CardHeader class="pb-2">
+			<CardTitle class="text-xl font-semibold">Watermark Settings</CardTitle>
 		</CardHeader>
 		<CardContent class="space-y-4">
 			<Tabs defaultValue="basic" class="w-full">
@@ -703,15 +706,18 @@
 
 				<TabsContent value="basic" class="space-y-4">
 					<div class="mt-2 rounded-md border bg-muted p-4">
-						<p class="mb-2 text-sm text-muted-foreground">Preview:</p>
-						<p
-							style="font-family: {settings.font}; font-size: {settings.fontSize}px; color: {settings.color}; opacity: {settings.opacity}%;"
-						>
-							{settings.text || 'Your watermark text'}
-						</p>
+						<p class="mb-2 text-sm font-medium text-muted-foreground">Preview:</p>
+						<div class="min-h-[60px] flex items-center justify-center">
+							<p
+								style="font-family: {settings.font}; font-size: {settings.fontSize}px; color: {settings.color}; opacity: {settings.opacity}%;"
+								class="break-words text-center"
+							>
+								{settings.text || 'Your watermark text'}
+							</p>
+						</div>
 					</div>
 					<div class="space-y-2">
-						<label for="watermark-text" class="text-sm">Text</label>
+						<label for="watermark-text" class="text-sm font-medium">Text</label>
 						<Input
 							id="watermark-text"
 							bind:value={settings.text}
@@ -720,7 +726,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label id="font-label" class="text-sm">Font</label>
+						<label id="font-label" class="text-sm font-medium">Font</label>
 						<Select.Root
 							selected={selectedFont}
 							onSelectedChange={(selected) => {
@@ -749,7 +755,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label id="pattern-label" class="text-sm">Pattern</label>
+						<label id="pattern-label" class="text-sm font-medium">Pattern</label>
 						<Select.Root
 							selected={selectedPattern}
 							onSelectedChange={(selected) => {
@@ -784,17 +790,19 @@
 				<TabsContent value="advanced" class="space-y-4">
 					<!-- Image Preview -->
 					<div class="mt-2 rounded-md border bg-muted p-4">
-						<p class="mb-2 text-sm text-muted-foreground">Preview:</p>
-						<p
-							style="font-family: {settings.font}; font-size: {settings.fontSize}px; color: {settings.color}; opacity: {settings.opacity}%;"
-						>
-							{settings.text || 'Your watermark text'}
-						</p>
+						<p class="mb-2 text-sm font-medium text-muted-foreground">Preview:</p>
+						<div class="min-h-[60px] flex items-center justify-center">
+							<p
+								style="font-family: {settings.font}; font-size: {settings.fontSize}px; color: {settings.color}; opacity: {settings.opacity}%;"
+								class="break-words text-center"
+							>
+								{settings.text || 'Your watermark text'}
+							</p>
+						</div>
 					</div>
-					<!-- ----- -->
 
 					<div class="space-y-2">
-						<label for="font-size" class="text-sm">Size ({settings.fontSize}px)</label>
+						<label for="font-size" class="text-sm font-medium">Size ({settings.fontSize}px)</label>
 						<Slider
 							id="font-size"
 							value={[settings.fontSize]}
@@ -806,7 +814,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label for="opacity" class="text-sm">Opacity ({settings.opacity}%)</label>
+						<label for="opacity" class="text-sm font-medium">Opacity ({settings.opacity}%)</label>
 						<Slider
 							id="opacity"
 							value={[settings.opacity]}
@@ -818,7 +826,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label for="rotation" class="text-sm">Rotation ({settings.rotation}°)</label>
+						<label for="rotation" class="text-sm font-medium">Rotation ({settings.rotation}°)</label>
 						<Slider
 							id="rotation"
 							value={[settings.rotation]}
@@ -830,7 +838,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label for="spacing" class="text-sm">Spacing ({settings.spacing}%)</label>
+						<label for="spacing" class="text-sm font-medium">Spacing ({settings.spacing}%)</label>
 						<Slider
 							id="spacing"
 							value={[settings.spacing]}
@@ -845,7 +853,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label for="horizontal-offset" class="text-sm">
+						<label for="horizontal-offset" class="text-sm font-medium">
 							Horizontal Position ({settings.horizontalOffset}%)
 						</label>
 						<Slider
@@ -862,7 +870,7 @@
 					</div>
 
 					<div class="space-y-2">
-						<label for="vertical-offset" class="text-sm">
+						<label for="vertical-offset" class="text-sm font-medium">
 							Vertical Position ({settings.verticalOffset}%)
 						</label>
 						<Slider
@@ -878,7 +886,7 @@
 						/>
 					</div>
 					<div class="space-y-2">
-						<label for="color-picker" class="text-sm">Color</label>
+						<label for="color-picker" class="text-sm font-medium">Color</label>
 						<div class="flex items-center gap-2">
 							<div class="h-8 w-8 rounded border" style="background-color: {settings.color}"></div>
 							<Input id="color-picker" type="color" bind:value={settings.color} class="h-8 w-12" />
@@ -891,7 +899,7 @@
 					<div class="space-y-4">
 						<!-- Hidden Message Input -->
 						<div class="space-y-2">
-							<Label for="hidden-message">Hidden Message</Label>
+							<Label for="hidden-message" class="text-sm font-medium">Hidden Message</Label>
 							<Input
 								id="hidden-message"
 								bind:value={hiddenMessage}
@@ -901,7 +909,7 @@
 
 						<!-- Fetched Message Display -->
 						<div class="space-y-2">
-							<Label>Retrieved Hidden Message</Label>
+							<Label class="text-sm font-medium">Retrieved Hidden Message</Label>
 							<div class="rounded-md border bg-muted p-3">
 								<p class="text-sm text-muted-foreground">{fetchedMessage}</p>
 							</div>
@@ -927,7 +935,7 @@
 						</Alert>
 					</div>
 
-					<div class="space-y-2 pt-4">
+					<div class="space-y-2 pt-2">
 						<Button class="w-full" on:click={saveHiddenMessage} disabled={!hiddenMessage}>
 							{isStegApplied ? 'Update' : 'Save'} Hidden Message
 						</Button>
@@ -941,7 +949,7 @@
 				</TabsContent>
 			</Tabs>
 
-			<div class="space-y-4 pt-4">
+			<div class="sticky bottom-0 space-y-2 bg-background pt-4">
 				<Button class="w-full" on:click={saveWatermarkSettings} disabled={isSaving}>
 					{#if isSaving}
 						Saving Settings...
