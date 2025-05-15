@@ -23,9 +23,8 @@ from .views import (
     ImageMetadataView,
     CustomMetadataView,
     RequestAccessView,
-    ManageAccessRequestsView
-
-
+    ManageAccessRequestsView,
+    AIProtectionView
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import serve_decrypted_image
@@ -69,6 +68,7 @@ urlpatterns = [
     path('api/image/<int:image_id>/metadata/custom/', CustomMetadataView.as_view(), name='custom-metadata'),
 
     path('images/<int:image_id>/decrypted/', serve_decrypted_image, name='serve_decrypted_image'),
+    path('images/<int:image_id>/ai-protection/', AIProtectionView.as_view(), name='ai-protection'),
 ]
 
 if settings.DEBUG:

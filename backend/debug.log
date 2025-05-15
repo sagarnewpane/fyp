@@ -13888,3 +13888,360 @@ Access log created: 60
 Unauthorized: /token/
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+STREAM b'IHDR' 16 13
+STREAM b'pHYs' 41 9
+STREAM b'tEXt' 62 10
+STREAM b'tEXt' 84 10
+STREAM b'tEXt' 106 12
+STREAM b'IDAT' 130 8192
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+Starting protection chain for image 161
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (774, 768)
+Initial image mode: RGB
+Applying watermark with settings: {'font': 'Arial', 'text': '© abctesting', 'color': '#ffffff', 'opacity': 100, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 39, 'rotation': 45, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpxbjyoveh.png
+Output will be saved to: /tmp/tmp7534kvq1.png
+Watermark settings: {"text": "\u00a9 abctesting", "font": "Arial", "fontSize": 39, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpxbjyoveh.png /tmp/tmp7534kvq1.png {"text": "\u00a9 abctesting", "font": "Arial", "fontSize": 39, "color": "#ffffff", "opacity": 100.0, "rotation": 45.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpxbjyoveh.png
+Cleaned up temporary file: /tmp/tmp7534kvq1.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 61
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 62
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /image/14/
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /image/favicon.png
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /api/images/160/ai-protection/
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /images/160/ai-protection/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /access/WTZDvAb7GIc4nBM0NK9Mzli9mgTdvlrE_nMg0BDY9MQ/initiate/
+Internal Server Error: /access/WTZDvAb7GIc4nBM0NK9Mzli9mgTdvlrE_nMg0BDY9MQ/initiate/
+Internal Server Error: /access/WTZDvAb7GIc4nBM0NK9Mzli9mgTdvlrE_nMg0BDY9MQ/initiate/
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 63
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 64
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 65
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 66
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 67
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 68
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Bad Request: /access/qIJna3KIriDOGXxixBDuPvGnhEZDeaxAyitQLrnonbM/initiate/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 69
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 70
+Error in VerifyOTPView: 'WatermarkSettings' object has no attribute 'watermarked_image'
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py", line 1157, in post
+    image_url = self.get_protected_image_url(access, request)
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py", line 1101, in get_protected_image_url
+    if watermark_settings.enabled and watermark_settings.watermarked_image:
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WatermarkSettings' object has no attribute 'watermarked_image'
+Internal Server Error: /access/XTblikBfSm3hbvVSgmg9eY0TTfrn0UdAoWrLKj6rkUo/verify/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 71
+Bad Request: /access/XTblikBfSm3hbvVSgmg9eY0TTfrn0UdAoWrLKj6rkUo/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 72
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': False, 'metadata': False, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 140
+AI protection is enabled and protected image found for user_image ID: 140
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_3d-character-red-hair-01
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar is donkey', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpmxe8ynxg.png
+Output will be saved to: /tmp/tmpcovpncq6.png
+Watermark settings: {"text": "sagar is donkey", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpmxe8ynxg.png /tmp/tmpcovpncq6.png {"text": "sagar is donkey", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpmxe8ynxg.png
+Cleaned up temporary file: /tmp/tmpcovpncq6.png
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 73
+Bad Request: /access/fmFrOQBXpHGmPDdTKPNRtNsY5d2_nNzFm50vgXPDqWA/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 74
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 140
+AI protection is enabled and protected image found for user_image ID: 140
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_3d-character-red-hair-01
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+No invisible watermark settings found
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar is donkey', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpaylqxh5w.png
+Output will be saved to: /tmp/tmp_lwek8b3.png
+Watermark settings: {"text": "sagar is donkey", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpaylqxh5w.png /tmp/tmp_lwek8b3.png {"text": "sagar is donkey", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpaylqxh5w.png
+Cleaned up temporary file: /tmp/tmp_lwek8b3.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_064010.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_064010.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_064010.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 75
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Access log created: 76
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Access log created: 77
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Forbidden: /access/iADp8P9djtjVmUrvXWTCKSQBbWdvE357i0JXhJFpXT4/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Forbidden: /access/iADp8P9djtjVmUrvXWTCKSQBbWdvE357i0JXhJFpXT4/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Forbidden: /access/iADp8P9djtjVmUrvXWTCKSQBbWdvE357i0JXhJFpXT4/initiate/

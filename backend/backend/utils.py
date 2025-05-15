@@ -2,7 +2,7 @@
 import pyotp
 from django.utils import timezone
 import logging
-from .models import OTPSecret
+from .models import OTPSecret, WatermarkSettings, InvisibleWatermarkSettings, AIProtectionSettings
 import tempfile
 
 logger = logging.getLogger(__name__)
@@ -81,7 +81,6 @@ from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 from django.core.files.base import ContentFile
 import numpy as np
-from .models import WatermarkSettings, InvisibleWatermarkSettings
 from .scripts.steg import TextSteganography
 from .metadata_utils import MetadataExtractor
 import subprocess
@@ -126,7 +125,7 @@ class ProtectionChain:
                 # Apply protections in order of computational intensity
                 if protection_features.get('ai_protection') and user_image.ai_protection_enabled:
                     logger.info("Applying AI protection...")
-                    protected_image = ProtectionChain._apply_ai_protection(protected_image)
+                    protected_image = ProtectionChain._apply_ai_protection(protected_image, user_image)
 
                 if protection_features.get('hidden_watermark') and user_image.hidden_watermark_enabled:
                     try:
@@ -335,10 +334,35 @@ class ProtectionChain:
                     logger.error(f"Error cleaning up file {temp_input_path}: {str(e)}")
 
     @staticmethod
-    def _apply_ai_protection(image):
-        """Apply AI protection to the image"""
-        # Implement your AI protection logic here
-        return image
+    def _apply_ai_protection(image, user_image):
+        """Apply AI protection to the image if enabled and available."""
+        logger.info(f"Attempting AI protection for user_image ID: {user_image.id}")
+        try:
+            ai_settings = AIProtectionSettings.objects.filter(user_image=user_image).first()
+
+            if ai_settings and ai_settings.enabled and ai_settings.protected_image:
+                logger.info(f"AI protection is enabled and protected image found for user_image ID: {user_image.id}")
+                logger.info(f"Loading AI protected image from: {ai_settings.protected_image.path}")
+                # Open the AI protected image
+                ai_protected_pil_image = Image.open(ai_settings.protected_image.path)
+                # Ensure it's in a compatible mode, e.g., RGB
+                if ai_protected_pil_image.mode != 'RGB':
+                    ai_protected_pil_image = ai_protected_pil_image.convert('RGB')
+                logger.info("Successfully loaded AI protected image.")
+                return ai_protected_pil_image
+            else:
+                logger.warning(f"AI protection not enabled or no protected image found for user_image ID: {user_image.id}. Returning original image.")
+                return image  # Return the original image if AI protection is not applied
+
+        except AIProtectionSettings.DoesNotExist:
+            logger.warning(f"No AIProtectionSettings found for user_image ID: {user_image.id}. Returning original image.")
+            return image # Return original image if no settings
+        except FileNotFoundError:
+            logger.error(f"AI protected image file not found for user_image ID: {user_image.id} at path {ai_settings.protected_image.path}. Returning original image.")
+            return image # Return original image if file not found
+        except Exception as e:
+            logger.error(f"Error applying AI protection for user_image ID: {user_image.id}: {str(e)}", exc_info=True)
+            return image # Return original image in case of other errors
 
     @staticmethod
     def _apply_metadata(image, metadata):
@@ -399,7 +423,6 @@ class ProtectionChain:
         except Exception as e:
             logger.error(f"Error verifying metadata: {str(e)}")
             return None
-
 
 
 import requests

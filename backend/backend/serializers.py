@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from .models import UserImage, UserProfile, WatermarkSettings
+from .models import UserImage, UserProfile, WatermarkSettings, AIProtectionSettings
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
 
@@ -399,3 +399,17 @@ class AccessRequestSerializer(serializers.ModelSerializer):
 
     def get_image_id(self, obj):
         return obj.image_access.user_image.id if obj.image_access.user_image else None
+
+class AIProtectionSettingsSerializer(serializers.ModelSerializer):
+    protected_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AIProtectionSettings
+        fields = ['enabled', 'protected_image']
+        read_only_fields = ['protected_image']
+
+    def get_protected_image(self, obj):
+        request = self.context.get('request')
+        if obj.protected_image and request:
+            return request.build_absolute_uri(obj.protected_image.url)
+        return None if not obj.protected_image else obj.protected_image.url

@@ -6,14 +6,14 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer, AIProtectionSettingsSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from .models import UserImage, WatermarkSettings, InvisibleWatermarkSettings
+from .models import UserImage, WatermarkSettings, InvisibleWatermarkSettings, AIProtectionSettings
 from rest_framework.parsers import MultiPartParser, FormParser  #
 
 
@@ -21,6 +21,9 @@ from django.http import HttpResponse, Http404
 import cv2
 import os
 import traceback
+from PIL import Image
+import io
+import numpy as np
 
 def serve_decrypted_image(request, image_id):
     """
@@ -954,6 +957,27 @@ class InitiateAccessView(APIView):
     def post(self, request, token):
         try:
             access = ImageAccess.objects.get(token=token)
+
+            # Check if access rule itself is valid (e.g., max_views, expiration)
+            if not access.is_valid():
+                # Log this attempt
+                location_data = SimpleLocationCollector.get_location_data(request)
+                AccessLog.objects.create(
+                    image_access=access,
+                    email=request.data.get('email', 'unknown@example.com'), # Try to get email
+                    ip_address=location_data.get('ip_address'),
+                    country=location_data.get('country'),
+                    region=location_data.get('region'),
+                    city=location_data.get('city'),
+                    action_type='ATTEMPT',
+                    success=False,
+                    # Add a note about why it failed if possible, e.g., in a new field or a generic message
+                    # For now, just logging the attempt before returning error
+                )
+                return Response({
+                    'error': 'Access limit reached or this link is no longer valid.'
+                }, status=status.HTTP_403_FORBIDDEN)
+
             email = request.data.get('email')
             password = request.data.get('password', None)
 
@@ -1092,21 +1116,15 @@ class VerifyOTPView(APIView):
         user_image = access.user_image
         protection_features = access.protection_features
 
-        if protection_features.get('watermark') and user_image.watermark_enabled:
-            try:
-                watermark_settings = WatermarkSettings.objects.get(user_image=user_image)
-                if watermark_settings.enabled and watermark_settings.watermarked_image:
-                    return watermark_settings.watermarked_image.url
-            except WatermarkSettings.DoesNotExist:
-                pass
+        # Check if we already have a protected image for this access rule
+        if access.protected_image:
+            return access.protected_image.url
 
-        if protection_features.get('hidden_watermark') and user_image.hidden_watermark_enabled:
-            try:
-                invisible_watermark = InvisibleWatermarkSettings.objects.get(user_image=user_image)
-                if invisible_watermark.enabled and invisible_watermark.embedded_image:
-                    return invisible_watermark.embedded_image.url
-            except InvisibleWatermarkSettings.DoesNotExist:
-                pass
+        # If not, create one using the ProtectionChain
+        from .utils import ProtectionChain
+        protected_image = ProtectionChain.create_protected_image(user_image, protection_features, access)
+        if protected_image:
+            return protected_image.url
 
         # If no protection is applied or features aren't available, return original image
         return user_image.image.url
@@ -1123,6 +1141,25 @@ class VerifyOTPView(APIView):
                     access = ImageAccess.objects.get(token=token)
                 except ImageAccess.DoesNotExist:
                     return Response({'error': 'Invalid token'}, status=404)
+
+                # Check max_views BEFORE OTP verification and view increment
+                if not access.is_valid():
+                    # Log this attempt
+                    location_data = SimpleLocationCollector.get_location_data(request) # Duplicated, but necessary if OTP is not even attempted
+                    AccessLog.objects.create(
+                        image_access=access,
+                        email=email,
+                        ip_address=location_data.get('ip_address'),
+                        country=location_data.get('country'),
+                        region=location_data.get('region'),
+                        city=location_data.get('city'),
+                        action_type='ATTEMPT', # Log as attempt
+                        success=False
+                    )
+                    return Response({
+                        'error': 'Access limit reached or this link is no longer valid.'
+                    }, status=status.HTTP_403_FORBIDDEN)
+
 
                 # Get location data with logging
                 location_data = SimpleLocationCollector.get_location_data(request)
@@ -1143,25 +1180,39 @@ class VerifyOTPView(APIView):
 
                 # Verify OTP
                 if not OTPHandler.verify_otp(access, email, provided_otp):
-                    return Response({'error': 'Invalid or expired OTP'}, status=400)
+                    # Access log 'ATTEMPT' with success=False is already created before this
+                    # We can update it or rely on the existing one
+                    access_log.success = False # Ensure log reflects this state
+                    access_log.save(update_fields=['success'])
+                    return Response({
+                        'error': 'Invalid or expired OTP'
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+                # Check access validity AGAIN after OTP verification and BEFORE incrementing
+                if not access.is_valid():
+                     # Log already created, just ensure it reflects failure if not already
+                    access_log.success = False # Ensure log reflects this state
+                    access_log.save(update_fields=['success'])
+                    return Response({
+                        'error': 'Access limit reached or this link is no longer valid after OTP verification.'
+                    }, status=status.HTTP_403_FORBIDDEN)
+
+                # Increment current views
+                access.current_views += 1
+                access.save(update_fields=['current_views'])
 
                 # Update access log to successful
                 access_log.action_type = 'VIEW'
                 access_log.success = True
                 access_log.save()
 
-                # Use the pre-generated protected image if available
-                image_url = access.protected_image.url if access.protected_image else access.user_image.image.url
-
-                # Construct full URL
-                protocol = 'https://' if request.is_secure() else 'http://'
-                domain = request.get_host()
-                full_image_url = f"{protocol}{domain}{image_url}"
+                # Get the appropriate protected image URL
+                image_url = self.get_protected_image_url(access, request)
 
                 # Return success response
                 return Response({
                     'message': 'Access granted',
-                    'image_url': full_image_url,
+                    'image_url': request.build_absolute_uri(image_url),
                     'allow_download': access.allow_download,
                     'protection_features': access.protection_features
                 })
@@ -1622,4 +1673,187 @@ class ManageAccessRequestsView(APIView):
             return Response(
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class AIProtectionView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @staticmethod
+    def resize_and_adjust_uap(uap, target_size):
+        """Resize and adjust UAP to match image dimensions"""
+        target_h, target_w = target_size
+
+        # If UAP has more than 3 channels, take the first 3 or average them
+        if len(uap.shape) == 3 and uap.shape[2] > 3:
+            # Option 1: Take first 3 channels
+            uap = uap[:, :, :3]
+            # Option 2: Average across extra channels
+            # uap = np.mean(uap, axis=2, keepdims=True).repeat(3, axis=2)
+
+        uap_h, uap_w = uap.shape[:2]
+
+        # Calculate scale factors
+        scale_h = target_h / uap_h
+        scale_w = target_w / uap_w
+
+        # Resize UAP
+        resized_uap = cv2.resize(uap, (int(uap_w * scale_w), int(uap_h * scale_h)))
+        
+        # If resized UAP is smaller than target, tile it
+        if resized_uap.shape[0] < target_h or resized_uap.shape[1] < target_w:
+            tiled_uap = np.zeros((target_h, target_w, 3), dtype=np.float32)
+            
+            # Calculate how many times to tile in each direction
+            tiles_h = int(np.ceil(target_h / resized_uap.shape[0]))
+            tiles_w = int(np.ceil(target_w / resized_uap.shape[1]))
+            
+            # Tile the UAP
+            for i in range(tiles_h):
+                for j in range(tiles_w):
+                    h_start = i * resized_uap.shape[0]
+                    w_start = j * resized_uap.shape[1]
+                    h_end = min(h_start + resized_uap.shape[0], target_h)
+                    w_end = min(w_start + resized_uap.shape[1], target_w)
+                    
+                    tiled_uap[h_start:h_end, w_start:w_end] = resized_uap[:h_end-h_start, :w_end-w_start]
+            
+            return tiled_uap
+        
+        # If resized UAP is larger than target, crop it centrally
+        elif resized_uap.shape[0] > target_h or resized_uap.shape[1] > target_w:
+            start_h = (resized_uap.shape[0] - target_h) // 2
+            start_w = (resized_uap.shape[1] - target_w) // 2
+            cropped_uap = resized_uap[start_h:start_h+target_h, start_w:start_w+target_w]
+            return cropped_uap
+        
+        return resized_uap
+
+    def get(self, request, image_id):
+        """Get AI protection settings for an image"""
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+            try:
+                settings = AIProtectionSettings.objects.get(user_image=user_image)
+                serializer = AIProtectionSettingsSerializer(settings, context={'request': request})
+                return Response(serializer.data)
+            except AIProtectionSettings.DoesNotExist:
+                return Response({
+                    'enabled': False,
+                    'protected_image': None
+                })
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found or unauthorized access'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def post(self, request, image_id):
+        """Apply or update AI protection"""
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+            
+            # Load the UAP from numpy file
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            uap_path = os.path.join(current_dir, 'models', 'uap.npy')
+            print(f"Current directory: {current_dir}")
+            print(f"Attempting to load UAP from: {uap_path}")
+            print(f"Directory contents: {os.listdir(current_dir)}")
+            
+            # Load and check UAP shape
+            uap = np.load(uap_path)
+            print(f"UAP shape: {uap.shape}")
+            
+            # Get decrypted image
+            img = user_image.get_decrypted_image()
+            print(f"Image shape: {img.shape}")
+            
+            # Convert image to float32 and normalize to [0, 1]
+            img_float = img.astype(np.float32) / 255.0
+            
+            # Get image dimensions
+            img_h, img_w = img.shape[:2]
+            
+            # Resize and adjust UAP
+            uap_adjusted = self.resize_and_adjust_uap(uap, (img_h, img_w))
+            print(f"Adjusted UAP shape: {uap_adjusted.shape}")
+            
+            # Ensure UAP has correct shape
+            if uap_adjusted.shape != img_float.shape:
+                return Response(
+                    {'error': f'Shape mismatch after adjustment. UAP: {uap_adjusted.shape}, Image: {img_float.shape}'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            
+            # Apply UAP and ensure values stay in [0, 1]
+            protected_img = np.clip(img_float + uap_adjusted, 0, 1)
+            
+            # Convert back to uint8 [0, 255]
+            protected_img = (protected_img * 255).astype(np.uint8)
+            
+            # Save the protected image
+            settings, created = AIProtectionSettings.objects.get_or_create(
+                user_image=user_image,
+                defaults={'enabled': True}
+            )
+            
+            # Save the protected image to a temporary file
+            success, buffer = cv2.imencode('.png', protected_img)
+            if not success:
+                return Response(
+                    {'error': 'Failed to encode protected image'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            
+            # Save the image to the model
+            settings.protected_image.save(
+                f'ai_protected_{user_image.image_name}',
+                ContentFile(buffer.tobytes()),
+                save=True
+            )
+            
+            settings.enabled = True
+            settings.save()
+            
+            # Update the UserImage model
+            user_image.ai_protection_enabled = True
+            user_image.save(update_fields=['ai_protection_enabled'])
+            
+            serializer = AIProtectionSettingsSerializer(settings, context={'request': request})
+            return Response(serializer.data)
+            
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found or unauthorized access'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    def delete(self, request, image_id):
+        """Remove AI protection"""
+        try:
+            user_image = UserImage.objects.get(id=image_id, user=request.user)
+            try:
+                settings = AIProtectionSettings.objects.get(user_image=user_image)
+                if settings.protected_image:
+                    settings.protected_image.delete()
+                settings.delete()
+                
+                # Update the UserImage model
+                user_image.ai_protection_enabled = False
+                user_image.save(update_fields=['ai_protection_enabled'])
+                
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            except AIProtectionSettings.DoesNotExist:
+                return Response(
+                    {'error': 'AI protection not found'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+        except UserImage.DoesNotExist:
+            return Response(
+                {'error': 'Image not found or unauthorized access'},
+                status=status.HTTP_404_NOT_FOUND
             )

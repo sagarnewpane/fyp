@@ -397,3 +397,13 @@ def store_access_rule_info_before_delete(sender, instance, **kwargs):
         )
     except Exception as e:
         print(f"Error preserving access log data: {str(e)}")
+
+class AIProtectionSettings(models.Model):
+    user_image = models.OneToOneField(UserImage, on_delete=models.CASCADE, related_name='ai_protection')
+    enabled = models.BooleanField(default=False)
+    protected_image = models.ImageField(upload_to='ai_protected_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"AI Protection for {self.user_image.image_name}"

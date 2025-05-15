@@ -33,9 +33,18 @@
 				throw new Error('Failed to load image');
 			}
 			const data = await response.json();
+			console.log(data);
 			originalImage = data.image_url;
-			isPerturbed = data.is_perturbed || false;
-			perturbedImage = data.perturbed_url || '';
+
+			// Check AI protection status
+			const protectionResponse = await fetch(`/api/images/${$page.params.id}/ai-protection/`);
+			if (protectionResponse.ok) {
+				const protectionData = await protectionResponse.json();
+				isPerturbed = protectionData.enabled;
+				perturbedImage = protectionData.protected_image;
+				console.log(protectionData);
+			}
+
 			isLoading = false;
 			
 			if (!isPerturbed) {
@@ -51,21 +60,29 @@
 		if (isPerturbing || isPerturbed) return;
 		
 		isPerturbing = true;
+		error = null;
 		try {
-			const response = await fetch(`/api/image/${$page.params.id}/ai-protection/`, {
-				method: 'POST'
+			const response = await fetch(`/api/images/${$page.params.id}/ai-protection/`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				}
 			});
 			
 			if (!response.ok) {
-				throw new Error('Failed to apply protection');
+				const errorData = await response.json();
+				throw new Error(errorData.error || 'Failed to apply protection');
 			}
 			
 			const data = await response.json();
-			perturbedImage = data.image_url;
+			perturbedImage = data.protected_image;
 			isPerturbed = true;
 			stopAnimationLoop();
+
+			// Show success notification or feedback here if needed
 		} catch (err: unknown) {
 			error = err instanceof Error ? err.message : 'An unknown error occurred';
+			isPerturbed = false;
 		} finally {
 			isPerturbing = false;
 		}
@@ -182,9 +199,6 @@
 				<div class="px-6 py-4">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center space-x-4">
-							<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
-								<Shield class="h-6 w-6 text-primary" />
-							</div>
 							<div>
 								<h1 class="text-2xl font-bold text-foreground">AI Image Protection</h1>
 								<p class="text-sm text-muted-foreground">
