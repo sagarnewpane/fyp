@@ -14342,3 +14342,35 @@ Successfully got location data from ipapi.co: {'country': 'United States', 'regi
 Getting location data for IP: 8.8.8.8
 Retrieved cached location data for IP: 8.8.8.8
 Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/initiate/
+Access request notification NOT sent to sdreamnewpane@gmail.com (preference disabled) for image 140
+Forbidden: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/initiate/
+Access request notification sent to sdreamnewpane@gmail.com for image 140
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Forbidden: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/initiate/
+Forbidden: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/initiate/
+Bad Request: /access/DNBNOvSOwf_0FmqXTbY25GTZBfcEiTKD_dyPLjiy2OQ/initiate/
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Failed access (invalid OTP) notification sent to sdreamnewpane@gmail.com
+Bad Request: /access/5XPQ7JTc8ZXgQRZtmmMJdx_moRBjH-E9xKJcx9m2q1A/verify/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Successful access notification sent to sdreamnewpane@gmail.com

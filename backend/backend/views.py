@@ -6,14 +6,14 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer, AIProtectionSettingsSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer, AIProtectionSettingsSerializer, NotificationSettingsSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from .models import UserImage, WatermarkSettings, InvisibleWatermarkSettings, AIProtectionSettings
+from .models import UserImage, WatermarkSettings, InvisibleWatermarkSettings, AIProtectionSettings, UserProfile
 from rest_framework.parsers import MultiPartParser, FormParser  #
 
 
@@ -24,6 +24,9 @@ import traceback
 from PIL import Image
 import io
 import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
 
 def serve_decrypted_image(request, image_id):
     """
@@ -646,6 +649,19 @@ from rest_framework.permissions import IsAuthenticated
 from .utils import ProtectionChain
 import json
 import cv2
+
+# Helper function to get user profile for notification checks
+def get_user_profile_for_notifications(user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        profile, _ = UserProfile.objects.get_or_create(user=user)
+        return profile
+    except User.DoesNotExist:
+        logger.error(f"User with id {user_id} not found for notification check.")
+    except Exception as e:
+        logger.error(f"Error fetching UserProfile for user {user_id}: {str(e)}")
+    return None
+
 class CreateAccessView(APIView):
     def get(self, request, image_id):
             """
@@ -1104,9 +1120,6 @@ class InitiateAccessView(APIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 from .utils import SimpleLocationCollector
-import logging
-
-logger = logging.getLogger(__name__)
 
 class VerifyOTPView(APIView):
     permission_classes = [AllowAny]
@@ -1139,77 +1152,82 @@ class VerifyOTPView(APIView):
 
                 try:
                     access = ImageAccess.objects.get(token=token)
+                    image_owner_user = access.user_image.user # Get image owner
                 except ImageAccess.DoesNotExist:
                     return Response({'error': 'Invalid token'}, status=404)
 
-                # Check max_views BEFORE OTP verification and view increment
-                if not access.is_valid():
-                    # Log this attempt
-                    location_data = SimpleLocationCollector.get_location_data(request) # Duplicated, but necessary if OTP is not even attempted
-                    AccessLog.objects.create(
-                        image_access=access,
-                        email=email,
-                        ip_address=location_data.get('ip_address'),
-                        country=location_data.get('country'),
-                        region=location_data.get('region'),
-                        city=location_data.get('city'),
-                        action_type='ATTEMPT', # Log as attempt
-                        success=False
-                    )
-                    return Response({
-                        'error': 'Access limit reached or this link is no longer valid.'
-                    }, status=status.HTTP_403_FORBIDDEN)
-
-
-                # Get location data with logging
                 location_data = SimpleLocationCollector.get_location_data(request)
                 logger.info(f"Location data received: {location_data}")
 
-                # Create access log with location data
-                access_log = AccessLog.objects.create(
-                    image_access=access,
-                    email=email,
-                    ip_address=location_data.get('ip_address'),
-                    country=location_data.get('country'),
-                    region=location_data.get('region'),
-                    city=location_data.get('city'),
-                    action_type='ATTEMPT',
-                    success=False
-                )
-                logger.info(f"Access log created: {access_log.id}")
+                access_log_defaults = {
+                    'email': email,
+                    'ip_address': location_data.get('ip_address'),
+                    'country': location_data.get('country'),
+                    'region': location_data.get('region'),
+                    'city': location_data.get('city'),
+                }
 
-                # Verify OTP
-                if not OTPHandler.verify_otp(access, email, provided_otp):
-                    # Access log 'ATTEMPT' with success=False is already created before this
-                    # We can update it or rely on the existing one
-                    access_log.success = False # Ensure log reflects this state
-                    access_log.save(update_fields=['success'])
-                    return Response({
-                        'error': 'Invalid or expired OTP'
-                    }, status=status.HTTP_400_BAD_REQUEST)
-
-                # Check access validity AGAIN after OTP verification and BEFORE incrementing
                 if not access.is_valid():
-                     # Log already created, just ensure it reflects failure if not already
-                    access_log.success = False # Ensure log reflects this state
-                    access_log.save(update_fields=['success'])
-                    return Response({
-                        'error': 'Access limit reached or this link is no longer valid after OTP verification.'
-                    }, status=status.HTTP_403_FORBIDDEN)
+                    AccessLog.objects.create(
+                        image_access=access, **access_log_defaults,
+                        action_type='ATTEMPT', success=False
+                    )
+                    # Notify owner of failed attempt due to invalid access rule
+                    owner_profile = get_user_profile_for_notifications(image_owner_user.id)
+                    if owner_profile and owner_profile.notify_on_failed_access:
+                        try:
+                            send_mail(
+                                'Failed Access Attempt Alert',
+                                f'A failed attempt was made to access your image "{access.user_image.image_name}" by {email} (access rule invalid/expired).',
+                                settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
+                            )
+                            logger.info(f"Failed access (rule invalid) notification sent to {image_owner_user.email}")
+                        except Exception as e_notify:
+                            logger.error(f"Error sending failed access (rule invalid) notification: {str(e_notify)}")
+                    return Response({'error': 'Access limit reached or this link is no longer valid.'}, status=status.HTTP_403_FORBIDDEN)
 
-                # Increment current views
+                if not OTPHandler.verify_otp(access, email, provided_otp):
+                    AccessLog.objects.create(
+                        image_access=access, **access_log_defaults,
+                        action_type='ATTEMPT', success=False
+                    )
+                    # Notify owner of failed attempt due to invalid OTP
+                    owner_profile = get_user_profile_for_notifications(image_owner_user.id)
+                    if owner_profile and owner_profile.notify_on_failed_access:
+                        try:
+                            send_mail(
+                                'Failed Access Attempt Alert (Invalid OTP)',
+                                f'A failed attempt (invalid OTP) was made to access your image "{access.user_image.image_name}" by {email}.',
+                                settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
+                            )
+                            logger.info(f"Failed access (invalid OTP) notification sent to {image_owner_user.email}")
+                        except Exception as e_notify:
+                            logger.error(f"Error sending failed access (invalid OTP) notification: {str(e_notify)}")
+                    return Response({'error': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
+
+                # OTP is valid, proceed with access
                 access.current_views += 1
                 access.save(update_fields=['current_views'])
 
-                # Update access log to successful
-                access_log.action_type = 'VIEW'
-                access_log.success = True
-                access_log.save()
-
-                # Get the appropriate protected image URL
+                AccessLog.objects.create(
+                    image_access=access, **access_log_defaults,
+                    action_type='VIEW', success=True
+                )
+                
+                # Notify owner of successful view
+                owner_profile = get_user_profile_for_notifications(image_owner_user.id)
+                if owner_profile and owner_profile.notify_on_successful_access:
+                    try:
+                        send_mail(
+                            'Image Access Alert',
+                            f'Your image "{access.user_image.image_name}" was successfully viewed by {email}.',
+                            settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
+                        )
+                        logger.info(f"Successful access notification sent to {image_owner_user.email}")
+                    except Exception as e_notify:
+                        logger.error(f"Error sending successful access notification: {str(e_notify)}")
+                
                 image_url = self.get_protected_image_url(access, request)
-
-                # Return success response
                 return Response({
                     'message': 'Access granted',
                     'image_url': request.build_absolute_uri(image_url),
@@ -1220,7 +1238,7 @@ class VerifyOTPView(APIView):
             except Exception as e:
                 logger.error(f"Error in VerifyOTPView: {str(e)}", exc_info=True)
                 return Response(
-                    {'error': f'Verification failed: {str(e)}'},
+                    {'error': f'Verification failed: An unexpected error occurred.'},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
@@ -1561,18 +1579,27 @@ class RequestAccessView(APIView):
                     status='pending'
                 )
 
-                # Send notification to owner
+                # Send notification to owner IF PREFERENCE IS ENABLED
                 try:
-                    owner_email = access.user_image.user.email
-                    send_mail(
-                        'New Access Request',
-                        f'{email} has requested access to your protected image.\n\nMessage: {message}',
-                        settings.EMAIL_HOST_USER,
-                        [owner_email],
-                        fail_silently=True,
-                    )
+                    owner_user = access.user_image.user
+                    owner_profile = get_user_profile_for_notifications(owner_user.id)
+                    
+                    if owner_profile and owner_profile.notify_on_access_request:
+                        send_mail(
+                            'New Access Request',
+                            f'{email} has requested access to your protected image "{access.user_image.image_name}"./n/nMessage: {message}',
+                            settings.EMAIL_HOST_USER,
+                            [owner_user.email],
+                            fail_silently=True, # Set to False for debugging if needed
+                        )
+                        logger.info(f"Access request notification sent to {owner_user.email} for image {access.user_image.id}")
+                    elif owner_profile:
+                        logger.info(f"Access request notification NOT sent to {owner_user.email} (preference disabled) for image {access.user_image.id}")
+                    else:
+                        logger.error(f"Could not retrieve profile for owner {owner_user.id} to check access request notification preference.")
+                        
                 except Exception as e:
-                    print(f"Failed to send notification: {str(e)}")
+                    logger.error(f"Failed to send access request notification: {str(e)}")
 
                 return Response({
                     'message': 'Access request submitted successfully',
@@ -1582,7 +1609,8 @@ class RequestAccessView(APIView):
         except ImageAccess.DoesNotExist:
             return Response({'error': 'Invalid access token'}, status=404)
         except Exception as e:
-            return Response({'error': str(e)}, status=500)
+            logger.error(f"Error in RequestAccessView: {str(e)}", exc_info=True)
+            return Response({'error': 'An unexpected error occurred.'}, status=500)
 
 from .models import AccessRequest
 from .serializers import AccessRequestSerializer
@@ -1866,33 +1894,46 @@ class ServeProtectedImageDownloadView(APIView):
     def get(self, request, token):
         try:
             image_access = ImageAccess.objects.get(token=token)
+            image_owner_user = image_access.user_image.user # Get image owner
 
             if not image_access.protected_image or not image_access.protected_image.name:
                 return Response(
                     {'error': 'Protected image not found for this access rule.'},
                     status=status.HTTP_404_NOT_FOUND
                 )
-
-            # Ensure the file exists on the storage
             if not image_access.protected_image.storage.exists(image_access.protected_image.name):
                 return Response(
                     {'error': 'Protected image file is missing from storage.'},
                     status=status.HTTP_404_NOT_FOUND
                 )
-            
-            # Use FileResponse to stream the file. 
-            # It handles setting Content-Type and Content-Disposition (as attachment) automatically for common file types.
+
             response = FileResponse(image_access.protected_image.open('rb'), as_attachment=True)
-            # The filename in Content-Disposition will be taken from the image field's name.
-            # You can customize it if needed:
-            # response['Content-Disposition'] = f'attachment; filename="{image_access.access_name or "protected_image"}.png"'
             
-            # Optional: Add a log entry for the download
             try:
+                accessor_email = request.user.email if request.user.is_authenticated else 'anonymous@system.local' # Placeholder if not easily available
+                # Attempt to get email from OTP context if possible, or log as anonymous/system
+                # This part might need refinement based on how email is passed for downloads
+                
+                # For now, let's assume the AccessLog needs an email. If we can't get it from an authenticated user,
+                # we might try to associate it if the download is tied to an OTP session that had an email.
+                # This part is tricky as downloads might not have the same email context as OTP verification.
+                # For simplicity, if we can't get the email, we log it to the image owner that *someone* downloaded it.
+                
+                # The `AccessLog` expects an email field.
+                # We might need to rethink how to get the 'accessor_email' here if it's not from an authenticated session.
+                # For now, let's use a placeholder or the last known email from an OTP session if we could link it.
+                # This example assumes we have *some* email to log.
+                log_email = 'unknown_downloader@example.com' # Default if no other email context
+                if hasattr(request, 'session') and request.session.get('verified_email_for_token_' + token):
+                     log_email = request.session['verified_email_for_token_' + token]
+                elif request.user.is_authenticated:
+                     log_email = request.user.email
+
+
                 location_data = SimpleLocationCollector.get_location_data(request)
                 AccessLog.objects.create(
                     image_access=image_access,
-                    email=request.user.email if request.user.is_authenticated else 'anonymous', # Or based on OTP email if available
+                    email=log_email, 
                     ip_address=location_data.get('ip_address'),
                     country=location_data.get('country'),
                     region=location_data.get('region'),
@@ -1900,19 +1941,43 @@ class ServeProtectedImageDownloadView(APIView):
                     action_type='DOWNLOAD',
                     success=True
                 )
+                
+                # Notify owner of download IF PREFERENCE IS ENABLED
+                owner_profile = get_user_profile_for_notifications(image_owner_user.id)
+                if owner_profile and owner_profile.notify_on_download:
+                    try:
+                        send_mail(
+                            'Image Download Alert',
+                            f'Your image "{image_access.user_image.image_name}" was downloaded by {log_email}.',
+                            settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
+                        )
+                        logger.info(f"Image download notification sent to {image_owner_user.email}")
+                    except Exception as e_notify:
+                        logger.error(f"Error sending image download notification: {str(e_notify)}")
+                elif owner_profile:
+                    logger.info(f"Image download notification NOT sent to {image_owner_user.email} (preference disabled)")
+                else:
+                    logger.error(f"Could not retrieve profile for owner {image_owner_user.id} to check download notification preference.")
+
             except Exception as log_e:
                 logger.error(f"Error creating download access log: {str(log_e)}")
 
             return response
 
         except ImageAccess.DoesNotExist:
-            return Response(
-                {'error': 'Invalid access token.'},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            return Response({'error': 'Invalid access token.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             logger.error(f"Error serving protected image for download: {str(e)}", exc_info=True)
-            return Response(
-                {'error': 'An error occurred while processing your request.'},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            return Response({'error': 'An error occurred while processing your request.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class NotificationSettingsView(generics.RetrieveUpdateAPIView):
+    """
+    Retrieve or update notification settings for the authenticated user.
+    """
+    serializer_class = NotificationSettingsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        # Ensure UserProfile exists, create if not (should be handled by signal, but good practice)
+        profile, created = UserProfile.objects.get_or_create(user=self.request.user)
+        return profile

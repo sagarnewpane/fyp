@@ -1,5 +1,5 @@
 <script lang="js">
-	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact } from 'lucide-svelte';
+	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact, LogOut, User } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
 	import { page } from '$app/stores';
@@ -16,9 +16,18 @@
 
 	let currentPath = $derived($page.url.pathname);
 
-	const user = $derived($authStore?.user || null);
+	// const user = $derived($authStore?.user || null); // Old user derivation
 	const isAuthenticated = $derived(Boolean($authStore?.isAuthenticated));
 	const avatarUrl = $derived($authStore?.avatar || null);
+
+	// Directly derive username and related properties from the store state
+	const currentUsername = $derived($authStore?.user?.username || null);
+	const userInitials = $derived(currentUsername?.[0]?.toUpperCase() ?? '?');
+	const displayUsername = $derived(
+	    currentUsername 
+	        ? currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1) 
+	        : (isAuthenticated ? 'User' : '')
+	);
 
 	function handleAvatarError() {
 		console.error('Failed to load avatar');
@@ -63,7 +72,7 @@
 		{ label: 'Contact', href: '#', icon: Contact }
 	];
 
-	const dropItems = [{ label: 'Profile', href: '/user?tab=profile', icon: Shield }];
+	const dropItems = [{ label: 'Profile', href: '/user?tab=profile', icon: User }];
 
 	let isMobileMenuOpen = $state(false);
 
@@ -123,22 +132,30 @@
 										<AvatarImage src={avatarUrl} alt="User avatar" on:error={handleAvatarError} />
 									{/if}
 									<AvatarFallback>
-										{(user?.username && user.username[0].toUpperCase()) || '?'}
+										{userInitials}
 									</AvatarFallback>
 								</Avatar>
 							</DropdownMenuTrigger>
 						</div>
-						<DropdownMenuContent align="start" class=" place-items-center">
+						<DropdownMenuContent
+							align="end"
+							class="w-48 rounded-md border bg-background p-1 shadow-lg"
+						>
 							{#each dropItems as item}
-								<a href={item.href}>
-									<DropdownMenuItem class="w-full cursor-pointer">{item.label}</DropdownMenuItem>
+								<a href={item.href} class="block">
+									<DropdownMenuItem class="flex w-full cursor-pointer items-center gap-2">
+										<item.icon class="h-4 w-4 text-muted-foreground" />
+										<span>{item.label}</span>
+									</DropdownMenuItem>
 								</a>
 							{/each}
 
-							<DropdownMenuItem>
-								<Button variant="destructive" class="w-full" on:click={handleLogout} size="sm">
-									Logout
-								</Button>
+							<DropdownMenuItem
+								class="flex w-full cursor-pointer items-center gap-2 text-destructive focus:bg-destructive focus:text-destructive-foreground"
+								on:click={handleLogout}
+							>
+								<LogOut class="h-4 w-4" />
+								<span>Logout</span>
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
@@ -193,13 +210,11 @@
 									<AvatarImage src={avatarUrl} alt="User avatar" />
 								{/if}
 								<AvatarFallback>
-									{(user?.username && user.username[0].toUpperCase()) || '?'}
+									{userInitials}
 								</AvatarFallback>
 							</Avatar>
 							<span class="text-xl font-semibold">
-								{user.username
-									? String(user.username).charAt(0).toUpperCase() + String(user.username).slice(1)
-									: 'User'}
+								{displayUsername}
 							</span>
 						</div>
 						<!-- Mobile items from drop Down-->

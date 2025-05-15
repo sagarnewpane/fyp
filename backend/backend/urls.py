@@ -25,7 +25,8 @@ from .views import (
     RequestAccessView,
     ManageAccessRequestsView,
     AIProtectionView,
-    ServeProtectedImageDownloadView
+    ServeProtectedImageDownloadView,
+    NotificationSettingsView
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import serve_decrypted_image
@@ -44,6 +45,7 @@ urlpatterns = [
     path('api/profile/', UserProfileView.as_view(), name='user-profile'),
     path('api/profile/avatar/', AvatarUploadView.as_view(), name='avatar-upload'),
     path('api/password/change/', PasswordChangeView.as_view(), name='password-change'),
+    path('api/user/notification-settings/', NotificationSettingsView.as_view(), name='user-notification-settings'),
     path('api/image/<int:image_id>/watermark-settings/',WatermarkSettingsView.as_view(),name='watermark-settings'),
     path('api/image/<int:image_id>/invisible-watermark/', InvisibleWatermarkView.as_view(), name='invisible_watermark'),
 

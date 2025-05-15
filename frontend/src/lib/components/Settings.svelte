@@ -25,6 +25,22 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { passwordChangeSchema } from '$lib/schemas';
 	import { toast } from 'svelte-sonner';
+	import { onMount } from 'svelte';
+	import { Skeleton } from '$lib/components/ui/skeleton';
+
+	// Type for notification settings from backend
+	type NotificationSettingsAPI = {
+		notify_on_access_request: boolean;
+		notify_on_download: boolean;
+		notify_on_successful_access: boolean;
+		notify_on_failed_access: boolean;
+	};
+
+	// State for notification settings
+	let notificationSettings = $state<NotificationSettingsAPI | null>(null);
+	let previousNotificationSettings = $state<NotificationSettingsAPI | null>(null); // For diffing
+	let isLoadingNotifications = $state(true);
+	let errorLoadingNotifications = $state<string | null>(null);
 
 	// Notification preferences
 	let notifications = $state({
@@ -50,18 +66,129 @@
 		new_password: '',
 		confirm_password: ''
 	});
-	let passwordErrors = $state({});
+	let passwordErrors = $state<Record<string, string>>({}); // Initialized for linter
 	let isChangingPassword = $state(false);
+
+	// Fetch notification settings on mount
+	onMount(async () => {
+		try {
+			isLoadingNotifications = true;
+			const response = await fetch('/api/user/notification-settings');
+			if (response.ok) {
+				const data = await response.json();
+				notificationSettings = data;
+				previousNotificationSettings = JSON.parse(JSON.stringify(data)); 
+			} else {
+				const errorData = await response.json();
+				errorLoadingNotifications = errorData.error || 'Failed to load notification settings.';
+				if (errorLoadingNotifications) {
+				    toast.error(errorLoadingNotifications);
+				} else {
+				    toast.error('Failed to load notification settings.'); 
+				}
+			}
+		} catch (e) {
+			console.error('Error fetching notification settings:', e);
+			errorLoadingNotifications = 'An unexpected error occurred while loading settings.';
+			toast.error(errorLoadingNotifications);
+		} finally {
+			isLoadingNotifications = false;
+		}
+	});
+
+	// Effect to handle notification setting changes
+	$effect(() => {
+		if (isLoadingNotifications || !notificationSettings || !previousNotificationSettings) {
+			return; 
+		}
+
+		let changedKey: keyof NotificationSettingsAPI | null = null;
+		let newValue: boolean | undefined;
+		let oldValue: boolean | undefined;
+
+		for (const k in notificationSettings) {
+			const key = k as keyof NotificationSettingsAPI;
+			if (notificationSettings[key] !== previousNotificationSettings[key]) {
+				changedKey = key;
+				newValue = notificationSettings[key];
+				oldValue = previousNotificationSettings[key];
+				break; 
+			}
+		}
+
+		if (changedKey && typeof newValue === 'boolean' && typeof oldValue === 'boolean') {
+			const keyToUpdate = changedKey;
+			const valueToUpdate = newValue;
+			const valueToRevertTo = oldValue;
+
+			previousNotificationSettings = JSON.parse(JSON.stringify(notificationSettings));
+
+			(async () => {
+				try {
+					const response = await fetch('/api/user/notification-settings', {
+						method: 'PATCH',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ [keyToUpdate]: valueToUpdate })
+					});
+
+					if (response.ok) {
+						const updatedFromServer = await response.json();
+						notificationSettings = { ...notificationSettings, ...updatedFromServer }; 
+                        previousNotificationSettings = JSON.parse(JSON.stringify(notificationSettings)); 
+						toast.success('Notification setting updated!');
+					} else {
+						if (notificationSettings) notificationSettings[keyToUpdate] = valueToRevertTo;
+						previousNotificationSettings = JSON.parse(JSON.stringify(notificationSettings)); 
+						const errorData = await response.json();
+						toast.error(errorData.error || 'Failed to update setting.');
+					}
+				} catch (e) {
+					if (notificationSettings) notificationSettings[keyToUpdate] = valueToRevertTo;
+					previousNotificationSettings = JSON.parse(JSON.stringify(notificationSettings)); 
+					console.error('Error updating notification setting:', e);
+					toast.error('An unexpected error occurred.');
+				}
+			})();
+		} else if (notificationSettings && previousNotificationSettings && JSON.stringify(notificationSettings) !== JSON.stringify(previousNotificationSettings)) {
+		    previousNotificationSettings = JSON.parse(JSON.stringify(notificationSettings));
+		}
+	});
+
+	const preferenceItems = [
+		{
+			key: 'notify_on_access_request' as keyof NotificationSettingsAPI,
+			label: 'Access Request Notifications',
+			description: 'Receive notifications when someone requests access to your images.'
+		},
+		{
+			key: 'notify_on_download' as keyof NotificationSettingsAPI,
+			label: 'Download Alerts',
+			description: 'Get notified when your images are downloaded.'
+		},
+		{
+			key: 'notify_on_successful_access' as keyof NotificationSettingsAPI,
+			label: 'Successful Access Alerts',
+			description: 'Receive notifications when someone successfully views your images.'
+		},
+		{
+			key: 'notify_on_failed_access' as keyof NotificationSettingsAPI,
+			label: 'Failed Access Attempts',
+			description: 'Get alerted about unauthorized access attempts to your images.'
+		}
+	];
 
 	async function updatePassword(event: Event) {
 		event.preventDefault();
 		passwordErrors = {};
 
-		// Validate input
 		const validation = passwordChangeSchema.safeParse(passwords);
 		if (!validation.success) {
 			validation.error.errors.forEach((error) => {
-				passwordErrors[error.path[0]] = error.message;
+				if (typeof error.path[0] === 'string') { // Linter fix
+ 					passwordErrors[error.path[0]] = error.message;
+ 				}
 			});
 			toast.error('Please fix the validation errors');
 			return;
@@ -85,7 +212,9 @@
 				toast.dismiss(loadingToastId);
 				if (data && typeof data === 'object') {
 					Object.keys(data).forEach((key) => {
-						passwordErrors[key] = data[key];
+						if (typeof data[key] === 'string') { // Linter fix
+ 							passwordErrors[key] = data[key];
+ 						}
 					});
 					toast.error('Please fix the validation errors');
 				} else {
@@ -94,7 +223,6 @@
 				return;
 			}
 
-			// Clear form
 			passwords.current_password = '';
 			passwords.new_password = '';
 			passwords.confirm_password = '';
@@ -113,9 +241,6 @@
 		// Implement notification settings save logic
 	}
 
-	function saveSecurity() {
-		// Implement security settings save logic
-	}
 </script>
 
 <div class="container mx-auto max-w-4xl px-4 py-8">
@@ -137,132 +262,36 @@
 			</CardHeader>
 			<CardContent>
 				<div class="space-y-6">
-					<!-- Access Notifications -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Access Request Notifications</Label>
-							<p class="text-sm text-muted-foreground">
-								Receive notifications when someone requests access
-							</p>
-						</div>
-						<Switch checked={notifications.accessRequests} />
-					</div>
-
-					<!-- Download Alerts -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Download Alerts</Label>
-							<p class="text-sm text-muted-foreground">
-								Get notified when your images are downloaded
-							</p>
-						</div>
-						<Switch checked={notifications.downloadAlerts} />
-					</div>
-
-					<!-- Access Notifications -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Successful Access Alerts</Label>
-							<p class="text-sm text-muted-foreground">
-								Notifications when someone successfully views your images
-							</p>
-						</div>
-						<Switch checked={notifications.successfulAccess} />
-					</div>
-
-					<!-- Failed Attempts -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Failed Access Attempts</Label>
-							<p class="text-sm text-muted-foreground">
-								Get alerted about unauthorized access attempts
-							</p>
-						</div>
-						<Switch checked={notifications.failedAttempts} />
-					</div>
-
-					<!-- Weekly Summary -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Weekly Activity Digest</Label>
-							<p class="text-sm text-muted-foreground">
-								Receive a weekly summary of all activities
-							</p>
-						</div>
-						<Switch checked={notifications.weeklyDigest} />
-					</div>
-				</div>
-			</CardContent>
-		</Card>
-
-		<!-- Security Settings -->
-		<Card>
-			<CardHeader>
-				<CardTitle>Security Settings</CardTitle>
-				<CardDescription>Manage your account security and access preferences</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<div class="space-y-6">
-					<!-- 2FA -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Two-Factor Authentication</Label>
-							<p class="text-sm text-muted-foreground">
-								Add an extra layer of security to your account
-							</p>
-						</div>
-						<Switch checked={security.twoFactorAuth} />
-					</div>
-
-					<!-- Auto-approve verified -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Auto-approve Verified Users</Label>
-							<p class="text-sm text-muted-foreground">
-								Automatically approve requests from verified users
-							</p>
-						</div>
-						<Switch checked={security.autoApproveVerified} />
-					</div>
-
-					<!-- Require reason -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Require Request Reason</Label>
-							<p class="text-sm text-muted-foreground">
-								Users must provide a reason for access requests
-							</p>
-						</div>
-						<Switch checked={security.requireRequestReason} />
-					</div>
-
-					<!-- Unknown IP -->
-					<div class="flex items-center justify-between">
-						<div class="space-y-0.5">
-							<Label class="text-base">Unknown IP Alerts</Label>
-							<p class="text-sm text-muted-foreground">
-								Get notified of access from new IP addresses
-							</p>
-						</div>
-						<Switch checked={security.notifyUnknownIP} />
-					</div>
-
-					<Separator />
-
-					<!-- Download Link Expiry -->
-					<div class="space-y-4">
-						<Label class="text-base">Download Link Expiry</Label>
-						<p class="text-sm text-muted-foreground">Set how long download links remain active</p>
-						<select
-							class="w-full rounded-md border border-input bg-background px-3 py-2"
-							bind:value={security.downloadExpiry}
-						>
-							<option value={12}>12 Hours</option>
-							<option value={24}>24 Hours</option>
-							<option value={48}>48 Hours</option>
-							<option value={72}>72 Hours</option>
-						</select>
-					</div>
+					{#if isLoadingNotifications}
+						{#each preferenceItems as item (item.key)} 
+							<div class="flex items-center justify-between space-x-4 rounded-lg border p-4">
+								<div class="space-y-0.5">
+									<Skeleton class="h-5 w-48" />
+									<Skeleton class="h-4 w-full max-w-xs" />
+								</div>
+								<Skeleton class="h-6 w-10 rounded-full" />
+							</div>
+						{/each}
+					{:else if errorLoadingNotifications}
+						<p class="text-destructive">{errorLoadingNotifications}</p>
+					{:else if notificationSettings}
+						{#each preferenceItems as item (item.key)}
+							<div class="flex flex-row items-center justify-between space-x-4 rounded-lg border p-4">
+								<div class="space-y-0.5">
+									<Label for={item.key} class="text-base font-medium">
+										{item.label}
+									</Label>
+									<p class="text-sm text-muted-foreground">{item.description}</p>
+								</div>
+								<Switch
+									id={item.key}
+									bind:checked={notificationSettings[item.key]}
+								/>
+							</div>
+						{/each}
+					{:else}
+						<p>Could not load notification settings.</p>
+					{/if}
 				</div>
 			</CardContent>
 		</Card>

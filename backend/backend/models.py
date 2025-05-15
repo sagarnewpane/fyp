@@ -168,6 +168,12 @@ class UserProfile(models.Model):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     social_links = models.JSONField(default=dict, blank=True)
 
+    # Notification Preferences
+    notify_on_access_request = models.BooleanField(default=True)
+    notify_on_download = models.BooleanField(default=True)
+    notify_on_successful_access = models.BooleanField(default=True)
+    notify_on_failed_access = models.BooleanField(default=True)
+
     def __str__(self):
         return f"{self.user.username}'s profile"
 

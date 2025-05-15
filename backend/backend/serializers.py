@@ -189,6 +189,16 @@ class UserProfileUpdateSerializer(serializers.Serializer):
 
         return instance
 
+class NotificationSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'notify_on_access_request',
+            'notify_on_download',
+            'notify_on_successful_access',
+            'notify_on_failed_access'
+        ]
+
 # Passwod Updatation
 class PasswordChangeSerializer(serializers.Serializer):
     current_password = serializers.CharField(required=True)
