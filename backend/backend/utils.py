@@ -162,8 +162,10 @@ class ProtectionChain:
 
                         # Save the processed file to the model
                         with open(file_path, 'rb') as f:
+                            # Ensure .png extension for the saved protected image name
+                            protected_filename = f'protected_{user_image.image_name}.png'
                             access_rule.protected_image.save(
-                                f'protected_{user_image.image_name}',
+                                protected_filename,
                                 ContentFile(f.read()),
                                 save=True
                             )
@@ -183,8 +185,10 @@ class ProtectionChain:
                 # Save the final protected image
                 output = BytesIO()
                 protected_image.save(output, format='PNG')
+                # Ensure .png extension for the saved protected image name
+                final_protected_filename = f'protected_{user_image.image_name}.png'
                 access_rule.protected_image.save(
-                    f'protected_{user_image.image_name}',
+                    final_protected_filename,
                     ContentFile(output.getvalue()),
                     save=True
                 )

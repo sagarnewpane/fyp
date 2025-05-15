@@ -1857,3 +1857,62 @@ class AIProtectionView(APIView):
                 {'error': 'Image not found or unauthorized access'},
                 status=status.HTTP_404_NOT_FOUND
             )
+
+from django.http import FileResponse
+
+class ServeProtectedImageDownloadView(APIView):
+    permission_classes = [AllowAny] # Or IsAuthenticated, depending on your needs
+
+    def get(self, request, token):
+        try:
+            image_access = ImageAccess.objects.get(token=token)
+
+            if not image_access.protected_image or not image_access.protected_image.name:
+                return Response(
+                    {'error': 'Protected image not found for this access rule.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            # Ensure the file exists on the storage
+            if not image_access.protected_image.storage.exists(image_access.protected_image.name):
+                return Response(
+                    {'error': 'Protected image file is missing from storage.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+            
+            # Use FileResponse to stream the file. 
+            # It handles setting Content-Type and Content-Disposition (as attachment) automatically for common file types.
+            response = FileResponse(image_access.protected_image.open('rb'), as_attachment=True)
+            # The filename in Content-Disposition will be taken from the image field's name.
+            # You can customize it if needed:
+            # response['Content-Disposition'] = f'attachment; filename="{image_access.access_name or "protected_image"}.png"'
+            
+            # Optional: Add a log entry for the download
+            try:
+                location_data = SimpleLocationCollector.get_location_data(request)
+                AccessLog.objects.create(
+                    image_access=image_access,
+                    email=request.user.email if request.user.is_authenticated else 'anonymous', # Or based on OTP email if available
+                    ip_address=location_data.get('ip_address'),
+                    country=location_data.get('country'),
+                    region=location_data.get('region'),
+                    city=location_data.get('city'),
+                    action_type='DOWNLOAD',
+                    success=True
+                )
+            except Exception as log_e:
+                logger.error(f"Error creating download access log: {str(log_e)}")
+
+            return response
+
+        except ImageAccess.DoesNotExist:
+            return Response(
+                {'error': 'Invalid access token.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            logger.error(f"Error serving protected image for download: {str(e)}", exc_info=True)
+            return Response(
+                {'error': 'An error occurred while processing your request.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

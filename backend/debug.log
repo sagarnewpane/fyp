@@ -14245,3 +14245,76 @@ Forbidden: /access/iADp8P9djtjVmUrvXWTCKSQBbWdvE357i0JXhJFpXT4/initiate/
 Getting location data for IP: 8.8.8.8
 Retrieved cached location data for IP: 8.8.8.8
 Forbidden: /access/iADp8P9djtjVmUrvXWTCKSQBbWdvE357i0JXhJFpXT4/initiate/
+Not Found: /api/images/140/decrypted/
+Not Found: /api/images/140/decrypted/
+Not Found: /api/images/140/decrypted/
+Not Found: /api/images/140/decrypted/
+Not Found: /api/images/140/decrypted/
+Not Found: /api/images/140/decrypted/
+Not Found: /api/images/140/decrypted/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Not Found: /api/access/XTblikBfSm3hbvVSgmg9eY0TTfrn0UdAoWrLKj6rkUo/download-protected/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Starting protection chain for image 140
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (1000, 704)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 140
+AI protection is enabled and protected image found for user_image ID: 140
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_3d-character-red-hair-01
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+No invisible watermark settings found
+Applying watermark with settings: {'font': 'Verdana', 'text': 'sagar is donkey', 'color': '#660000', 'opacity': 100, 'pattern': 'grid', 'spacing': 61, 'fontSize': 23, 'rotation': 312, 'verticalOffset': 15, 'horizontalOffset': -3}
+Starting watermark application
+Saving input image to: /tmp/tmpcf3uk_ui.png
+Output will be saved to: /tmp/tmp0e1us5g5.png
+Watermark settings: {"text": "sagar is donkey", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpcf3uk_ui.png /tmp/tmp0e1us5g5.png {"text": "sagar is donkey", "font": "Verdana", "fontSize": 23, "color": "#660000", "opacity": 100.0, "rotation": 312.0, "pattern": "grid", "spacing": 61.0, "horizontalOffset": -3.0, "verticalOffset": 15.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpcf3uk_ui.png
+Cleaned up temporary file: /tmp/tmp0e1us5g5.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_073652.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_073652.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_073652.png
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8

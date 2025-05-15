@@ -9,7 +9,8 @@
 		Shield,
 		Circle,
 		CheckCircle2,
-		Clock
+		Clock,
+		Download
 	} from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	export let imageInfo;
@@ -20,6 +21,34 @@
 			.split('_') // Split the string at underscores
 			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize each word
 			.join(' '); // Join the words with a space
+	}
+
+	async function downloadOriginalImage() {
+		if (!imageInfo || !imageInfo.id) {
+			console.error('Image information or ID is not available.');
+			// Optionally, show an error message to the user
+			return;
+		}
+		try {
+			const response = await fetch(`/api/images/${imageInfo.id}/decrypted/`);
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.style.display = 'none';
+			a.href = url;
+			// Suggest a filename for the download
+			a.download = imageInfo.image_name ? imageInfo.image_name.replace(/\.enc$/, '.png') : 'download.png';
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+			a.remove();
+		} catch (e) {
+			console.error('Download failed:', e);
+			// Optionally, show an error message to the user
+		}
 	}
 </script>
 
@@ -39,6 +68,10 @@
 					<Clock class="h-4 w-4" />
 					Access Logs
 				</a>
+			</Button>
+			<Button variant="outline" on:click={downloadOriginalImage}>
+				<Download class="mr-2 h-4 w-4" />
+				Download Original
 			</Button>
 		</div>
 	</div>

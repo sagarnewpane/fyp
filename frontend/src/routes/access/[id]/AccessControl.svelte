@@ -134,7 +134,7 @@
 			const response = await fetch(`/api/images/${imageId}/access/`);
 			if (response.ok) {
 				const data = await response.json();
-				activeAccessRules = data.rules;
+				activeAccessRules = data.rules.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 			}
 		} catch (error) {
 			console.error('Error fetching access rules:', error);
@@ -250,6 +250,49 @@
 		navigator.clipboard.writeText(link);
 		toast.success('Access link copied to clipboard');
 	}
+
+	async function downloadProtectedImage(token, accessName) {
+		if (!token) {
+			toast.error('Access token is missing. Cannot download.');
+			return;
+		}
+		try {
+			// Use the new SvelteKit API route
+			const response = await fetch(`/api/access/${token}/download/`);
+
+			if (!response.ok) {
+				const errorData = await response.json().catch(() => ({ error: 'Download failed. Please try again.' }));
+				toast.error(errorData.error || `Failed to download image: ${response.statusText}`);
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.style.display = 'none';
+			a.href = url;
+
+			// Try to get filename from Content-Disposition header, otherwise fallback
+			const contentDisposition = response.headers.get('content-disposition');
+			let filename = `${accessName || 'protected_image'}.png`; // Default filename
+			if (contentDisposition) {
+				const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+				if (filenameMatch && filenameMatch[1]) {
+					filename = filenameMatch[1].replace(/['"]/g, '');
+				}
+			}
+			a.download = filename;
+
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+			a.remove();
+			toast.success('Protected image download started.');
+		} catch (e) {
+			console.error('Download protected image failed:', e);
+			toast.error('An error occurred during download. Please try again.');
+		}
+	}
 </script>
 
 <div class="grid justify-center gap-6 lg:grid-cols-[1fr,600px]">
@@ -343,7 +386,11 @@
 													<DropdownMenuContent>
 														<DropdownMenuItem on:click={() => copyAccessLink(rule.token)}>
 															<Link class="mr-2 h-4 w-4" />
-															<span>Copy link</span>
+															Copy Link
+														</DropdownMenuItem>
+														<DropdownMenuItem on:click={() => downloadProtectedImage(rule.token, rule.access_name)}>
+															<Download class="mr-2 h-4 w-4" />
+															Download Protected
 														</DropdownMenuItem>
 														<DropdownMenuSeparator />
 														<DropdownMenuItem

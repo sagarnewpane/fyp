@@ -24,7 +24,8 @@ from .views import (
     CustomMetadataView,
     RequestAccessView,
     ManageAccessRequestsView,
-    AIProtectionView
+    AIProtectionView,
+    ServeProtectedImageDownloadView
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import serve_decrypted_image
@@ -69,6 +70,9 @@ urlpatterns = [
 
     path('images/<int:image_id>/decrypted/', serve_decrypted_image, name='serve_decrypted_image'),
     path('images/<int:image_id>/ai-protection/', AIProtectionView.as_view(), name='ai-protection'),
+
+    # New endpoint for downloading protected image by access token
+    path('api/access/<str:token>/download-protected/', ServeProtectedImageDownloadView.as_view(), name='download_protected_image'),
 ]
 
 if settings.DEBUG:
