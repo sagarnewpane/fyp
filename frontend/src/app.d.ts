@@ -3,7 +3,10 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			user: any; // You can define a more specific type for user
+			isAuthenticated: boolean;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}

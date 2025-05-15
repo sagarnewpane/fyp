@@ -1,10 +1,9 @@
 import { error } from '@sveltejs/kit';
 
-// Define the backend base URL. 
-// In a production app, you'd likely use an environment variable for this.
+
 const BACKEND_BASE_URL = 'http://localhost:8000';
 
-export async function GET({ params, fetch: svelteKitFetch }) {
+export async function GET({ params, fetch }) {
     const { id } = params;
 
     if (!id) {
@@ -16,7 +15,9 @@ export async function GET({ params, fetch: svelteKitFetch }) {
     try {
         // Use SvelteKit's fetch for server-side requests to handle cookies/credentials if needed
         // and to enable relative paths if your backend was on the same domain (not the case here).
-        const backendResponse = await svelteKitFetch(backendUrl);
+        const backendResponse = await fetch(backendUrl,{
+            method: 'GET',
+        });
 
         if (!backendResponse.ok) {
             // Forward the error status and a generic message from the backend if possible

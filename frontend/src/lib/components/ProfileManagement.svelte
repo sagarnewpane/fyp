@@ -44,7 +44,7 @@
 	onMount(async () => {
 		try {
 			isLoading = true; // Set loading state
-			const response = await fetch('/api/profile');
+			const response = await fetch('/api/profile/');
 			if (response.ok) {
 				const data = await response.json();
 				username = data.username;

@@ -40,8 +40,17 @@ export async function handle({ event, resolve }) {
 	);
 
 	if (isProtectedRoute && !authResult.isAuthenticated) {
-		const redirectUrl = `/login`;
-		throw redirect(303, redirectUrl);
+		if (event.url.pathname.startsWith('/api')) {
+			// For API routes, return a 401 error instead of redirecting
+			return new Response(JSON.stringify({ error: 'Not authenticated' }), {
+				status: 401,
+				headers: { 'Content-Type': 'application/json' }
+			});
+		} else {
+			// For page navigations, redirect to login
+			const redirectUrl = `/login`;
+			throw redirect(303, redirectUrl);
+		}
 	}
 
 	const response = await resolve(event);

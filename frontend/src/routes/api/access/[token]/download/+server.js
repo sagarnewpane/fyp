@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 // In a production app, you'd likely use an environment variable for this.
 const BACKEND_BASE_URL = 'http://localhost:8000'; // Ensure this matches your Django backend URL
 
-export async function GET({ params, fetch: svelteKitFetch }) {
+export async function GET({ params, fetch }) {
     const { token } = params;
 
     if (!token) {
@@ -15,7 +15,9 @@ export async function GET({ params, fetch: svelteKitFetch }) {
     const backendUrl = `${BACKEND_BASE_URL}/api/access/${token}/download-protected/`;
 
     try {
-        const backendResponse = await svelteKitFetch(backendUrl);
+        const backendResponse = await fetch(backendUrl,{
+            method: 'GET'
+        });
 
         if (!backendResponse.ok) {
             let errorBody = 'Failed to download protected image from backend.';

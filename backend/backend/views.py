@@ -1861,7 +1861,7 @@ class AIProtectionView(APIView):
 from django.http import FileResponse
 
 class ServeProtectedImageDownloadView(APIView):
-    permission_classes = [AllowAny] # Or IsAuthenticated, depending on your needs
+    permission_classes = [AllowAny]
 
     def get(self, request, token):
         try:

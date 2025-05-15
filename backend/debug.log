@@ -14318,3 +14318,27 @@ Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/
 Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250515_073652.png
 Getting location data for IP: 8.8.8.8
 Retrieved cached location data for IP: 8.8.8.8
+/home/sagar/Documents/FYP/igaurdian/backend/backend/utils.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Unauthorized: /api/access/IGJHZUiBy-DyggQVtVBFnHMown5j_ZeoykKowj7ehZM/download-protected/
+Unauthorized: /api/access/IGJHZUiBy-DyggQVtVBFnHMown5j_ZeoykKowj7ehZM/download-protected/
+Unauthorized: /api/access/IGJHZUiBy-DyggQVtVBFnHMown5j_ZeoykKowj7ehZM/download-protected/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Unauthorized: /api/access/IGJHZUiBy-DyggQVtVBFnHMown5j_ZeoykKowj7ehZM/download-protected/
+Unauthorized: /api/access/IGJHZUiBy-DyggQVtVBFnHMown5j_ZeoykKowj7ehZM/download-protected/
+Unauthorized: /api/access/IGJHZUiBy-DyggQVtVBFnHMown5j_ZeoykKowj7ehZM/download-protected/
+Unauthorized: /api/access/iADp8P9djtjVmUrvXWTCKSQBbWdvE357i0JXhJFpXT4/download-protected/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 200 None
+Successfully got location data from ipapi.co: {'country': 'United States', 'region': 'California', 'city': 'Mountain View', 'ip_address': '8.8.8.8'}
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Watching for file changes with StatReloader
