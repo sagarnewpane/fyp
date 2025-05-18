@@ -1706,56 +1706,6 @@ class ManageAccessRequestsView(APIView):
 class AIProtectionView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @staticmethod
-    def resize_and_adjust_uap(uap, target_size):
-        """Resize and adjust UAP to match image dimensions"""
-        target_h, target_w = target_size
-
-        # If UAP has more than 3 channels, take the first 3 or average them
-        if len(uap.shape) == 3 and uap.shape[2] > 3:
-            # Option 1: Take first 3 channels
-            uap = uap[:, :, :3]
-            # Option 2: Average across extra channels
-            # uap = np.mean(uap, axis=2, keepdims=True).repeat(3, axis=2)
-
-        uap_h, uap_w = uap.shape[:2]
-
-        # Calculate scale factors
-        scale_h = target_h / uap_h
-        scale_w = target_w / uap_w
-
-        # Resize UAP
-        resized_uap = cv2.resize(uap, (int(uap_w * scale_w), int(uap_h * scale_h)))
-        
-        # If resized UAP is smaller than target, tile it
-        if resized_uap.shape[0] < target_h or resized_uap.shape[1] < target_w:
-            tiled_uap = np.zeros((target_h, target_w, 3), dtype=np.float32)
-            
-            # Calculate how many times to tile in each direction
-            tiles_h = int(np.ceil(target_h / resized_uap.shape[0]))
-            tiles_w = int(np.ceil(target_w / resized_uap.shape[1]))
-            
-            # Tile the UAP
-            for i in range(tiles_h):
-                for j in range(tiles_w):
-                    h_start = i * resized_uap.shape[0]
-                    w_start = j * resized_uap.shape[1]
-                    h_end = min(h_start + resized_uap.shape[0], target_h)
-                    w_end = min(w_start + resized_uap.shape[1], target_w)
-                    
-                    tiled_uap[h_start:h_end, w_start:w_end] = resized_uap[:h_end-h_start, :w_end-w_start]
-            
-            return tiled_uap
-        
-        # If resized UAP is larger than target, crop it centrally
-        elif resized_uap.shape[0] > target_h or resized_uap.shape[1] > target_w:
-            start_h = (resized_uap.shape[0] - target_h) // 2
-            start_w = (resized_uap.shape[1] - target_w) // 2
-            cropped_uap = resized_uap[start_h:start_h+target_h, start_w:start_w+target_w]
-            return cropped_uap
-        
-        return resized_uap
-
     def get(self, request, image_id):
         """Get AI protection settings for an image"""
         try:
@@ -1776,78 +1726,105 @@ class AIProtectionView(APIView):
             )
 
     def post(self, request, image_id):
-        """Apply or update AI protection"""
+        """Apply or update AI protection using external perturb API"""
         try:
             user_image = UserImage.objects.get(id=image_id, user=request.user)
             
-            # Load the UAP from numpy file
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            uap_path = os.path.join(current_dir, 'models', 'uap.npy')
-            print(f"Current directory: {current_dir}")
-            print(f"Attempting to load UAP from: {uap_path}")
-            print(f"Directory contents: {os.listdir(current_dir)}")
-            
-            # Load and check UAP shape
-            uap = np.load(uap_path)
-            print(f"UAP shape: {uap.shape}")
-            
             # Get decrypted image
             img = user_image.get_decrypted_image()
-            print(f"Image shape: {img.shape}")
             
-            # Convert image to float32 and normalize to [0, 1]
-            img_float = img.astype(np.float32) / 255.0
-            
-            # Get image dimensions
-            img_h, img_w = img.shape[:2]
-            
-            # Resize and adjust UAP
-            uap_adjusted = self.resize_and_adjust_uap(uap, (img_h, img_w))
-            print(f"Adjusted UAP shape: {uap_adjusted.shape}")
-            
-            # Ensure UAP has correct shape
-            if uap_adjusted.shape != img_float.shape:
-                return Response(
-                    {'error': f'Shape mismatch after adjustment. UAP: {uap_adjusted.shape}, Image: {img_float.shape}'},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-            
-            # Apply UAP and ensure values stay in [0, 1]
-            protected_img = np.clip(img_float + uap_adjusted, 0, 1)
-            
-            # Convert back to uint8 [0, 255]
-            protected_img = (protected_img * 255).astype(np.uint8)
-            
-            # Save the protected image
-            settings, created = AIProtectionSettings.objects.get_or_create(
-                user_image=user_image,
-                defaults={'enabled': True}
-            )
-            
-            # Save the protected image to a temporary file
-            success, buffer = cv2.imencode('.png', protected_img)
+            # Convert image to bytes for API request
+            success, buffer = cv2.imencode('.png', img)
             if not success:
+                logger.error("Failed to encode image for perturb API")
                 return Response(
-                    {'error': 'Failed to encode protected image'},
+                    {'error': 'Failed to encode image'},
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
             
-            # Save the image to the model
-            settings.protected_image.save(
-                f'ai_protected_{user_image.image_name}',
-                ContentFile(buffer.tobytes()),
-                save=True
-            )
-            
-            settings.enabled = True
-            settings.save()
-            
-            # Update the UserImage model
-            user_image.ai_protection_enabled = True
-            user_image.save(update_fields=['ai_protection_enabled'])
-            
-            serializer = AIProtectionSettingsSerializer(settings, context={'request': request})
-            return Response(serializer.data)
+            # Make request to perturb API
+            import requests
+            try:
+                # Create a temporary file to store the image
+                with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
+                    temp_file.write(buffer.tobytes())
+                    temp_file.flush()
+                    
+                    # Make the API request with the file
+                    with open(temp_file.name, 'rb') as f:
+                        response = requests.post(
+                            'http://20.168.8.203/perturb',
+                            files={'file': ('image.png', f, 'image/png')},
+                            timeout=30  # 30 second timeout
+                        )
+                
+                # Clean up the temporary file
+                os.unlink(temp_file.name)
+                
+                if response.status_code == 422:
+                    logger.error(f"Perturb API validation error: {response.text}")
+                    return Response(
+                        {'error': 'Invalid image format or size'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+                elif response.status_code != 200:
+                    logger.error(f"Perturb API error: Status {response.status_code}, Response: {response.text}")
+                    return Response(
+                        {'error': f'Perturb API returned status code {response.status_code}'},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                # Convert response content to image
+                perturbed_img = cv2.imdecode(
+                    np.frombuffer(response.content, np.uint8),
+                    cv2.IMREAD_COLOR
+                )
+                
+                if perturbed_img is None:
+                    logger.error("Failed to decode perturbed image from API response")
+                    return Response(
+                        {'error': 'Failed to decode perturbed image from API response'},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                # Save the protected image
+                settings, created = AIProtectionSettings.objects.get_or_create(
+                    user_image=user_image,
+                    defaults={'enabled': True}
+                )
+                
+                # Save the protected image to a temporary file
+                success, buffer = cv2.imencode('.png', perturbed_img)
+                if not success:
+                    logger.error("Failed to encode protected image for storage")
+                    return Response(
+                        {'error': 'Failed to encode protected image'},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+                
+                # Save the image to the model
+                settings.protected_image.save(
+                    f'ai_protected_{user_image.image_name}',
+                    ContentFile(buffer.tobytes()),
+                    save=True
+                )
+                
+                settings.enabled = True
+                settings.save()
+                
+                # Update the UserImage model
+                user_image.ai_protection_enabled = True
+                user_image.save(update_fields=['ai_protection_enabled'])
+                
+                serializer = AIProtectionSettingsSerializer(settings, context={'request': request})
+                return Response(serializer.data)
+                
+            except requests.RequestException as e:
+                logger.error(f"Request to perturb API failed: {str(e)}")
+                return Response(
+                    {'error': f'Failed to communicate with perturb API: {str(e)}'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
             
         except UserImage.DoesNotExist:
             return Response(
@@ -1855,6 +1832,7 @@ class AIProtectionView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         except Exception as e:
+            logger.error(f"Unexpected error in AIProtectionView.post: {str(e)}", exc_info=True)
             return Response(
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -1910,27 +1888,37 @@ class ServeProtectedImageDownloadView(APIView):
             response = FileResponse(image_access.protected_image.open('rb'), as_attachment=True)
             
             try:
-                accessor_email = request.user.email if request.user.is_authenticated else 'anonymous@system.local' # Placeholder if not easily available
-                # Attempt to get email from OTP context if possible, or log as anonymous/system
-                # This part might need refinement based on how email is passed for downloads
+                # Get email from headers first
+                log_email = request.headers.get('X-Access-Email')
+                access_name = request.headers.get('X-Access-Name')
                 
-                # For now, let's assume the AccessLog needs an email. If we can't get it from an authenticated user,
-                # we might try to associate it if the download is tied to an OTP session that had an email.
-                # This part is tricky as downloads might not have the same email context as OTP verification.
-                # For simplicity, if we can't get the email, we log it to the image owner that *someone* downloaded it.
-                
-                # The `AccessLog` expects an email field.
-                # We might need to rethink how to get the 'accessor_email' here if it's not from an authenticated session.
-                # For now, let's use a placeholder or the last known email from an OTP session if we could link it.
-                # This example assumes we have *some* email to log.
-                log_email = 'unknown_downloader@example.com' # Default if no other email context
-                if hasattr(request, 'session') and request.session.get('verified_email_for_token_' + token):
-                     log_email = request.session['verified_email_for_token_' + token]
-                elif request.user.is_authenticated:
-                     log_email = request.user.email
+                logger.info(f"Download request - Token: {token}")
+                logger.info(f"Headers - Email: {log_email}, Access Name: {access_name}")
+                logger.info(f"Access Rule - Allowed Emails: {image_access.allowed_emails}")
 
+                # Special case for owner download
+                if log_email == 'owner@igaurdian.local':
+                    log_email = image_owner_user.email
+                    logger.info(f"Owner download detected, using owner email: {log_email}")
+                # If no email in headers, try to get from access rule
+                elif not log_email or log_email == 'unknown':
+                    if image_access.allowed_emails:
+                        log_email = image_access.allowed_emails[0]
+                        logger.info(f"Using email from access rule: {log_email}")
+                    elif request.user.is_authenticated:
+                        log_email = request.user.email
+                        logger.info(f"Using authenticated user email: {log_email}")
+                    elif hasattr(request, 'session') and request.session.get('verified_email_for_token_' + token):
+                        log_email = request.session['verified_email_for_token_' + token]
+                        logger.info(f"Using email from session: {log_email}")
+                    else:
+                        # Use access name as identifier if available
+                        log_email = f"{access_name}@access.local" if access_name and access_name != 'unknown' else 'unknown_downloader@example.com'
+                        logger.info(f"Using fallback email: {log_email}")
 
                 location_data = SimpleLocationCollector.get_location_data(request)
+                logger.info(f"Location data: {location_data}")
+
                 AccessLog.objects.create(
                     image_access=image_access,
                     email=log_email, 

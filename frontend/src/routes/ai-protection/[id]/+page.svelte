@@ -4,7 +4,9 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
-	import { Shield, RefreshCw, AlertCircle } from 'lucide-svelte';
+	import { Shield, RefreshCw, AlertCircle, Trash2 } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
+	import { Slider } from '$lib/components/ui/slider';
 	
 	let showOriginal = false;
 	let showNoise = false;
@@ -19,6 +21,8 @@
 	let error: string | null = null;
 	let animationPhase = 0;
 	let animationInterval: NodeJS.Timeout;
+	let isRemoving = false;
+	let sliderValue = [50]; // Changed to array for Slider component
 
 	const [send, receive] = crossfade({
 		duration: 800,
@@ -53,6 +57,7 @@
 		} catch (err: unknown) {
 			error = err instanceof Error ? err.message : 'An unknown error occurred';
 			isLoading = false;
+			toast.error('Failed to load image');
 		}
 	}
 
@@ -85,6 +90,35 @@
 			isPerturbed = false;
 		} finally {
 			isPerturbing = false;
+		}
+	}
+
+	async function removeProtection() {
+		if (isRemoving) return;
+		
+		isRemoving = true;
+		error = null;
+		try {
+			const response = await fetch(`/api/images/${$page.params.id}/ai-protection/`, {
+				method: 'DELETE'
+			});
+			
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.error || 'Failed to remove protection');
+			}
+			
+			isPerturbed = false;
+			perturbedImage = '';
+			startAnimationLoop();
+
+			// Show success notification
+			toast.success('AI protection removed successfully');
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'An unknown error occurred';
+			toast.error('Failed to remove AI protection');
+		} finally {
+			isRemoving = false;
 		}
 	}
 
@@ -162,7 +196,11 @@
 
 	onMount(() => {
 		loadImage();
-		return () => stopAnimationLoop();
+		return () => {
+			if (animationInterval) {
+				clearInterval(animationInterval);
+			}
+		};
 	});
 </script>
 
@@ -210,8 +248,23 @@
 								</p>
 							</div>
 						</div>
-						{#if !isPerturbed}
-							<div class="flex items-center space-x-4">
+						<div class="flex items-center space-x-4">
+							{#if isPerturbed}
+								<Button 
+									on:click={removeProtection}
+									disabled={isRemoving}
+									variant="destructive"
+									size="sm"
+								>
+									{#if isRemoving}
+										<div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+										Removing...
+									{:else}
+										<Trash2 class="mr-2 h-4 w-4" />
+										Remove Protection
+									{/if}
+								</Button>
+							{:else}
 								<Button 
 									on:click={() => {
 										stopAnimationLoop();
@@ -242,8 +295,8 @@
 										Apply Protection
 									{/if}
 								</Button>
-							</div>
-						{/if}
+							{/if}
+						</div>
 					</div>
 				</div>
 			</header>
@@ -254,13 +307,42 @@
 					<!-- Animation/Image Section -->
 					<div class="col-span-8 flex items-center justify-center bg-muted/30 rounded-xl p-8">
 						{#if isPerturbed}
-							<!-- Show protected image -->
-							<div class="relative group">
-								<div class="w-[600px] h-[600px] rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 group-hover:scale-105 border-4 border-primary/20">
-									<img src={perturbedImage} alt="Protected Image" class="w-full h-full object-cover" />
-									<div class="noise-pattern active"></div>
-									<div class="shield-effect active"></div>
-									<div class="protection-badge active">Protected</div>
+							<!-- Show protected image with slider -->
+							<div class="relative w-full max-w-[600px]">
+								<div class="relative w-full aspect-square rounded-xl overflow-hidden shadow-2xl border-4 border-primary/20">
+									<!-- Original Image -->
+									<img 
+										src={originalImage} 
+										alt="Original Image" 
+										class="absolute inset-0 w-full h-full object-cover"
+										style="clip-path: inset(0 {100 - sliderValue[0]}% 0 0);"
+									/>
+									<!-- Protected Image -->
+									<img 
+										src={perturbedImage} 
+										alt="Protected Image" 
+										class="absolute inset-0 w-full h-full object-cover"
+										style="clip-path: inset(0 0 0 {sliderValue[0]}%);"
+									/>
+									<!-- Slider Line -->
+									<div 
+										class="absolute top-0 bottom-0 w-0.5 bg-white/50"
+										style="left: {sliderValue[0]}%; transform: translateX(-50%);"
+									/>
+								</div>
+								<!-- Slider Control -->
+								<div class="mt-4 px-4">
+									<Slider
+										bind:value={sliderValue}
+										min={0}
+										max={100}
+										step={1}
+										class="w-full"
+									/>
+									<div class="flex justify-between text-sm text-muted-foreground mt-2">
+										<span>Original</span>
+										<span>Protected</span>
+									</div>
 								</div>
 							</div>
 						{:else}
@@ -333,7 +415,6 @@
 											<img src={originalImage} alt="Protected Image" class="w-full h-full object-cover mix-blend-overlay" />
 											<div class="noise-pattern active"></div>
 											<div class="shield-effect active"></div>
-											<div class="protection-badge active">Protected</div>
 										</div>
 										<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
 											<p class="text-white font-medium text-center">Protected Image</p>

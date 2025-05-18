@@ -46,20 +46,31 @@
 	import { slide, fade } from 'svelte/transition';
 	import { emailSchema, passwordSchema, otpSchema, accessRequestSchema } from './schema';
 
-	export let data;
+	export let data: { token: string };
+
+	interface ImageData {
+		image_url: string;
+		allow_download: boolean;
+		protection_features: {
+			watermark: boolean;
+			hidden_watermark: boolean;
+			metadata: boolean;
+			ai_protection: boolean;
+		};
+	}
 
 	let accessStep = 'email';
 	let email = '';
 	let password = '';
 	let otp = '';
-	let imageData = null;
+	let imageData: ImageData | null = null;
 	let showInfo = true;
 	let isLoading = false;
 	let accessFormError = '';
 	let showRequestForm = false;
 	let requestMessage = '';
 	let isRequestPending = false;
-	let apiResult = null;
+	let apiResult: { request_status?: string } | null = null;
 	let showProtectionInfo = false;
 	let imageLoaded = false;
 
@@ -271,21 +282,56 @@
 		}
 	}
 
-	function handleError(error: Error) {
+	function handleError(error: unknown) {
 		console.error('Error:', error);
-		accessFormError = error.message || 'An unexpected error occurred';
+		accessFormError = error instanceof Error ? error.message : 'An unexpected error occurred';
 		toast.error(accessFormError);
 	}
 
 	function handleDownload() {
 		if (!browser || !imageData?.allow_download) return;
-		const link = document.createElement('a');
-		link.href = imageData.image_url;
-		link.download = '';
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-		toast.success('Downloading image...');
+		
+		// Show loading toast
+		toast.loading('Preparing download...');
+		
+		fetch(`/api/access/${data.token}/download/`, {
+			headers: {
+				'X-Access-Email': email || 'unknown',
+				'X-Access-Name': 'shared_access'
+			}
+		})
+			.then(async response => {
+				if (!response.ok) {
+					throw new Error('Download failed');
+				}
+				const blob = await response.blob();
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.style.display = 'none';
+				a.href = url;
+				
+				// Get filename from Content-Disposition header or use default
+				const contentDisposition = response.headers.get('content-disposition');
+				let filename = 'protected_image.png';
+				if (contentDisposition) {
+					const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+					if (filenameMatch && filenameMatch[1]) {
+						filename = filenameMatch[1].replace(/['"]/g, '');
+					}
+				}
+				a.download = filename;
+				
+				document.body.appendChild(a);
+				a.click();
+				window.URL.revokeObjectURL(url);
+				a.remove();
+				
+				toast.success('Download started');
+			})
+			.catch((error: unknown) => {
+				console.error('Download error:', error);
+				toast.error(error instanceof Error ? error.message : 'Failed to download image');
+			});
 	}
 
 	function handleShare() {

@@ -257,8 +257,20 @@
 			return;
 		}
 		try {
-			// Use the new SvelteKit API route
-			const response = await fetch(`/api/access/${token}/download/`);
+			// Show loading toast
+			toast.loading('Preparing download...');
+			
+			// Use 'owner' as the email since this is the owner downloading from access control
+			const email = 'owner@igaurdian.local';
+			console.log('Using owner email for download'); // Debug log
+
+			// Use the new SvelteKit API route with email in headers
+			const response = await fetch(`/api/access/${token}/download/`, {
+				headers: {
+					'X-Access-Email': email,
+					'X-Access-Name': 'owner'
+				}
+			});
 
 			if (!response.ok) {
 				const errorData = await response.json().catch(() => ({ error: 'Download failed. Please try again.' }));
@@ -287,9 +299,9 @@
 			a.click();
 			window.URL.revokeObjectURL(url);
 			a.remove();
-			toast.success('Protected image download started.');
-		} catch (e) {
-			console.error('Download protected image failed:', e);
+			toast.success('Download started');
+		} catch (error) {
+			console.error('Download protected image failed:', error);
 			toast.error('An error occurred during download. Please try again.');
 		}
 	}
