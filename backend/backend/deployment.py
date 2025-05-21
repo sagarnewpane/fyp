@@ -2,8 +2,8 @@ import os
 from .settings import *
 from .settings import BASE_DIR
 
-ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
-CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME']]
+ALLOWED_HOSTS = [os.environ['WEB_HOST']]
+CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEB_HOST']]
 DEBUG = False
 SECRET_KEY = os.environ['MY_SECRET_KEY']
 
@@ -22,8 +22,9 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    'authograph-dwg9c8b7bzbuecdg.canadacentral-01.azurewebsites.net' 
+    'https://' + os.environ['WEB_HOST']
 ]
+
 
 
 STORAGES = {
