@@ -2,6 +2,11 @@ import os
 from .settings import *
 from .settings import BASE_DIR
 
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
 ALLOWED_HOSTS = [os.environ['WEB_HOST']]
 CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEB_HOST']]
 DEBUG = False
@@ -36,16 +41,17 @@ STORAGES = {
     },
 }
 
-CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
-CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
+# CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
+# CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": CONNECTION_STR['dbname'],
-        "HOST": CONNECTION_STR['host'],
-        "USER": CONNECTION_STR['user'],
-        "PASSWORD": CONNECTION_STR['password'],
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
