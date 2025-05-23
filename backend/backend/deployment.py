@@ -7,10 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = False
 SECRET_KEY = os.environ['MY_SECRET_KEY']
 
-
-ALLOWED_HOSTS = os.environ.get("WEB_ALLOWED_HOSTS", "").split(",")
-
-CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host]
+ALLOWED_HOSTS = [os.environ['WEB_HOST'], os.environ['WEB_IP']]
+CSRF_TRUSTED_ORIGINS = [f"https://{os.environ['WEB_HOST']}", f"https://{os.environ['WEB_IP']}"]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -24,8 +22,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED", "").split(",")
-
+CORS_ALLOWED_ORIGINS = [
+    f"https://{os.environ['WEB_HOST']}",
+    f"https://{os.environ['WEB_IP']}"
+]
 
 STORAGES = {
     "default": {
