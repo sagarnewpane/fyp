@@ -88,5 +88,5 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = 'default from email'
 
 
-
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR/'staticfiles'
