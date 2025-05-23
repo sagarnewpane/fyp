@@ -1,16 +1,18 @@
-import os 
+import os
 from .settings import *
-from .settings import BASE_DIR
+# from .settings import BASE_DIR
 
 import environ
 
 env = environ.Env()
 environ.Env.read_env()
 
-ALLOWED_HOSTS = [os.environ['WEB_HOST']]
-CSRF_TRUSTED_ORIGINS = ['https://'+os.environ['WEB_HOST']]
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+ALLOWED_HOSTS = [env('WEB_HOST')]
+CSRF_TRUSTED_ORIGINS = [f"https://{env('WEB_HOST')}"]
 DEBUG = False
-SECRET_KEY = os.environ['MY_SECRET_KEY']
+SECRET_KEY = env('MY_SECRET_KEY')
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
