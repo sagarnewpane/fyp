@@ -3,6 +3,7 @@ import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
 import { redirect } from 'sveltekit-flash-message/server';
+import { API_ENDPOINTS } from '$lib/endpoints';
 
 export const load = async () => {
 	return {
@@ -28,7 +29,7 @@ export const actions = {
 
 		let response;
 		try {
-			response = await fetch('http://localhost:8000/api/register/', {
+			response = await fetch(API_ENDPOINTS.REGISTER, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

@@ -1,4 +1,5 @@
 import { error, json } from '@sveltejs/kit';
+import { API_ENDPOINTS } from '$lib/endpoints';
 
 export async function POST({ request, cookies }) {
 	try {
@@ -10,7 +11,7 @@ export async function POST({ request, cookies }) {
 			throw error(401, 'Unauthorized');
 		}
 
-		const res = await fetch('http://localhost:8000/upload/', {
+		const res = await fetch(API_ENDPOINTS.UPLOAD, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${accessToken}`

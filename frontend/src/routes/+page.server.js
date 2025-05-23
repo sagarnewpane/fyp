@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { API_ENDPOINTS } from '$lib/endpoints';
 
 export async function load({ request, fetch, cookies, url }) {
 	const accessToken = cookies.get('access_token');
@@ -8,7 +9,7 @@ export async function load({ request, fetch, cookies, url }) {
 	}
 
 	try {
-		const res = await fetch(`http://localhost:8000/images/?sort=-created_at&page=1`, {
+		const res = await fetch(`${API_ENDPOINTS.IMAGES}?sort=-created_at&page=1`, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,

@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { API_ENDPOINTS } from '$lib/endpoints';
 
 export async function load({ request, fetch, cookies, url, depends }) {
 	const accessToken = cookies.get('access_token');
@@ -12,7 +13,7 @@ export async function load({ request, fetch, cookies, url, depends }) {
 
 		depends('data:images');
 
-		const res = await fetch(`http://localhost:8000/images/?${params.toString()}`, {
+		const res = await fetch(`${API_ENDPOINTS.IMAGES}?${params.toString()}`, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
