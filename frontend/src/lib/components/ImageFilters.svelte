@@ -239,12 +239,6 @@
 						>
 							Reset
 						</Button>
-						<Button
-							on:click={applyFilters}
-							class="flex-1 bg-primary hover:bg-primary/90 md:flex-initial"
-						>
-							Apply
-						</Button>
 					</div>
 				</div>
 			</div>

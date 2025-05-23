@@ -14741,3 +14741,102 @@ http://20.168.8.203:80 "POST /perturb HTTP/1.1" 200 811456
 Starting new HTTP connection (1): 20.168.8.203:80
 http://20.168.8.203:80 "POST /perturb HTTP/1.1" 200 811456
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /image/1/
+Unauthorized: /token/
+Unauthorized: /token/
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Not Found: /image/1/
+Starting new HTTP connection (1): 20.168.8.203:80
+http://20.168.8.203:80 "POST /perturb HTTP/1.1" 200 904637
+Starting protection chain for image 167
+Protection features requested: {'watermark': False, 'hidden_watermark': True, 'metadata': True, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (750, 864)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 167
+AI protection is enabled and protected image found for user_image ID: 167
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_photo-masthead-375-BoK_p8LG_p9GYeyF
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+No invisible watermark settings found
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250523_132230.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250523_132230.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250523_132230.png
+Download request - Token: _m8xK4t06UFdW_EQYl-5eIb3TULl9MkmdKJgAAZgGR4
+Headers - Email: owner@igaurdian.local, Access Name: owner
+Access Rule - Allowed Emails: []
+Owner download detected, using owner email: sdreamnewpane@gmail.com
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Image download notification NOT sent to sdreamnewpane@gmail.com (preference disabled)
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting new HTTP connection (1): 20.168.8.203:80
+Request to perturb API failed: HTTPConnectionPool(host='20.168.8.203', port=80): Max retries exceeded with url: /perturb (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x717b4a135160>: Failed to establish a new connection: [Errno 101] Network is unreachable'))
+Internal Server Error: /images/163/ai-protection/
+Bad Request: /api/password/change/
+Bad Request: /api/password/change/
+Unauthorized: /token/

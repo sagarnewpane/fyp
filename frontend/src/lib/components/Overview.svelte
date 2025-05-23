@@ -168,10 +168,6 @@
 		<div class="flex items-center justify-between">
 			<h2 class="text-3xl font-bold tracking-tight">Activity Overview</h2>
 			<div class="flex gap-4">
-				<div class="relative w-[300px]">
-					<Search class="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-					<Input placeholder="Search..." class="pl-8" bind:value={searchQuery} />
-				</div>
 				<Button
 					variant="outline"
 					on:click={() => {

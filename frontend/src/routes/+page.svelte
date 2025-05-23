@@ -39,7 +39,6 @@
 		<div class="flex flex-col gap-16">
 			<Hero />
 			<Features />
-			<Gallery />
 			<FAQ />
 			<CTA />
 		</div>

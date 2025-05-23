@@ -2,6 +2,7 @@ import { superValidate, message } from 'sveltekit-superforms';
 import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
+import { API_ENDPOINTS } from '$lib/endpoints';
 
 export const load = async () => {
 	return {
@@ -23,7 +24,7 @@ export const actions = {
 
 		let response;
 		try {
-			response = await fetch('http://localhost:8000/api/password-reset-confirm/', {
+			response = await fetch(API_ENDPOINTS.PASSWORD_RESET_CONFIRM, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

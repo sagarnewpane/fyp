@@ -7,7 +7,7 @@
 	import { Shield, RefreshCw, AlertCircle, Trash2 } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 	import { Slider } from '$lib/components/ui/slider';
-	
+
 	let showOriginal = false;
 	let showNoise = false;
 	let showPlus = false;
@@ -50,7 +50,7 @@
 			}
 
 			isLoading = false;
-			
+
 			if (!isPerturbed) {
 				startAnimationLoop();
 			}
@@ -63,7 +63,7 @@
 
 	async function applyProtection() {
 		if (isPerturbing || isPerturbed) return;
-		
+
 		isPerturbing = true;
 		error = null;
 		try {
@@ -73,12 +73,12 @@
 					'Content-Type': 'application/json'
 				}
 			});
-			
+
 			if (!response.ok) {
 				const errorData = await response.json();
 				throw new Error(errorData.error || 'Failed to apply protection');
 			}
-			
+
 			const data = await response.json();
 			perturbedImage = data.protected_image;
 			isPerturbed = true;
@@ -95,19 +95,19 @@
 
 	async function removeProtection() {
 		if (isRemoving) return;
-		
+
 		isRemoving = true;
 		error = null;
 		try {
 			const response = await fetch(`/api/images/${$page.params.id}/ai-protection/`, {
 				method: 'DELETE'
 			});
-			
+
 			if (!response.ok) {
 				const errorData = await response.json();
 				throw new Error(errorData.error || 'Failed to remove protection');
 			}
-			
+
 			isPerturbed = false;
 			perturbedImage = '';
 			startAnimationLoop();
@@ -156,7 +156,7 @@
 			showPlus = false;
 			showCombined = false;
 			showFinal = false;
-			
+
 			// Show original image
 			setTimeout(() => {
 				showOriginal = true;
@@ -178,14 +178,14 @@
 				showOriginal = false;
 				showNoise = false;
 				showPlus = false;
-			}, 3000);
+			}, 5000);
 
 			// Show final protected state
 			setTimeout(() => {
 				showFinal = true;
 				showCombined = false;
-			}, 4500);
-		}, 7000);
+			}, 5500);
+		}, 10000);
 	}
 
 	function stopAnimationLoop() {
@@ -206,13 +206,15 @@
 
 <div class="min-h-screen bg-gradient-to-br from-background to-background/95">
 	{#if isLoading}
-		<div class="flex flex-col items-center justify-center h-screen">
-			<div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary mb-4"></div>
-			<p class="text-muted-foreground text-lg font-medium">Loading your image...</p>
+		<div class="flex h-screen flex-col items-center justify-center">
+			<div
+				class="mb-4 h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-primary"
+			></div>
+			<p class="text-lg font-medium text-muted-foreground">Loading your image...</p>
 		</div>
 	{:else if error}
-		<div class="flex flex-col items-center justify-center h-screen">
-			<div class="bg-destructive/10 border-l-4 border-destructive p-4 rounded-lg shadow-sm">
+		<div class="flex h-screen flex-col items-center justify-center">
+			<div class="rounded-lg border-l-4 border-destructive bg-destructive/10 p-4 shadow-sm">
 				<div class="flex">
 					<div class="flex-shrink-0">
 						<AlertCircle class="h-5 w-5 text-destructive" />
@@ -222,16 +224,10 @@
 					</div>
 				</div>
 			</div>
-			<Button 
-				on:click={loadImage}
-				variant="outline"
-				class="mt-4"
-			>
-				Try Again
-			</Button>
+			<Button on:click={loadImage} variant="outline" class="mt-4">Try Again</Button>
 		</div>
 	{:else}
-		<div class="flex flex-col h-screen">
+		<div class="flex h-screen flex-col">
 			<!-- Header Section -->
 			<header class="border-b border-border bg-card/50 backdrop-blur-sm">
 				<div class="px-6 py-4">
@@ -250,14 +246,16 @@
 						</div>
 						<div class="flex items-center space-x-4">
 							{#if isPerturbed}
-								<Button 
+								<Button
 									on:click={removeProtection}
 									disabled={isRemoving}
 									variant="destructive"
 									size="sm"
 								>
 									{#if isRemoving}
-										<div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+										<div
+											class="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-t-2 border-white"
+										></div>
 										Removing...
 									{:else}
 										<Trash2 class="mr-2 h-4 w-4" />
@@ -265,30 +263,16 @@
 									{/if}
 								</Button>
 							{:else}
-								<Button 
-									on:click={() => {
-										stopAnimationLoop();
-										showOriginal = false;
-										showNoise = false;
-										showPlus = false;
-										showCombined = false;
-										showFinal = false;
-										startAnimationLoop();
-									}}
-									variant="outline"
-									size="sm"
-								>
-									<RefreshCw class="mr-2 h-4 w-4" />
-									Replay Animation
-								</Button>
-								<Button 
+								<Button
 									on:click={applyProtection}
 									disabled={isPerturbing}
 									variant="default"
 									size="sm"
 								>
 									{#if isPerturbing}
-										<div class="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+										<div
+											class="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-t-2 border-white"
+										></div>
 										Applying...
 									{:else}
 										<Shield class="mr-2 h-4 w-4" />
@@ -303,43 +287,39 @@
 
 			<!-- Main Content -->
 			<main class="flex-1 px-6 py-8">
-				<div class="grid grid-cols-12 gap-8 h-full">
+				<div class="grid h-full grid-cols-12 gap-8">
 					<!-- Animation/Image Section -->
-					<div class="col-span-8 flex items-center justify-center bg-muted/30 rounded-xl p-8">
+					<div class="col-span-8 flex items-center justify-center rounded-xl bg-muted/30 p-8">
 						{#if isPerturbed}
 							<!-- Show protected image with slider -->
 							<div class="relative w-full max-w-[600px]">
-								<div class="relative w-full aspect-square rounded-xl overflow-hidden shadow-2xl border-4 border-primary/20">
+								<div
+									class="relative aspect-square w-full overflow-hidden rounded-xl border-4 border-primary/20 shadow-2xl"
+								>
 									<!-- Original Image -->
-									<img 
-										src={originalImage} 
-										alt="Original Image" 
-										class="absolute inset-0 w-full h-full object-cover"
+									<img
+										src={originalImage}
+										alt="Original Image"
+										class="absolute inset-0 h-full w-full object-cover"
 										style="clip-path: inset(0 {100 - sliderValue[0]}% 0 0);"
 									/>
 									<!-- Protected Image -->
-									<img 
-										src={perturbedImage} 
-										alt="Protected Image" 
-										class="absolute inset-0 w-full h-full object-cover"
+									<img
+										src={perturbedImage}
+										alt="Protected Image"
+										class="absolute inset-0 h-full w-full object-cover"
 										style="clip-path: inset(0 0 0 {sliderValue[0]}%);"
 									/>
 									<!-- Slider Line -->
-									<div 
-										class="absolute top-0 bottom-0 w-0.5 bg-white/50"
+									<div
+										class="absolute bottom-0 top-0 w-0.5 bg-white/50"
 										style="left: {sliderValue[0]}%; transform: translateX(-50%);"
 									/>
 								</div>
 								<!-- Slider Control -->
 								<div class="mt-4 px-4">
-									<Slider
-										bind:value={sliderValue}
-										min={0}
-										max={100}
-										step={1}
-										class="w-full"
-									/>
-									<div class="flex justify-between text-sm text-muted-foreground mt-2">
+									<Slider bind:value={sliderValue} min={0} max={100} step={1} class="w-full" />
+									<div class="mt-2 flex justify-between text-sm text-muted-foreground">
 										<span>Original</span>
 										<span>Protected</span>
 									</div>
@@ -349,75 +329,121 @@
 							<!-- Show animation -->
 							<div class="relative flex items-center justify-center space-x-8">
 								<!-- Original Image -->
-								<div class="relative group transition-all duration-500"
+								<div
+									class="group relative transition-all duration-500"
 									class:opacity-100={showOriginal}
 									class:opacity-0={!showOriginal}
 									class:translate-x-0={showOriginal}
-									class:translate-x-[-150%]={!showOriginal}>
-									<div class="w-[400px] h-[400px] rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 group-hover:scale-105 border border-border">
-										<img src={originalImage} alt="Original Image" class="w-full h-full object-cover" />
+									class:translate-x-[-150%]={!showOriginal}
+								>
+									<div
+										class="h-[400px] w-[400px] transform overflow-hidden rounded-xl border border-border shadow-2xl transition-all duration-500 group-hover:scale-105"
+									>
+										<img
+											src={originalImage}
+											alt="Original Image"
+											class="h-full w-full object-cover"
+										/>
 									</div>
-									<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-										<p class="text-white font-medium text-center">Original Image</p>
+									<div
+										class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4"
+									>
+										<p class="text-center font-medium text-white">Original Image</p>
 									</div>
 								</div>
 
 								<!-- Plus Sign -->
-								<div class="text-5xl text-muted-foreground font-light transition-all duration-300"
+								<div
+									class="text-5xl font-light text-muted-foreground transition-all duration-300"
 									class:opacity-100={showPlus}
 									class:opacity-0={!showPlus}
 									class:translate-y-0={showPlus}
-									class:translate-y-10={!showPlus}>
+									class:translate-y-10={!showPlus}
+								>
 									+
 								</div>
 
 								<!-- Noise Pattern -->
-								<div class="relative group transition-all duration-500"
+								<div
+									class="group relative transition-all duration-500"
 									class:opacity-100={showNoise}
 									class:opacity-0={!showNoise}
 									class:translate-x-0={showNoise}
-									class:translate-x-[150%]={!showNoise}>
-									<div class="w-[400px] h-[400px] rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 group-hover:scale-105 border border-border">
-										<div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-											<img src="/uap.png" alt="Noise Pattern" class="w-full h-full object-cover opacity-70" />
+									class:translate-x-[150%]={!showNoise}
+								>
+									<div
+										class="h-[400px] w-[400px] transform overflow-hidden rounded-xl border border-border shadow-2xl transition-all duration-500 group-hover:scale-105"
+									>
+										<div
+											class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5"
+										>
+											<img
+												src="/uap.png"
+												alt="Noise Pattern"
+												class="h-full w-full object-cover opacity-70"
+											/>
 										</div>
 									</div>
-									<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-										<p class="text-white font-medium text-center">Protection Layer</p>
+									<div
+										class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4"
+									>
+										<p class="text-center font-medium text-white">Protection Layer</p>
 									</div>
 								</div>
 
 								<!-- Combined Image (Transition State) -->
-								<div class="absolute transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
+								<!-- <div
+									class="absolute transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
 									class:opacity-100={showCombined}
 									class:opacity-0={!showCombined}
 									class:scale-100={showCombined}
-									class:scale-95={!showCombined}>
-									<div class="relative group">
-										<div class="w-[500px] h-[500px] rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 group-hover:scale-105 border border-border">
-											<img src={originalImage} alt="Protected Image" class="w-full h-full object-cover mix-blend-overlay" />
-											<div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/10 opacity-70"></div>
+									class:scale-95={!showCombined}
+								>
+									<div class="group relative">
+										<div
+											class="h-[500px] w-[500px] transform overflow-hidden rounded-xl border border-border shadow-2xl transition-all duration-500 group-hover:scale-105"
+										>
+											<img
+												src={originalImage}
+												alt="Protected Image"
+												class="h-full w-full object-cover mix-blend-overlay"
+											/>
+											<div
+												class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/10 opacity-70"
+											></div>
 										</div>
-										<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-											<p class="text-white font-medium text-center">Combining Protection</p>
+										<div
+											class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4"
+										>
+											<p class="text-center font-medium text-white">Combining Protection</p>
 										</div>
 									</div>
-								</div>
+								</div> -->
 
 								<!-- Final Protected Image -->
-								<div class="absolute transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
+								<div
+									class="absolute transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
 									class:opacity-100={showFinal}
 									class:opacity-0={!showFinal}
 									class:scale-100={showFinal}
-									class:scale-95={!showFinal}>
-									<div class="relative group">
-										<div class="w-[500px] h-[500px] rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 group-hover:scale-105 border-4 border-primary/20">
-											<img src={originalImage} alt="Protected Image" class="w-full h-full object-cover mix-blend-overlay" />
+									class:scale-95={!showFinal}
+								>
+									<div class="group relative">
+										<div
+											class="h-[500px] w-[500px] transform overflow-hidden rounded-xl border-4 border-primary/20 shadow-2xl transition-all duration-500 group-hover:scale-105"
+										>
+											<img
+												src={originalImage}
+												alt="Protected Image"
+												class="h-full w-full object-cover mix-blend-overlay"
+											/>
 											<div class="noise-pattern active"></div>
 											<div class="shield-effect active"></div>
 										</div>
-										<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-											<p class="text-white font-medium text-center">Protected Image</p>
+										<div
+											class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4"
+										>
+											<p class="text-center font-medium text-white">Protected Image</p>
 										</div>
 									</div>
 								</div>
@@ -427,34 +453,47 @@
 
 					<!-- Info Section -->
 					<div class="col-span-4 space-y-6">
-						<div class="bg-card rounded-xl p-6 border border-border">
-							<h3 class="text-lg font-semibold text-foreground mb-4">How It Works</h3>
-							<p class="text-muted-foreground leading-relaxed">
+						<div class="rounded-xl border border-border bg-card p-6">
+							<h3 class="mb-4 text-lg font-semibold text-foreground">How It Works</h3>
+							<p class="leading-relaxed text-muted-foreground">
 								{#if isPerturbed}
-									Your image has been protected with our advanced AI protection technology. The protection layer is invisible to human eyes but prevents AI models from properly analyzing the image content.
+									Your image has been protected with our advanced AI protection technology. A
+									protection layer is applied on the image that is invisible to human eyes but
+									prevents AI models from properly analyzing the image content i.e. prevent them
+									from understanding your images that might be used for their training or copying
+									your content.
 								{:else}
-									We add an invisible protection layer to your images that prevents AI models from properly analyzing them while maintaining visual quality for human viewers. Click "Apply Protection" to secure your image.
+									We add an invisible protection layer to your images that prevents AI models from
+									properly analyzing them while maintaining visual quality for human viewers. Your
+									image might be in risk of theft by AI. Click "Apply Protection" to secure your
+									image.
 								{/if}
 							</p>
 						</div>
 
-						<div class="bg-primary/5 rounded-xl p-6 border border-primary/10">
-							<h3 class="text-lg font-semibold text-primary mb-4">Protection Features</h3>
+						<div class="rounded-xl border border-primary/10 bg-primary/5 p-6">
+							<h3 class="mb-4 text-lg font-semibold text-primary">Why use it?</h3>
 							<ul class="space-y-3">
 								<li class="flex items-start space-x-3">
-									<div class="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+									<div
+										class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10"
+									>
 										<Shield class="h-3 w-3 text-primary" />
 									</div>
 									<p class="text-sm text-muted-foreground">Invisible to human eyes</p>
 								</li>
 								<li class="flex items-start space-x-3">
-									<div class="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+									<div
+										class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10"
+									>
 										<Shield class="h-3 w-3 text-primary" />
 									</div>
 									<p class="text-sm text-muted-foreground">Prevents AI model analysis</p>
 								</li>
 								<li class="flex items-start space-x-3">
-									<div class="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+									<div
+										class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10"
+									>
 										<Shield class="h-3 w-3 text-primary" />
 									</div>
 									<p class="text-sm text-muted-foreground">Maintains image quality</p>
@@ -475,7 +514,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url("/noise-pattern.png");
+		background-image: url('/noise-pattern.png');
 		background-size: cover;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
@@ -500,9 +539,18 @@
 	}
 
 	@keyframes pulseShield {
-		0% { transform: scale(0.95); opacity: 0.7; }
-		50% { transform: scale(1.05); opacity: 0.9; }
-		100% { transform: scale(0.95); opacity: 0.7; }
+		0% {
+			transform: scale(0.95);
+			opacity: 0.7;
+		}
+		50% {
+			transform: scale(1.05);
+			opacity: 0.9;
+		}
+		100% {
+			transform: scale(0.95);
+			opacity: 0.7;
+		}
 	}
 
 	.protection-badge {
@@ -530,4 +578,3 @@
 		transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 	}
 </style>
-  

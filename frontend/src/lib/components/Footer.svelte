@@ -34,16 +34,14 @@
 
 	// Quick links
 	const quickLinks = [
-		{ text: 'Home', href: '#home' },
-		{ text: 'Features', href: '#features' },
-		{ text: 'Contact', href: '#contact' }
+		{ text: 'Home', href: '/' },
+		{ text: 'Blogs', href: '/blog' }
 	];
 
 	// Legal links
 	const legalLinks = [
-		{ text: 'Terms of Service', href: '#terms' },
-		{ text: 'Privacy Policy', href: '#privacy' },
-		{ text: 'Cookie Policy', href: '#cookies' }
+		{ text: 'Terms of Service', href: '/terms' },
+		{ text: 'Privacy Policy', href: '/privacy' }
 	];
 </script>
 
@@ -70,8 +68,8 @@
 					</a>
 				</div>
 				<p class="text-sm leading-relaxed text-[#A0AEC0]">
-					Protecting your visual assets with advanced technology and industry-leading security
-					measures.
+					Protecting your visual assets before showing it publicly with advanced technology and
+					industry-leading security measures.
 				</p>
 			</div>
 

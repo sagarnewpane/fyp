@@ -1,5 +1,5 @@
 <script lang="js">
-	import { Menu, Shield, X, ChevronRight, Album, DollarSign, Contact, LogOut, User } from 'lucide-svelte';
+	import { Menu, Shield, X, ChevronRight, Album, DollarSign, LogOut, User } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
 	import { page } from '$app/stores';
@@ -24,9 +24,11 @@
 	const currentUsername = $derived($authStore?.user?.username || null);
 	const userInitials = $derived(currentUsername?.[0]?.toUpperCase() ?? '?');
 	const displayUsername = $derived(
-	    currentUsername 
-	        ? currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1) 
-	        : (isAuthenticated ? 'User' : '')
+		currentUsername
+			? currentUsername.charAt(0).toUpperCase() + currentUsername.slice(1)
+			: isAuthenticated
+				? 'User'
+				: ''
 	);
 
 	function handleAvatarError() {
@@ -68,8 +70,8 @@
 
 	const navItems = [
 		{ label: 'Home', href: '/', icon: Shield },
-		{ label: 'Images', href: '/images', icon: Album },
-		{ label: 'Contact', href: '#', icon: Contact }
+		{ label: 'Images', href: '/images', icon: Album }
+		// { label: 'Blog', href: '/blogs', icon: Blog }
 	];
 
 	const dropItems = [{ label: 'Profile', href: '/user?tab=profile', icon: User }];
@@ -129,7 +131,12 @@
 									class="border-2 border-primary/20 transition-all duration-300 hover:border-primary/50"
 								>
 									{#if avatarUrl}
-										<AvatarImage src={avatarUrl} alt="User avatar" class="object-cover" on:error={handleAvatarError} />
+										<AvatarImage
+											src={avatarUrl}
+											alt="User avatar"
+											class="object-cover"
+											on:error={handleAvatarError}
+										/>
 									{/if}
 									<AvatarFallback>
 										{userInitials}

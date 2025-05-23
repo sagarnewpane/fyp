@@ -3,7 +3,18 @@ import { redirect } from '@sveltejs/kit';
 import { API_ENDPOINTS } from '$lib/endpoints';
 
 const CONFIG = {
-	PROTECTED_ROUTES: ['/images', '/profile', '/user', '/watermark', '/logs', '/access', '/metadata'],
+	PROTECTED_ROUTES: [
+		'/images',
+		'/profile',
+		'/user',
+		'/watermark',
+		'/logs',
+		'/access',
+		'/metadata',
+		'/terms',
+		'/blogs',
+		'/learn'
+	],
 	API_ENDPOINTS: {
 		VERIFY: API_ENDPOINTS.VERIFY,
 		REFRESH: API_ENDPOINTS.REFRESH

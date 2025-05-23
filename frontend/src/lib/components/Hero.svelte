@@ -23,8 +23,8 @@
 			</h1>
 			<div class="decorative-circle"></div>
 			<p class="text-xl leading-relaxed text-muted-foreground">
-				Upload, store, and secure your images with advanced protection features. Experience peace of
-				mind with our cutting-edge security solutions.
+				Upload, store, and securely share your images with the world. Experience peace of mind with
+				our cutting-edge protection solutions to protect your images from theft.
 			</p>
 			<div class="flex flex-col gap-4 sm:flex-row">
 				<!-- Modified Get Started Button -->
