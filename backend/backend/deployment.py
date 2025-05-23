@@ -1,18 +1,14 @@
 import os
+from pathlib import Path
 from .settings import *
-# from .settings import BASE_DIR
-
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = [env('WEB_HOST')]
-CSRF_TRUSTED_ORIGINS = [f"https://{env('WEB_HOST')}"]
 DEBUG = False
-SECRET_KEY = env('MY_SECRET_KEY')
+SECRET_KEY = os.environ['MY_SECRET_KEY']
+
+ALLOWED_HOSTS = [os.environ['WEB_HOST']]
+CSRF_TRUSTED_ORIGINS = [f"https://{os.environ['WEB_HOST']}"]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -26,13 +22,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-
 CORS_ALLOWED_ORIGINS = [
-    'https://' + os.environ['WEB_HOST']
+    f"https://{os.environ['WEB_HOST']}"
 ]
-
-
 
 STORAGES = {
     "default": {
@@ -43,17 +35,14 @@ STORAGES = {
     },
 }
 
-# CONNECTION = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
-# CONNECTION_STR = {pair.split('=')[0]:pair.split('=')[1] for pair in CONNECTION.split(' ')}
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": env("DB_HOST"),
-        "PORT": env("DB_PORT"),
+        "NAME": os.environ["DB_NAME"],
+        "USER": os.environ["DB_USER"],
+        "PASSWORD": os.environ["DB_PASSWORD"],
+        "HOST": os.environ["DB_HOST"],
+        "PORT": os.environ["DB_PORT"],
     }
 }
 
@@ -75,18 +64,15 @@ LOGGING = {
     },
 }
 
-
-
-ADMINS = [("Nick", "YOURMAIL.com")]
+ADMINS = [("Sagar", "sdreamnewpane@gmail.com")]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_HOST_USER = os.environ['EMAIL_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
 DEFAULT_FROM_EMAIL = 'default from email'
 
-
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR/'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
