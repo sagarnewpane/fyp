@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: django-backend
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+      python manage.py createsu
+    startCommand: gunicorn backend.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DB_NAME
+        value: fyp_sb65
+      - key: DB_USER
+        value: fyp_sb65_user
+      - key: DB_PASSWORD
+        value: PEi3bZG0eFAQvWCpvT2GywHf85hFKDlJ
+      - key: DB_HOST
+        value: dpg-d0nfnk6uk2gs73bu7fog-a
+      - key: DB_PORT
+        value: "5432"
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: admin
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: admin@example.com
+      - key: DJANGO_SUPERUSER_PASSWORD
+        value: supersecurepassword123
+      - key: WEB_HOST
+        value: https://fyp-f72p.onrender.com
