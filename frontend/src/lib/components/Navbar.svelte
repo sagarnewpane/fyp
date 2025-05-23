@@ -129,7 +129,7 @@
 									class="border-2 border-primary/20 transition-all duration-300 hover:border-primary/50"
 								>
 									{#if avatarUrl}
-										<AvatarImage src={avatarUrl} alt="User avatar" on:error={handleAvatarError} />
+										<AvatarImage src={avatarUrl} alt="User avatar" class="object-cover" on:error={handleAvatarError} />
 									{/if}
 									<AvatarFallback>
 										{userInitials}
@@ -207,7 +207,7 @@
 						<div class="flex items-center gap-3 px-3 py-2">
 							<Avatar>
 								{#if avatarUrl}
-									<AvatarImage src={avatarUrl} alt="User avatar" />
+									<AvatarImage src={avatarUrl} alt="User avatar" class="object-cover" />
 								{/if}
 								<AvatarFallback>
 									{userInitials}

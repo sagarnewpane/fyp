@@ -245,6 +245,7 @@
 										<AvatarImage
 											src={avatarUrl}
 											alt="Profile"
+											class="object-cover"
 											on:error={() => {
 												avatarUrl = '';
 											}}

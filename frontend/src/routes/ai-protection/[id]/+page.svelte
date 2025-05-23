@@ -379,7 +379,7 @@
 									class:translate-x-[150%]={!showNoise}>
 									<div class="w-[400px] h-[400px] rounded-xl overflow-hidden shadow-2xl transform transition-all duration-500 group-hover:scale-105 border border-border">
 										<div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-											<div class="noise-pattern"></div>
+											<img src="/uap.png" alt="Noise Pattern" class="w-full h-full object-cover opacity-70" />
 										</div>
 									</div>
 									<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -475,7 +475,8 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.20'/%3E%3C/svg%3E");
+		background-image: url("/noise-pattern.png");
+		background-size: cover;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
 	}
