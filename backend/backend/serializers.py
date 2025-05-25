@@ -4,9 +4,34 @@ from django.contrib.auth.password_validation import validate_password
 from .models import UserImage, UserProfile, WatermarkSettings, AIProtectionSettings
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
+import re
+
+def validate_password_complexity(password):
+    """
+    Validate password complexity:
+    - At least 8 characters long
+    - Contains at least one uppercase letter
+    - Contains at least one lowercase letter
+    - Contains at least one number
+    - Contains at least one special character
+    """
+    if len(password) < 8:
+        raise serializers.ValidationError("Password must be at least 8 characters long.")
+    
+    if not re.search(r'[A-Z]', password):
+        raise serializers.ValidationError("Password must contain at least one uppercase letter.")
+    
+    if not re.search(r'[a-z]', password):
+        raise serializers.ValidationError("Password must contain at least one lowercase letter.")
+    
+    if not re.search(r'\d', password):
+        raise serializers.ValidationError("Password must contain at least one number.")
+    
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        raise serializers.ValidationError("Password must contain at least one special character (!@#$%^&*(),.?\":{}|<>).")
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password, validate_password_complexity])
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
@@ -21,6 +46,11 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({"password": "Password fields didn't match."})
+        
+        # Check if email is already registered
+        if User.objects.filter(email=attrs['email']).exists():
+            raise serializers.ValidationError({"email": "This email is already registered."})
+            
         return attrs
 
     def create(self, validated_data):
@@ -47,7 +77,7 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 class PasswordResetConfirmSerializer(serializers.Serializer):
     token = serializers.CharField()
     uidb64 = serializers.CharField()
-    new_password = serializers.CharField(write_only=True, validators=[validate_password])
+    new_password = serializers.CharField(write_only=True, validators=[validate_password, validate_password_complexity])
     confirm_password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
@@ -202,7 +232,7 @@ class NotificationSettingsSerializer(serializers.ModelSerializer):
 # Passwod Updatation
 class PasswordChangeSerializer(serializers.Serializer):
     current_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True, validators=[validate_password])
+    new_password = serializers.CharField(required=True, validators=[validate_password, validate_password_complexity])
     confirm_password = serializers.CharField(required=True)
 
     def validate_current_password(self, value):
@@ -423,3 +453,17 @@ class AIProtectionSettingsSerializer(serializers.ModelSerializer):
         if obj.protected_image and request:
             return request.build_absolute_uri(obj.protected_image.url)
         return None if not obj.protected_image else obj.protected_image.url
+
+class AccountDeletionSerializer(serializers.Serializer):
+    password = serializers.CharField(required=True)
+    confirmation = serializers.CharField(required=True)
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if not user.check_password(data['password']):
+            raise serializers.ValidationError({"password": "Current password is incorrect."})
+        
+        if data['confirmation'].lower() != 'delete my account':
+            raise serializers.ValidationError({"confirmation": "Please type 'delete my account' to confirm."})
+        
+        return data

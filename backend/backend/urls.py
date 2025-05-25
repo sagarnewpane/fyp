@@ -26,7 +26,8 @@ from .views import (
     ManageAccessRequestsView,
     AIProtectionView,
     ServeProtectedImageDownloadView,
-    NotificationSettingsView
+    NotificationSettingsView,
+    DeleteAccountView
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import serve_decrypted_image
@@ -75,6 +76,9 @@ urlpatterns = [
 
     # New endpoint for downloading protected image by access token
     path('api/access/<str:token>/download-protected/', ServeProtectedImageDownloadView.as_view(), name='download_protected_image'),
+
+    path('api/change-password/', PasswordChangeView.as_view(), name='change-password'),
+    path('api/delete-account/', DeleteAccountView.as_view(), name='delete-account'),
 ]
 
 if settings.DEBUG:

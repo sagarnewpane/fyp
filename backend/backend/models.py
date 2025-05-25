@@ -98,6 +98,8 @@ class UserImage(models.Model):
             # Replace the original file with the encrypted version
             self.image.save(file_name, ContentFile(encrypted_data), save=False)
 
+            os.remove(image_path)
+
             # Update other fields
             self.image_name = Path(file_name).stem
             self.file_type = 'png'  # Custom file type for encrypted files

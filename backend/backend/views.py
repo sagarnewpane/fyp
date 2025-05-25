@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer, AIProtectionSettingsSerializer, NotificationSettingsSerializer
+from .serializers import RegisterUserSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer, SpecificImageSerializer, UserImageSerializer, UserImageListSerializer, PasswordChangeSerializer, OTPVerificationSerializer, AIProtectionSettingsSerializer, NotificationSettingsSerializer, AccountDeletionSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -25,6 +25,7 @@ from PIL import Image
 import io
 import numpy as np
 import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -103,8 +104,19 @@ class PasswordResetRequestView(APIView):
 
             # Send email
             send_mail(
-                'Password Reset Request',
-                f'Please click the following link to reset your password: {reset_link}',
+                'Password Reset Request - Authograph',
+                f'''Dear {user.username},
+
+We received a request to reset your password for your Authograph account. To proceed with the password reset, please click the following link:
+
+{reset_link}
+
+This link will expire in 24 hours for security reasons.
+
+If you did not request this password reset, please ignore this email or contact our support team if you have concerns about your account security.
+
+Best regards,
+The Authograph Team''',
                 settings.EMAIL_HOST_USER,
                 [email],
                 fail_silently=False,
@@ -1091,8 +1103,17 @@ class InitiateAccessView(APIView):
 
             try:
                 send_mail(
-                    'Access Verification Code',
-                    f'Your verification code is: {otp}\nValid for 5 minutes.',
+                    'Access Verification Code - Authograph',
+                    f'''Dear User,
+
+Your verification code for accessing the protected image is: {otp}
+
+This code is valid for 5 minutes. Please do not share this code with anyone.
+
+If you did not request access to this image, please ignore this email.
+
+Best regards,
+The Authograph Team''',
                     settings.EMAIL_HOST_USER,
                     [email],
                     fail_silently=False,
@@ -1177,8 +1198,20 @@ class VerifyOTPView(APIView):
                     if owner_profile and owner_profile.notify_on_failed_access:
                         try:
                             send_mail(
-                                'Failed Access Attempt Alert',
-                                f'A failed attempt was made to access your image "{access.user_image.image_name}" by {email} (access rule invalid/expired).',
+                                'Security Alert: Failed Access Attempt - Authograph',
+                                f'''Dear {image_owner_user.username},
+
+We detected a failed attempt to access your protected image "{access.user_image.image_name}".
+
+Details:
+- Attempted by: {email}
+- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+- Reason: Invalid access rule or expired link
+
+If you believe this was an unauthorized attempt, please review your security settings or contact our support team.
+
+Best regards,
+The Authograph Security Team''',
                                 settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
                             )
                             logger.info(f"Failed access (rule invalid) notification sent to {image_owner_user.email}")
@@ -1196,8 +1229,20 @@ class VerifyOTPView(APIView):
                     if owner_profile and owner_profile.notify_on_failed_access:
                         try:
                             send_mail(
-                                'Failed Access Attempt Alert (Invalid OTP)',
-                                f'A failed attempt (invalid OTP) was made to access your image "{access.user_image.image_name}" by {email}.',
+                                'Security Alert: Invalid OTP Attempt - Authograph',
+                                f'''Dear {image_owner_user.username},
+
+We detected an invalid OTP attempt for your protected image "{access.user_image.image_name}".
+
+Details:
+- Attempted by: {email}
+- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+- Action: Invalid OTP verification
+
+If you believe this was an unauthorized attempt, please review your security settings or contact our support team.
+
+Best regards,
+The Authograph Security Team''',
                                 settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
                             )
                             logger.info(f"Failed access (invalid OTP) notification sent to {image_owner_user.email}")
@@ -1219,8 +1264,20 @@ class VerifyOTPView(APIView):
                 if owner_profile and owner_profile.notify_on_successful_access:
                     try:
                         send_mail(
-                            'Image Access Alert',
-                            f'Your image "{access.user_image.image_name}" was successfully viewed by {email}.',
+                            'Image Access Notification - Authograph',
+                            f'''Dear {image_owner_user.username},
+
+Your protected image "{access.user_image.image_name}" was successfully accessed.
+
+Details:
+- Accessed by: {email}
+- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+- Action: Image view
+
+You can view detailed access logs in your Authograph dashboard.
+
+Best regards,
+The Authograph Team''',
                             settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
                         )
                         logger.info(f"Successful access notification sent to {image_owner_user.email}")
@@ -1586,11 +1643,23 @@ class RequestAccessView(APIView):
                     
                     if owner_profile and owner_profile.notify_on_access_request:
                         send_mail(
-                            'New Access Request',
-                            f'{email} has requested access to your protected image "{access.user_image.image_name}"./n/nMessage: {message}',
+                            'New Access Request - Authograph',
+                            f'''Dear {owner_user.username},
+
+A new access request has been submitted for your protected image "{access.user_image.image_name}".
+
+Request Details:
+- Requested by: {email}
+- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+- Message: {message}
+
+You can review and manage this request in your Authograph dashboard.
+
+Best regards,
+The Authograph Team''',
                             settings.EMAIL_HOST_USER,
                             [owner_user.email],
-                            fail_silently=True, # Set to False for debugging if needed
+                            fail_silently=True,
                         )
                         logger.info(f"Access request notification sent to {owner_user.email} for image {access.user_image.id}")
                     elif owner_profile:
@@ -1678,8 +1747,19 @@ class ManageAccessRequestsView(APIView):
             try:
                 status_text = 'approved' if action == 'approve' else 'denied'
                 send_mail(
-                    f'Access Request {status_text.capitalize()}',
-                    f'Your request to access the protected image has been {status_text}.',
+                    f'Access Request Update - Authograph',
+                    f'''Dear User,
+
+Your access request for the protected image has been {status_text}.
+
+Details:
+- Status: {status_text.capitalize()}
+- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+
+If your request was approved, you can now access the image using the original access link.
+
+Best regards,
+The Authograph Team''',
                     settings.EMAIL_HOST_USER,
                     [access_request.email],
                     fail_silently=True,
@@ -1935,8 +2015,20 @@ class ServeProtectedImageDownloadView(APIView):
                 if owner_profile and owner_profile.notify_on_download:
                     try:
                         send_mail(
-                            'Image Download Alert',
-                            f'Your image "{image_access.user_image.image_name}" was downloaded by {log_email}.',
+                            'Image Download Alert - Authograph',
+                            f'''Dear {image_owner_user.username},
+
+Your protected image "{image_access.user_image.image_name}" was downloaded.
+
+Details:
+- Downloaded by: {log_email}
+- Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}
+- Action: Image download
+
+You can view detailed access logs in your Authograph dashboard.
+
+Best regards,
+The Authograph Team''',
                             settings.EMAIL_HOST_USER, [image_owner_user.email], fail_silently=True
                         )
                         logger.info(f"Image download notification sent to {image_owner_user.email}")
@@ -1969,3 +2061,30 @@ class NotificationSettingsView(generics.RetrieveUpdateAPIView):
         # Ensure UserProfile exists, create if not (should be handled by signal, but good practice)
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
         return profile
+
+class DeleteAccountView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = AccountDeletionSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            try:
+                # Delete all user's images and related data
+                UserImage.objects.filter(user=request.user).delete()
+                
+                # Delete user profile
+                UserProfile.objects.filter(user=request.user).delete()
+                
+                # Delete the user account
+                request.user.delete()
+                
+                return Response(
+                    {"message": "Account successfully deleted."},
+                    status=status.HTTP_200_OK
+                )
+            except Exception as e:
+                return Response(
+                    {"error": "Failed to delete account. Please try again."},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

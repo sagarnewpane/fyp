@@ -14840,3 +14840,556 @@ Internal Server Error: /images/163/ai-protection/
 Bad Request: /api/password/change/
 Bad Request: /api/password/change/
 Unauthorized: /token/
+Unauthorized: /token/
+Unauthorized: /token/
+Unauthorized: /token/
+Bad Request: /api/register/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Bad Request: /api/register/
+Bad Request: /api/register/
+Bad Request: /api/register/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+Bad Request: /api/register/
+Bad Request: /api/register/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Unauthorized: /api/delete-account/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Unauthorized: /verify/
+Internal Server Error: /token/refresh/
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework_simplejwt/views.py", line 44, in post
+    serializer.is_valid(raise_exception=True)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 223, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 445, in run_validation
+    value = self.validate(value)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework_simplejwt/serializers.py", line 116, in validate
+    user := get_user_model().objects.get(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        **{api_settings.USER_ID_FIELD: user_id}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/query.py", line 649, in get
+    raise self.model.DoesNotExist(
+        "%s matching query does not exist." % self.model._meta.object_name
+    )
+django.contrib.auth.models.User.DoesNotExist: User matching query does not exist.
+Unauthorized: /token/
+Unauthorized: /token/
+Unauthorized: /token/
+Unauthorized: /token/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /api/password-reset/
+Traceback (most recent call last):
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py", line 94, in post
+    if serializer.is_valid():
+       ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 223, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 442, in run_validation
+    value = self.to_internal_value(data)
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/rest_framework/serializers.py", line 501, in to_internal_value
+    validated_value = validate_method(validated_value)
+  File "/home/sagar/Documents/FYP/igaurdian/backend/backend/serializers.py", line 72, in validate_email
+    User.objects.get(email=value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/sagar/Documents/FYP/igaurdian/.env/lib/python3.13/site-packages/django/db/models/query.py", line 652, in get
+    raise self.model.MultipleObjectsReturned(
+    ...<5 lines>...
+    )
+django.contrib.auth.models.User.MultipleObjectsReturned: get() returned more than one User -- it returned 2!
+Bad Request: /api/password-reset-confirm/
+/home/sagar/Documents/FYP/igaurdian/backend/backend/views.py changed, reloading.
+Watching for file changes with StatReloader
+Bad Request: /api/password-reset/
+Bad Request: /api/password-reset-confirm/
+Bad Request: /api/password-reset-confirm/
+Bad Request: /api/password-reset-confirm/
+Starting protection chain for image 168
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (3000, 2000)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 168
+AI protection is enabled and protected image found for user_image ID: 168
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_camera
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+No invisible watermark settings found
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar', 'color': '#ffffff', 'opacity': 51, 'pattern': 'tiled', 'spacing': 40, 'fontSize': 63, 'rotation': 36, 'verticalOffset': 18, 'horizontalOffset': 7}
+Starting watermark application
+Saving input image to: /tmp/tmph22whfev.png
+Output will be saved to: /tmp/tmpj_oz71if.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 63, "color": "#ffffff", "opacity": 51.0, "rotation": 36.0, "pattern": "tiled", "spacing": 40.0, "horizontalOffset": 7.0, "verticalOffset": 18.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmph22whfev.png /tmp/tmpj_oz71if.png {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 63, "color": "#ffffff", "opacity": 51.0, "rotation": 36.0, "pattern": "tiled", "spacing": 40.0, "horizontalOffset": 7.0, "verticalOffset": 18.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmph22whfev.png
+Cleaned up temporary file: /tmp/tmpj_oz71if.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_075857.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_075857.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_075857.png
+Bad Request: /access/ypIg8XYOuLwtuoa2gNjVwKcIlBM8w_zN5xBxulFBNzU/initiate/
+Starting protection chain for image 168
+Protection features requested: {'watermark': False, 'hidden_watermark': False, 'metadata': False, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (3000, 2000)
+Initial image mode: RGB
+Starting protection chain for image 168
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (3000, 2000)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 168
+AI protection is enabled and protected image found for user_image ID: 168
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_camera
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+No invisible watermark settings found
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagar', 'color': '#ffffff', 'opacity': 51, 'pattern': 'tiled', 'spacing': 40, 'fontSize': 63, 'rotation': 36, 'verticalOffset': 18, 'horizontalOffset': 7}
+Starting watermark application
+Saving input image to: /tmp/tmpfolgfryb.png
+Output will be saved to: /tmp/tmpjq92qp7w.png
+Watermark settings: {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 63, "color": "#ffffff", "opacity": 51.0, "rotation": 36.0, "pattern": "tiled", "spacing": 40.0, "horizontalOffset": 7.0, "verticalOffset": 18.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpfolgfryb.png /tmp/tmpjq92qp7w.png {"text": "\u00a9 sagar", "font": "Arial", "fontSize": 63, "color": "#ffffff", "opacity": 51.0, "rotation": 36.0, "pattern": "tiled", "spacing": 40.0, "horizontalOffset": 7.0, "verticalOffset": 18.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpfolgfryb.png
+Cleaned up temporary file: /tmp/tmpjq92qp7w.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_080558.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_080558.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_080558.png
+Download request - Token: B9BOsq_MazuSQaLMYqy0DTcSR2zuHTKyV94-brs-Lq0
+Headers - Email: owner@igaurdian.local, Access Name: owner
+Access Rule - Allowed Emails: []
+Owner download detected, using owner email: sdreamnewpane@gmail.com
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Image download notification sent to sdreamnewpane@gmail.com
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Successful access notification sent to sdreamnewpane@gmail.com
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Forbidden: /access/B9BOsq_MazuSQaLMYqy0DTcSR2zuHTKyV94-brs-Lq0/initiate/
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Forbidden: /access/B9BOsq_MazuSQaLMYqy0DTcSR2zuHTKyV94-brs-Lq0/initiate/
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /images/162/decrypted/
+STREAM b'IHDR' 16 13
+STREAM b'sBIT' 41 4
+b'sBIT' 41 4 (unknown)
+STREAM b'pHYs' 57 9
+STREAM b'tEXt' 78 28
+STREAM b'IDAT' 118 8192
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+Starting new HTTP connection (1): 20.168.8.203:80
+http://20.168.8.203:80 "POST /perturb HTTP/1.1" 200 811456
+Starting protection chain for image 172
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': True}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (800, 834)
+Initial image mode: RGB
+Applying AI protection...
+Attempting AI protection for user_image ID: 172
+AI protection is enabled and protected image found for user_image ID: 172
+Loading AI protected image from: /home/sagar/Documents/FYP/igaurdian/backend/media/ai_protected_images/ai_protected_5_9HZnPTa
+STREAM b'IHDR' 16 13
+STREAM b'IDAT' 41 8192
+Successfully loaded AI protected image.
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpl1g3i06t.png
+Cleaned up temporary file: /tmp/tmpl1g3i06t.png
+Applying watermark with settings: {'font': 'Arial', 'text': '© sagarnewpane', 'color': '#000000', 'opacity': 49, 'pattern': 'tiled', 'spacing': 50, 'fontSize': 24, 'rotation': 0, 'verticalOffset': 9, 'horizontalOffset': 6}
+Starting watermark application
+Saving input image to: /tmp/tmpk6p_6_t4.png
+Output will be saved to: /tmp/tmp2idq5at4.png
+Watermark settings: {"text": "\u00a9 sagarnewpane", "font": "Arial", "fontSize": 24, "color": "#000000", "opacity": 49.0, "rotation": 0.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 6.0, "verticalOffset": 9.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpk6p_6_t4.png /tmp/tmp2idq5at4.png {"text": "\u00a9 sagarnewpane", "font": "Arial", "fontSize": 24, "color": "#000000", "opacity": 49.0, "rotation": 0.0, "pattern": "tiled", "spacing": 50.0, "horizontalOffset": 6.0, "verticalOffset": 9.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpk6p_6_t4.png
+Cleaned up temporary file: /tmp/tmp2idq5at4.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_112906.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_112906.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250524_112906.png
+Download request - Token: XoW1-vA6hxd0ow4ZIKBzeCQEpY9g4E8_F3_ufCH_DAo
+Headers - Email: owner@igaurdian.local, Access Name: owner
+Access Rule - Allowed Emails: []
+Owner download detected, using owner email: aplmlxpqeqbpdtyzpb@nespf.com
+Getting location data for IP: 8.8.8.8
+Starting new HTTPS connection (1): ipapi.co:443
+https://ipapi.co:443 "GET /8.8.8.8/json/ HTTP/1.1" 429 116
+Starting new HTTP connection (1): ip-api.com:80
+http://ip-api.com:80 "GET /json/8.8.8.8 HTTP/1.1" 200 277
+Successfully got location data from ip-api.com: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Location data: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Image download notification sent to aplmlxpqeqbpdtyzpb@nespf.com
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data received: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Successful access notification sent to aplmlxpqeqbpdtyzpb@nespf.com
+Download request - Token: XoW1-vA6hxd0ow4ZIKBzeCQEpY9g4E8_F3_ufCH_DAo
+Headers - Email: wemisal556@nomrista.com, Access Name: shared_access
+Access Rule - Allowed Emails: []
+Getting location data for IP: 8.8.8.8
+Retrieved cached location data for IP: 8.8.8.8
+Location data: {'country': 'United States', 'region': 'Virginia', 'city': 'Ashburn', 'ip_address': '8.8.8.8'}
+Image download notification sent to aplmlxpqeqbpdtyzpb@nespf.com
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+/home/sagar/Documents/FYP/igaurdian/backend/backend/models.py changed, reloading.
+Watching for file changes with StatReloader
+STREAM b'IHDR' 16 13
+STREAM b'iTXt' 41 832
+STREAM b'IDAT' 885 65536
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+Bad Request: /api/image/173/invisible-watermark/
+Bad Request: /api/image/173/invisible-watermark/
+Bad Request: /api/image/175/invisible-watermark/
+Bad Request: /api/image/175/invisible-watermark/
+Bad Request: /api/image/175/invisible-watermark/
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+STREAM b'IHDR' 16 13
+STREAM b'pHYs' 41 9
+STREAM b'sRGB' 62 1
+STREAM b'gAMA' 75 4
+STREAM b'IDAT' 91 2935502
+Watching for file changes with StatReloader
+Not Found: /images/173/decrypted/
+STREAM b'IHDR' 16 13
+STREAM b'PLTE' 41 630
+STREAM b'tRNS' 683 62
+STREAM b'IDAT' 757 5992
+Importing BlpImagePlugin
+Importing BmpImagePlugin
+Importing BufrStubImagePlugin
+Importing CurImagePlugin
+Importing DcxImagePlugin
+Importing DdsImagePlugin
+Importing EpsImagePlugin
+Importing FitsImagePlugin
+Importing FliImagePlugin
+Importing FpxImagePlugin
+Importing FtexImagePlugin
+Importing GbrImagePlugin
+Importing GifImagePlugin
+Importing GribStubImagePlugin
+Importing Hdf5StubImagePlugin
+Importing IcnsImagePlugin
+Importing IcoImagePlugin
+Importing ImImagePlugin
+Importing ImtImagePlugin
+Importing IptcImagePlugin
+Importing JpegImagePlugin
+Importing Jpeg2KImagePlugin
+Importing McIdasImagePlugin
+Importing MicImagePlugin
+Importing MpegImagePlugin
+Importing MpoImagePlugin
+Importing MspImagePlugin
+Importing PalmImagePlugin
+Importing PcdImagePlugin
+Importing PcxImagePlugin
+Importing PdfImagePlugin
+Importing PixarImagePlugin
+Importing PngImagePlugin
+Importing PpmImagePlugin
+Importing PsdImagePlugin
+Importing QoiImagePlugin
+Importing SgiImagePlugin
+Importing SpiderImagePlugin
+Importing SunImagePlugin
+Importing TgaImagePlugin
+Importing TiffImagePlugin
+Importing WebPImagePlugin
+Importing WmfImagePlugin
+Importing XbmImagePlugin
+Importing XpmImagePlugin
+Importing XVThumbImagePlugin
+STREAM b'IHDR' 16 13
+STREAM b'sBIT' 41 4
+b'sBIT' 41 4 (unknown)
+STREAM b'pHYs' 57 9
+STREAM b'tEXt' 78 28
+STREAM b'IDAT' 118 8192
+Starting new HTTP connection (1): 20.168.8.203:80
+http://20.168.8.203:80 "POST /perturb HTTP/1.1" 200 811456
+Starting protection chain for image 181
+Protection features requested: {'watermark': True, 'hidden_watermark': True, 'metadata': True, 'ai_protection': False}
+Image is encrypted, decrypting first...
+Successfully decrypted and converted to PIL Image
+Initial image size: (800, 834)
+Initial image mode: RGB
+Applying steganography...
+Starting steganography application
+Saving input image to temporary file: /tmp/tmpmwl6sc6b.png
+Cleaned up temporary file: /tmp/tmpmwl6sc6b.png
+Applying watermark with settings: {'font': 'Georgia', 'text': 'test123 user', 'color': '#000000', 'opacity': 50, 'pattern': 'diagonal', 'spacing': 50, 'fontSize': 35, 'rotation': 34, 'verticalOffset': 0, 'horizontalOffset': 0}
+Starting watermark application
+Saving input image to: /tmp/tmpykqt3_a0.png
+Output will be saved to: /tmp/tmp7vacc8_t.png
+Watermark settings: {"text": "test123 user", "font": "Georgia", "fontSize": 35, "color": "#000000", "opacity": 50.0, "rotation": 34.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Using watermark script at: ../frontend/watermark.cjs
+Executing command: node ../frontend/watermark.cjs /tmp/tmpykqt3_a0.png /tmp/tmp7vacc8_t.png {"text": "test123 user", "font": "Georgia", "fontSize": 35, "color": "#000000", "opacity": 50.0, "rotation": 34.0, "pattern": "diagonal", "spacing": 50.0, "horizontalOffset": 0.0, "verticalOffset": 0.0}
+Reading watermarked image
+STREAM b'IHDR' 16 13
+STREAM b'sRGB' 41 1
+STREAM b'IDAT' 54 8192
+Cleaned up temporary file: /tmp/tmpykqt3_a0.png
+Cleaned up temporary file: /tmp/tmp7vacc8_t.png
+Applying metadata protection...
+Starting metadata application
+Temp directory created/verified at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp
+Attempting to save image to: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250525_072346.png
+Image saved successfully
+Metadata embedding successful
+Attempting to open file at: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250525_072346.png
+Cleaned up processing file: /home/sagar/Documents/FYP/igaurdian/backend/backend/temp/processing_20250525_072346.png
