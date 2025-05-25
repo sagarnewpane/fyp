@@ -11,7 +11,9 @@
 	export let data;
 
 	const form = superForm(data, {
-		validators: zodClient(formSchema)
+		validators: zodClient(formSchema),
+		preserveScroll: true,
+		resetForm: false
 	});
 	const { form: formData, enhance, message, submitting } = form;
 </script>

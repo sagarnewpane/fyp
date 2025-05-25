@@ -33,9 +33,15 @@
 				</div>
 				<form method="POST" use:enhance class="grid gap-5">
 					{#if $message}
-						<Alert.Root variant={$message.status === 'success' ? 'default' : 'destructive'}>
-							<Alert.Title>{$message.status === 'success' ? 'Success' : 'Error'}</Alert.Title>
-							<Alert.Description>{$message}</Alert.Description>
+						<Alert.Root variant='default'>
+							<!-- <Alert.Title>{$message.status === 'success' ? 'Success' : 'Error'}</Alert.Title> -->
+							<Alert.Description>
+								{#if typeof $message === 'string'}
+									{$message}
+								{:else}
+									{$message.message}
+								{/if}
+							</Alert.Description>
 						</Alert.Root>
 					{/if}
 					<div class="grid gap-4">
@@ -44,6 +50,16 @@
 								<div class="grid gap-2">
 									<Form.Label>New Password</Form.Label>
 									<Input {...attrs} bind:value={$formData.new_password} type="password" />
+									<div class="text-sm text-muted-foreground">
+										<p>Password must:</p>
+										<ul class="list-disc pl-4">
+											<li>Be at least 8 characters long</li>
+											<li>Contain at least one uppercase letter</li>
+											<li>Contain at least one lowercase letter</li>
+											<li>Contain at least one number</li>
+											<li>Contain at least one special character (e.g., !, @, #, $, %, ^, &, *, etc.)</li>
+										</ul>
+									</div>
 								</div>
 							</Form.Control>
 							<Form.FieldErrors />

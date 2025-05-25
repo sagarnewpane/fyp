@@ -1,5 +1,5 @@
 <script lang="js">
-	import { Menu, Shield, X, ChevronRight, Album, DollarSign, LogOut, User } from 'lucide-svelte';
+	import { Menu, Shield, X, ChevronRight, Album, DollarSign, LogOut, User, Book } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { slide, fade } from 'svelte/transition';
 	import { page } from '$app/stores';
@@ -70,8 +70,8 @@
 
 	const navItems = [
 		{ label: 'Home', href: '/', icon: Shield },
-		{ label: 'Images', href: '/images', icon: Album }
-		// { label: 'Blog', href: '/blogs', icon: Blog }
+		{ label: 'Images', href: '/images', icon: Album },
+		{ label: 'How does it work?', href: '/blogs', icon: Book }
 	];
 
 	const dropItems = [{ label: 'Profile', href: '/user?tab=profile', icon: User }];

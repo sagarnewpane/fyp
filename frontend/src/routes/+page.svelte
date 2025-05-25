@@ -1,7 +1,6 @@
 <script>
 	import Hero from '$lib/components/Hero.svelte';
 	import Features from '$lib/components/Features.svelte';
-	import Gallery from '$lib/components/Gallery.svelte';
 	import FAQ from '$lib/components/FAQ.svelte';
 	import CTA from '$lib/components/CTA.svelte';
 	import AccessRequests from '$lib/components/AccessRequests.svelte';

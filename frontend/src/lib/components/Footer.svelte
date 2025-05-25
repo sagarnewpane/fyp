@@ -35,7 +35,7 @@
 	// Quick links
 	const quickLinks = [
 		{ text: 'Home', href: '/' },
-		{ text: 'Blogs', href: '/blog' }
+		{ text: 'Blogs', href: '/blogs' }
 	];
 
 	// Legal links

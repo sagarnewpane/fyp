@@ -39,6 +39,7 @@
 				<!-- Modified Learn More Button -->
 				<Button
 					variant="ghost"
+					href="/blogs"
 					class="relative overflow-hidden px-3 text-[#1A202C] transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#2B6CB0] after:transition-all after:duration-300 hover:text-[#2B6CB0] hover:after:w-full"
 				>
 					Learn More
@@ -52,7 +53,7 @@
 					class="aspect-video rounded-2xl bg-gradient-to-r from-primary/10 to-primary/5 shadow-lg transition-all duration-300 hover:shadow-xl"
 				>
 					<img
-						src="/hero.png"
+						src="/landing.jpg"
 						alt=""
 						class="absolute inset-0 h-full w-full rounded-2xl object-cover"
 					/>

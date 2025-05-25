@@ -27,6 +27,9 @@
 	import { toast } from 'svelte-sonner';
 	import { onMount } from 'svelte';
 	import { Skeleton } from '$lib/components/ui/skeleton';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { API_ENDPOINTS } from '$lib/endpoints';
+	import { goto } from '$app/navigation';
 
 	// Type for notification settings from backend
 	type NotificationSettingsAPI = {
@@ -68,6 +71,13 @@
 	});
 	let passwordErrors = $state<Record<string, string>>({}); // Initialized for linter
 	let isChangingPassword = $state(false);
+
+	// Delete account state
+	let isDeleteDialogOpen = $state(false);
+	let isDeleting = $state(false);
+	let deletePassword = $state('');
+	let deleteConfirmation = $state('');
+	let deleteError = $state('');
 
 	// Fetch notification settings on mount
 	onMount(async () => {
@@ -241,6 +251,43 @@
 		// Implement notification settings save logic
 	}
 
+	async function handleDelete() {
+		if (deleteConfirmation.toLowerCase() !== 'delete my account') {
+			deleteError = "Please type 'delete my account' to confirm.";
+			return;
+		}
+
+		isDeleting = true;
+		deleteError = '';
+
+		try {
+			const response = await fetch('/api/delete-account', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ password: deletePassword, confirmation: deleteConfirmation })
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				throw new Error(data.error || data.password || data.confirmation || 'Failed to delete account');
+			}
+
+			// Show success message
+			toast.success('Account deleted successfully');
+
+			// Redirect to login page
+			goto('/login');
+		} catch (err) {
+			deleteError = err.message;
+			toast.error(deleteError);
+		} finally {
+			isDeleting = false;
+		}
+	}
+
 </script>
 
 <div class="container mx-auto max-w-4xl px-4 py-8">
@@ -381,6 +428,79 @@
 						</Button>
 					</div>
 				</form>
+			</CardContent>
+		</Card>
+
+		<!-- Delete Account -->
+		<Card class="border-destructive/50 bg-destructive/5">
+			<CardHeader>
+				<CardTitle class="text-destructive">Delete Account</CardTitle>
+				<CardDescription class="text-destructive/80">
+					Once you delete your account, there is no going back. Please be certain.
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Button variant="destructive" on:click={() => isDeleteDialogOpen = true}>
+					Delete Account
+				</Button>
+
+				<Dialog.Root bind:open={isDeleteDialogOpen}>
+					<Dialog.Content class="sm:max-w-[425px]">
+						<Dialog.Header>
+							<Dialog.Title>Delete Account</Dialog.Title>
+							<Dialog.Description>
+								This action cannot be undone. This will permanently delete your account and remove all your data from our servers.
+							</Dialog.Description>
+						</Dialog.Header>
+
+						<div class="grid gap-4 py-4">
+							{#if deleteError}
+								<div class="flex items-center gap-2 text-sm text-destructive">
+									<AlertCircle class="h-4 w-4" />
+									<span>{deleteError}</span>
+								</div>
+							{/if}
+
+							<div class="grid gap-2">
+								<Label for="delete-password">Current Password</Label>
+								<Input
+									id="delete-password"
+									type="password"
+									bind:value={deletePassword}
+									placeholder="Enter your current password"
+									disabled={isDeleting}
+								/>
+							</div>
+
+							<div class="grid gap-2">
+								<Label for="delete-confirmation">Type "delete my account" to confirm</Label>
+								<Input
+									id="delete-confirmation"
+									type="text"
+									bind:value={deleteConfirmation}
+									placeholder="delete my account"
+									disabled={isDeleting}
+								/>
+							</div>
+						</div>
+
+						<Dialog.Footer>
+							<Button variant="outline" on:click={() => isDeleteDialogOpen = false} disabled={isDeleting}>
+								Cancel
+							</Button>
+							<Button variant="destructive" on:click={handleDelete} disabled={isDeleting}>
+								{#if isDeleting}
+									<span class="flex items-center gap-2">
+										<span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+										Deleting...
+									</span>
+								{:else}
+									Delete Account
+								{/if}
+							</Button>
+						</Dialog.Footer>
+					</Dialog.Content>
+				</Dialog.Root>
 			</CardContent>
 		</Card>
 	</div>

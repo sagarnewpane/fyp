@@ -174,6 +174,11 @@
 			return;
 		}
 
+		if (newAccess.requires_password && !newAccess.password) {
+			toast.error('Password is required when password protection is enabled');
+			return;
+		}
+
 		try {
 			isSaving = true;
 			const accessData = {
@@ -599,6 +604,8 @@
 										type="password"
 										placeholder="Enter access password"
 										bind:value={newAccess.password}
+										required
+										class={!newAccess.password ? 'border-destructive' : ''}
 									/>
 								{/if}
 							</div>
